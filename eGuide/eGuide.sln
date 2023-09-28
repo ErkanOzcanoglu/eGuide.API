@@ -5,33 +5,33 @@ VisualStudioVersion = 17.7.34031.279
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Business", "Business", "{54B862CC-1713-4774-87C2-C3B2875F0774}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "eGuide.Business.Concrete", "eGuide.Business.Concrete\eGuide.Business.Concrete.csproj", "{EDAC1E8A-BC05-4744-AC07-C5B927554D64}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "eGuide.Business.Concrete", "eGuide.Business.Concrete\eGuide.Business.Concrete.csproj", "{EDAC1E8A-BC05-4744-AC07-C5B927554D64}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "eGuide.Business.Interface", "eGuide.Business.Interface\eGuide.Business.Interface.csproj", "{C35ED5DF-CDCA-4DD7-B21B-B728E6E2C535}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "eGuide.Business.Interface", "eGuide.Business.Interface\eGuide.Business.Interface.csproj", "{C35ED5DF-CDCA-4DD7-B21B-B728E6E2C535}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Common", "Common", "{8D24D86E-8039-418D-8470-FA894ACA2806}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "eGuide.Common", "eGuide.Common\eGuide.Common.csproj", "{96FF6ED5-893C-44E2-88F0-DB61312FB850}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "eGuide.Common", "eGuide.Common\eGuide.Common.csproj", "{96FF6ED5-893C-44E2-88F0-DB61312FB850}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Data", "Data", "{D555DD96-0738-472B-973D-86EACECD9437}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "eGuide.Data.Context", "eGuide.Data.Context\eGuide.Data.Context.csproj", "{6F0BBF16-6EC0-4C77-8989-791B47B1FFBE}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "eGuide.Data.Context", "eGuide.Data.Context\eGuide.Data.Context.csproj", "{6F0BBF16-6EC0-4C77-8989-791B47B1FFBE}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "eGuide.Data.Dto", "eGuide.Data.Dto\eGuide.Data.Dto.csproj", "{1F374B9B-B449-4EF6-930D-DD31357F9CF0}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "eGuide.Data.Dto", "eGuide.Data.Dto\eGuide.Data.Dto.csproj", "{1F374B9B-B449-4EF6-930D-DD31357F9CF0}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "eGuide.Data.Entites", "eGuide.Data.Entites\eGuide.Data.Entites.csproj", "{061753C1-2EA3-4563-96DA-C5B4B8D52061}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "eGuide.Data.Entites", "eGuide.Data.Entites\eGuide.Data.Entites.csproj", "{061753C1-2EA3-4563-96DA-C5B4B8D52061}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Infrastructure", "Infrastructure", "{3B639F85-9361-48FD-BC8B-A745305204FF}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "eGuide.Infrastructure.Conctrete", "eGuide.Infrastructure.Conctrete\eGuide.Infrastructure.Conctrete.csproj", "{6A30C433-B240-40AB-B6E1-73577C45C1B0}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "eGuide.Infrastructure.Conctrete", "eGuide.Infrastructure.Conctrete\eGuide.Infrastructure.Conctrete.csproj", "{6A30C433-B240-40AB-B6E1-73577C45C1B0}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "eGuide.Infrastructure.Infrastructure", "eGuide.Infrastructure.Infrastructure\eGuide.Infrastructure.Infrastructure.csproj", "{BDBDFA84-9D7B-4E24-9229-CB8163AD0044}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "eGuide.Infrastructure.Interface", "eGuide.Infrastructure.Infrastructure\eGuide.Infrastructure.Interface.csproj", "{BDBDFA84-9D7B-4E24-9229-CB8163AD0044}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Service", "Service", "{D3C2AC9F-7778-42CE-B17F-FE9CC052E0B0}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "eGuide.Service.AdminAPI", "eGuide.AdminAPI\eGuide.Service.AdminAPI.csproj", "{34DE98F0-1EB1-4D37-B737-DF8E37DB913D}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "eGuide.Service.AdminAPI", "eGuide.AdminAPI\eGuide.Service.AdminAPI.csproj", "{34DE98F0-1EB1-4D37-B737-DF8E37DB913D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "eGuide.Service.ClientAPI", "eGuide.Service.ClientAPI\eGuide.Service.ClientAPI.csproj", "{933EA023-DE44-43D6-9BB3-986D5FF6C266}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "eGuide.Service.ClientAPI", "eGuide.Service.ClientAPI\eGuide.Service.ClientAPI.csproj", "{933EA023-DE44-43D6-9BB3-986D5FF6C266}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
