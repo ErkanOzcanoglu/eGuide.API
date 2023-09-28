@@ -1,6 +1,7 @@
 ﻿
 
 using eGuide.Data.Context.Context;
+using eGuide.Data.Entities;
 using eGuide.Infrastructure.Interface;
 using Microsoft.EntityFrameworkCore;
 using System.Linq.Expressions;
@@ -58,7 +59,7 @@ namespace eGuide.Infrastructure.Concrete
         /// <returns></returns>
         public async Task<T> GetbyId(Guid id)
         {
-            return await _dbSet.FindAsync();
+            return await _dbSet.FindAsync(id);
         }
 
         /// <summary>
