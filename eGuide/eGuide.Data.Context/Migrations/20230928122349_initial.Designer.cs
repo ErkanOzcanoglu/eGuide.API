@@ -12,7 +12,7 @@ using eGuide.Data.Context.Context;
 namespace eGuide.Data.Context.Migrations
 {
     [DbContext(typeof(eGuideContext))]
-    [Migration("20230926122651_initial")]
+    [Migration("20230928122349_initial")]
     partial class initial
     {
         /// <inheritdoc />
@@ -119,6 +119,9 @@ namespace eGuide.Data.Context.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
+                    b.Property<DateTime>("CreatedDate")
+                        .HasColumnType("datetime2");
+
                     b.Property<string>("DarkColor1")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -138,6 +141,9 @@ namespace eGuide.Data.Context.Migrations
                     b.Property<string>("DarkColor5")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime?>("DeletedDate")
+                        .HasColumnType("datetime2");
 
                     b.Property<string>("LightColor1")
                         .IsRequired()
@@ -159,7 +165,10 @@ namespace eGuide.Data.Context.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<DateTime?>("UpdatedTime")
+                    b.Property<int>("Status")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime?>("UpdatedDate")
                         .HasColumnType("datetime2");
 
                     b.HasKey("Id");

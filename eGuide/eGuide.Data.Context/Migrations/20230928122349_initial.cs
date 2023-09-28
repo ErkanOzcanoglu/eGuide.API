@@ -46,7 +46,10 @@ namespace eGuide.Data.Context.Migrations
                     DarkColor3 = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     DarkColor4 = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     DarkColor5 = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    UpdatedTime = table.Column<DateTime>(type: "datetime2", nullable: true)
+                    Status = table.Column<int>(type: "int", nullable: false),
+                    CreatedDate = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    UpdatedDate = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    DeletedDate = table.Column<DateTime>(type: "datetime2", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -287,10 +290,7 @@ namespace eGuide.Data.Context.Migrations
                 columns: table => new
                 {
                     SocketsId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    StationModelsId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    CreatedTime = table.Column<DateTime>(type: "datetime2", nullable: true),
-                    UpdatedTime = table.Column<DateTime>(type: "datetime2", nullable: true),
-                    DeletedTime = table.Column<DateTime>(type: "datetime2", nullable: true)
+                    StationModelsId = table.Column<Guid>(type: "uniqueidentifier", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -345,10 +345,7 @@ namespace eGuide.Data.Context.Migrations
                 columns: table => new
                 {
                     FacilitiesId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    StationsId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    CreatedDate = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    UpdatedDate = table.Column<DateTime>(type: "datetime2", nullable: true),
-                    DeletedDate = table.Column<DateTime>(type: "datetime2", nullable: true)
+                    StationsId = table.Column<Guid>(type: "uniqueidentifier", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -372,10 +369,7 @@ namespace eGuide.Data.Context.Migrations
                 columns: table => new
                 {
                     StationsId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    UsersId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    CreatedDate = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    UpdatedDate = table.Column<DateTime>(type: "datetime2", nullable: true),
-                    DeletedDate = table.Column<DateTime>(type: "datetime2", nullable: true)
+                    UsersId = table.Column<Guid>(type: "uniqueidentifier", nullable: false)
                 },
                 constraints: table =>
                 {
