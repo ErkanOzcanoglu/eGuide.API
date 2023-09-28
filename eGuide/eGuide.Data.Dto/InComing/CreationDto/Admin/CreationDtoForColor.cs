@@ -1,5 +1,4 @@
 ﻿using eGuide.Data.Dto.OutComing;
-using eGuide.Data.Entities;
 using System;
 using System.Collections.Generic;
 using System.Linq;
