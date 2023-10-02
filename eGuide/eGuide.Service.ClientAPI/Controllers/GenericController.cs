@@ -3,8 +3,9 @@ using eGuide.Data.Entities;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
-namespace eGuide.Service.ClientAPI.Controllers
-{
+
+
+namespace eGuide.Service.ClientAPI.Controllers {
     /// <summary>
     /// 
     /// </summary>
@@ -12,33 +13,38 @@ namespace eGuide.Service.ClientAPI.Controllers
     /// <seealso cref="Microsoft.AspNetCore.Mvc.ControllerBase" />
     [Route("api/[controller]")]
     [ApiController]
-    public class GenericController<T> : ControllerBase where T : BaseModel
-    {
+    public class GenericController<T> : ControllerBase where T : BaseModel {
         /// <summary>
         /// The service
         /// </summary>
         private readonly IBusiness<T> _service;
 
+
+
         /// <summary>
         /// Initializes a new instance of the <see cref="GenericController{T}"/> class.
         /// </summary>
         /// <param name="business">The business.</param>
-        public GenericController(IBusiness<T> business)
-        {
+        public GenericController(IBusiness<T> business) {
             _service = business;
         }
+
+
 
         /// <summary>
         /// Alls this instance.
         /// </summary>
         /// <returns></returns>
         [HttpGet]
-        public async Task<List<T>> All()
-        {
+        public async Task<List<T>> All() {
             var personInf = await _service.GetAllAsync();
+
+
 
             return personInf.ToList();
         }
+
+
 
         /// <summary>
         /// Gets the by identifier.
@@ -50,8 +56,9 @@ namespace eGuide.Service.ClientAPI.Controllers
         {
             var person = await _service.GetbyIdAsync(id);
 
+
+
             return person;
         }
     }
 }
-
