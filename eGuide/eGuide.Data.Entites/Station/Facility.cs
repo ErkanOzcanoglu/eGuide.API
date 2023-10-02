@@ -1,4 +1,5 @@
-﻿using System;
+﻿using eGuide.Data.Entites.Station;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -60,6 +61,6 @@ namespace eGuide.Data.Entities.Station
         /// <value>
         /// The stations.
         /// </value>
-        public ICollection<StationProfile> Stations { get; set; }
+        public ICollection<StationFacility> StationFacilities { get; set; }
     }
 }

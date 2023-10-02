@@ -31,8 +31,6 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Service", "Service", "{D3C2
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "eGuide.Service.AdminAPI", "eGuide.AdminAPI\eGuide.Service.AdminAPI.csproj", "{34DE98F0-1EB1-4D37-B737-DF8E37DB913D}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "eGuide.Service.ClientAPI", "eGuide.Service.ClientAPI\eGuide.Service.ClientAPI.csproj", "{933EA023-DE44-43D6-9BB3-986D5FF6C266}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -75,10 +73,6 @@ Global
 		{34DE98F0-1EB1-4D37-B737-DF8E37DB913D}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{34DE98F0-1EB1-4D37-B737-DF8E37DB913D}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{34DE98F0-1EB1-4D37-B737-DF8E37DB913D}.Release|Any CPU.Build.0 = Release|Any CPU
-		{933EA023-DE44-43D6-9BB3-986D5FF6C266}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{933EA023-DE44-43D6-9BB3-986D5FF6C266}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{933EA023-DE44-43D6-9BB3-986D5FF6C266}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{933EA023-DE44-43D6-9BB3-986D5FF6C266}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -93,7 +87,6 @@ Global
 		{6A30C433-B240-40AB-B6E1-73577C45C1B0} = {3B639F85-9361-48FD-BC8B-A745305204FF}
 		{BDBDFA84-9D7B-4E24-9229-CB8163AD0044} = {3B639F85-9361-48FD-BC8B-A745305204FF}
 		{34DE98F0-1EB1-4D37-B737-DF8E37DB913D} = {D3C2AC9F-7778-42CE-B17F-FE9CC052E0B0}
-		{933EA023-DE44-43D6-9BB3-986D5FF6C266} = {D3C2AC9F-7778-42CE-B17F-FE9CC052E0B0}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {0519060E-4505-4C1A-96A2-6183D795118E}

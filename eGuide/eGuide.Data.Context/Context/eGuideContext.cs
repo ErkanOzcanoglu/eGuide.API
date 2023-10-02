@@ -1,4 +1,5 @@
 ﻿using eGuide.Common.Configuration;
+using eGuide.Data.Entites.Station;
 using eGuide.Data.Entities.Admin;
 using eGuide.Data.Entities.Client;
 using eGuide.Data.Entities.Map;
@@ -95,6 +96,12 @@ namespace eGuide.Data.Context.Context {
 
             var websiteConfiguration = new WebSiteConfiguration();
             websiteConfiguration.Configure(modelBuilder.Entity<Website>());
+
+            var stationFacilitiesConfiguration = new StationFacilityConfiguration();
+            stationFacilitiesConfiguration.Configure(modelBuilder.Entity<StationFacility>());
+
+            //var stationSocketConfiguration = new StationSocketConfiguration();  
+            //stationSocketConfiguration.Configure(modelBuilder.Entity<StationSockets>());
         }
 
         /// <summary>

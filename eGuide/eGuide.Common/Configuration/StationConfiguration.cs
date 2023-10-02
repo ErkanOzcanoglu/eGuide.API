@@ -21,9 +21,6 @@ namespace eGuide.Common.Configuration {
         {
             builder.HasKey(builder => builder.Id);
 
-            builder.HasMany(builder => builder.Facilities)
-                .WithMany(builder => builder.Stations);
-
             builder.HasOne(builder => builder.StationModel)
                 .WithMany(builder => builder.Stations)
                 .HasForeignKey(builder=> builder.StationModelId);

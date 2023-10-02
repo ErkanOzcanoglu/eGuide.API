@@ -6,6 +6,6 @@ using System.Threading.Tasks;
 
 namespace eGuide.Data.Dto.InComing.UpdateDto.Admin 
 {
-    internal class UpdateDtoForAdmin {
+    public class UpdateDtoForAdmin {
     }
 }

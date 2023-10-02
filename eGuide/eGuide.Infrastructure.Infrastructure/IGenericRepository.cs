@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.AspNetCore.Mvc;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
@@ -12,7 +13,7 @@ namespace eGuide.Infrastructure.Interface
     /// 
     /// </summary>
     /// <typeparam name="T"></typeparam>
-    public interface IGenericRepository<T> where T : class
+    public interface IGenericRepository<T, TDto, TUpdate, TCreate> where T : class
     {
         /// <summary>
         /// Getbies the identifier.
@@ -26,7 +27,7 @@ namespace eGuide.Infrastructure.Interface
         /// </summary>
         /// <param name="entity">The entity.</param>
         /// <returns></returns>
-        Task Add(T entity);
+        Task Add(TCreate entity);
 
         /// <summary>
         /// Updates the specified entity.
@@ -38,7 +39,7 @@ namespace eGuide.Infrastructure.Interface
         /// Removes the specified entity.
         /// </summary>
         /// <param name="entity">The entity.</param>
-        void Remove(T entity);
+        void Remove(Guid id);
 
         /// <summary>
         /// Gets all.

@@ -1,5 +1,6 @@
 ﻿
 
+using AutoMapper;
 using eGuide.Data.Context.Context;
 using eGuide.Data.Entities;
 using eGuide.Infrastructure.Interface;
@@ -14,7 +15,7 @@ namespace eGuide.Infrastructure.Concrete
     /// </summary>
     /// <typeparam name="T"></typeparam>
     /// <seealso cref="eGuide.Infrastructure.Interface.IGenericRepository&lt;T&gt;" />
-    public class GenericRepository<T> : IGenericRepository<T> where T : class
+    public class GenericRepository<T, TDto, TUpdate, TCreate> : IGenericRepository<T, TDto, TUpdate, TCreate> where T : BaseModel
     {
         /// <summary>The context</summary>
         protected readonly eGuideContext _context;
@@ -24,23 +25,26 @@ namespace eGuide.Infrastructure.Concrete
         /// </summary>
         private readonly DbSet<T> _dbSet;
 
+        private readonly IMapper _mapper;
+
         /// <summary>
         /// Initializes a new instance of the <see cref="GenericRepository{T}"/> class.
         /// </summary>
         /// <param name="context">The context.</param>
-        public GenericRepository(eGuideContext context)
+        public GenericRepository(eGuideContext context, IMapper mapper)
         {
             _context = context;
             _dbSet = _context.Set<T>();
+            _mapper = mapper;
         }
 
         /// <summary>
         /// Adds the specified entity.
         /// </summary>
         /// <param name="entity">The entity.</param>
-        public async Task Add(T entity)
+        public async Task Add(TCreate entity)
         {
-            await _dbSet.AddAsync(entity);
+            await _dbSet.AddAsync(_mapper.Map<T>(entity));
         }
 
         /// <summary>
@@ -49,7 +53,7 @@ namespace eGuide.Infrastructure.Concrete
         /// <returns></returns>
         public IQueryable<T> GetAll()
         {
-            return _dbSet.AsNoTracking().AsQueryable();
+            return _dbSet.Where(x => x.Status == 1);
         }
 
         /// <summary>
@@ -59,16 +63,23 @@ namespace eGuide.Infrastructure.Concrete
         /// <returns></returns>
         public async Task<T> GetbyId(Guid id)
         {
-            return await _dbSet.FindAsync(id);
+            var entity = await _dbSet.FindAsync(id);
+            if (entity.Status == 1) {
+                return entity;
+            }
+            else {
+                return null;
+            }
         }
 
         /// <summary>
         /// Removes the specified entity.
         /// </summary>
         /// <param name="entity">The entity.</param>
-        public void Remove(T entity)
+        public async void Remove(Guid id)
         {
-             _dbSet.Remove(entity);
+            var entity = _dbSet.Find(id);
+            entity.Status = 0;
         }
 
         /// <summary>
