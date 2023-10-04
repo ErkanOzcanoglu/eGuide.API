@@ -1,4 +1,5 @@
-﻿using eGuide.Data.Entities.Station;
+﻿using eGuide.Data.Entites.Client;
+using eGuide.Data.Entities.Station;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,7 +13,7 @@ namespace eGuide.Data.Entities.Client
     /// 
     /// </summary>
     /// <seealso cref="eGuide.Data.Entities.BaseModel" />
-    public class User : BaseModel 
+    public class User : BaseModel
     {
 
         /// <summary>
@@ -70,5 +71,14 @@ namespace eGuide.Data.Entities.Client
         /// The stations.
         /// </value>
         public ICollection<StationProfile> Stations { get; set; }
+
+        /// <summary>
+        /// Gets or sets the user vehicles.
+        /// </summary>
+        /// <value>
+        /// The user vehicles.
+        /// </value>
+        public ICollection<UserVehicle> UserVehicles { get; set; }
     }
+        
 }

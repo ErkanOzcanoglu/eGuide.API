@@ -1,4 +1,5 @@
-﻿using System;
+﻿using eGuide.Data.Entites.Client;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -29,5 +30,13 @@ namespace eGuide.Data.Entities.Client
         /// The model.
         /// </value>
         public string Model { get; set; }
+
+        /// <summary>
+        /// Gets or sets the user vehicles.
+        /// </summary>
+        /// <value>
+        /// The user vehicles.
+        /// </value>
+        public ICollection<UserVehicle> UserVehicles { get; set; }
     }
 }

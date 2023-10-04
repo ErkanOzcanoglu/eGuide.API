@@ -293,6 +293,35 @@ namespace eGuide.Data.Context.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "UserVehicle",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    UserId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    VehicleId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    Status = table.Column<int>(type: "int", nullable: false),
+                    CreatedDate = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    UpdatedDate = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    DeletedDate = table.Column<DateTime>(type: "datetime2", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_UserVehicle", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_UserVehicle_User_UserId",
+                        column: x => x.UserId,
+                        principalTable: "User",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_UserVehicle_Vehicle_VehicleId",
+                        column: x => x.VehicleId,
+                        principalTable: "Vehicle",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "StationSockets",
                 columns: table => new
                 {
@@ -454,6 +483,16 @@ namespace eGuide.Data.Context.Migrations
                 name: "IX_StationSockets_StationModelId",
                 table: "StationSockets",
                 column: "StationModelId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_UserVehicle_UserId",
+                table: "UserVehicle",
+                column: "UserId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_UserVehicle_VehicleId",
+                table: "UserVehicle",
+                column: "VehicleId");
         }
 
         /// <inheritdoc />
@@ -490,7 +529,7 @@ namespace eGuide.Data.Context.Migrations
                 name: "StationSockets");
 
             migrationBuilder.DropTable(
-                name: "Vehicle");
+                name: "UserVehicle");
 
             migrationBuilder.DropTable(
                 name: "Website");
@@ -502,10 +541,13 @@ namespace eGuide.Data.Context.Migrations
                 name: "Station");
 
             migrationBuilder.DropTable(
+                name: "Socket");
+
+            migrationBuilder.DropTable(
                 name: "User");
 
             migrationBuilder.DropTable(
-                name: "Socket");
+                name: "Vehicle");
 
             migrationBuilder.DropTable(
                 name: "Connector");

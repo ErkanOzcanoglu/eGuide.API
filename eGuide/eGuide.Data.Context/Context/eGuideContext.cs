@@ -1,4 +1,5 @@
 ﻿using eGuide.Common.Configuration;
+using eGuide.Data.Entites.Client;
 using eGuide.Data.Entites.Station;
 using eGuide.Data.Entities.Admin;
 using eGuide.Data.Entities.Client;
@@ -175,5 +176,13 @@ namespace eGuide.Data.Context.Context {
         /// The website.
         /// </value>
         public DbSet<Website> Website { get; set; }
+
+        /// <summary>
+        /// Gets or sets the user vehicle.
+        /// </summary>
+        /// <value>
+        /// The user vehicle.
+        /// </value>
+        public DbSet<UserVehicle> UserVehicle { get; set; }
     }
 }
