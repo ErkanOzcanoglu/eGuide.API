@@ -41,22 +41,6 @@ namespace eGuide.Data.Entities.Client
         public string Email { get; set; }
 
         /// <summary>
-        /// Gets or sets the password.
-        /// </summary>
-        /// <value>
-        /// The password.
-        /// </value>
-        public string Password { get; set; }
-
-        /// <summary>
-        /// Gets or sets the confirm password.
-        /// </summary>
-        /// <value>
-        /// The confirm password.
-        /// </value>
-        public string ConfirmPassword { get; set; }
-
-        /// <summary>
         /// Gets or sets the comments.
         /// </summary>
         /// <value>
@@ -79,6 +63,9 @@ namespace eGuide.Data.Entities.Client
         /// The user vehicles.
         /// </value>
         public ICollection<UserVehicle> UserVehicles { get; set; }
+
+        public byte[] PassWordHash { get; set; }
+        public byte[] PassWordSalt { get; set; }
     }
         
 }
