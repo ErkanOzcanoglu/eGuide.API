@@ -7,6 +7,7 @@ using eGuide.Infrastructure.Concrete;
 using eGuide.Infrastructure.Conctrete;
 using eGuide.Infrastructure.Interface;
 using Microsoft.EntityFrameworkCore;
+using MongoDB.Driver;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -22,6 +23,13 @@ builder.Services.AddScoped<IAdminAuthorizationBusiness, AdminAuthorizationBusine
 builder.Services.AddScoped<IAdminAuthorizationRepository, AdminAuthorizationRepository>();
 builder.Services.AddScoped(typeof(IGenericRepository<>), typeof(GenericRepository<>));
 builder.Services.AddScoped(typeof(IBusiness<>), typeof(Business<>));
+
+builder.Services.AddSingleton<IMongoClient>(new MongoClient("mongodb://localhost:27017"));
+builder.Services.AddSingleton<IMongoDatabase>(provider =>
+{
+    var client = provider.GetRequiredService<IMongoClient>();
+    return client.GetDatabase("eGuideDb"); // Replace with your database name
+});
 
 builder.Services.AddAutoMapper(typeof(AdminProfileMapper));
 builder.Services.AddDbContext<eGuideContext>(options => options.UseSqlServer(builder.Configuration.GetConnectionString("eGuideContext")));
