@@ -11,7 +11,7 @@ namespace eGuide.Business.Interface
     /// 
     /// </summary>
     /// <typeparam name="T"></typeparam>
-    public interface IBusiness<T, TDto, TUpdate, TCreate> where T :class
+    public interface IBusiness<T> where T :class
     {
         /// <summary>
         /// Getbies the identifier asynchronous.
@@ -25,7 +25,7 @@ namespace eGuide.Business.Interface
         /// </summary>
         /// <param name="entity">The entity.</param>
         /// <returns></returns>
-        Task<TCreate> AddAsync(TCreate entity);
+        Task<T> AddAsync(T entity);
 
         /// <summary>
         /// Updates the asynchronous.

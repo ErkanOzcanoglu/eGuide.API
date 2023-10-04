@@ -15,7 +15,7 @@ namespace eGuide.Infrastructure.Concrete
     /// </summary>
     /// <typeparam name="T"></typeparam>
     /// <seealso cref="eGuide.Infrastructure.Interface.IGenericRepository&lt;T&gt;" />
-    public class GenericRepository<T, TDto, TUpdate, TCreate> : IGenericRepository<T, TDto, TUpdate, TCreate> where T : BaseModel
+    public class GenericRepository<T> : IGenericRepository<T> where T : BaseModel
     {
         /// <summary>The context</summary>
         protected readonly eGuideContext _context;
@@ -25,26 +25,24 @@ namespace eGuide.Infrastructure.Concrete
         /// </summary>
         private readonly DbSet<T> _dbSet;
 
-        private readonly IMapper _mapper;
-
         /// <summary>
         /// Initializes a new instance of the <see cref="GenericRepository{T}"/> class.
         /// </summary>
         /// <param name="context">The context.</param>
-        public GenericRepository(eGuideContext context, IMapper mapper)
+        public GenericRepository(eGuideContext context)
         {
             _context = context;
             _dbSet = _context.Set<T>();
-            _mapper = mapper;
+           
         }
 
         /// <summary>
         /// Adds the specified entity.
         /// </summary>
         /// <param name="entity">The entity.</param>
-        public async Task Add(TCreate entity)
+        public async Task Add(T entity)
         {
-            await _dbSet.AddAsync(_mapper.Map<T>(entity));
+            await _dbSet.AddAsync(entity);
         }
 
         /// <summary>

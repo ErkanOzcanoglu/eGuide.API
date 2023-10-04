@@ -40,6 +40,14 @@ namespace eGuide.Data.Entities.Station
         public User Owner { get; set; }
 
         /// <summary>
+        /// Gets or sets the owner identifier.
+        /// </summary>
+        /// <value>
+        /// The owner identifier.
+        /// </value>
+        public Guid OwnerId { get; set; }
+       
+        /// <summary>
         /// Gets or sets the station.
         /// </summary>
         /// <value>
