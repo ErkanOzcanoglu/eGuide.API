@@ -75,9 +75,9 @@ namespace eGuide.Business.Concrete
         /// Removes the asynchronous.
         /// </summary>
         /// <param name="entity">The entity.</param>
-        public async Task RemoveAsync(T entity)
+        public async Task RemoveAsync(Guid id)
         {
-            _repository.Remove(entity);
+            _repository.Remove(id);
             await _unitOfWork.CommitAsync();
         }
 

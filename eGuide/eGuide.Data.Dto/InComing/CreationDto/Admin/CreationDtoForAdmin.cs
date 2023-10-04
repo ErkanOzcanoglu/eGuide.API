@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace eGuide.Data.Dto.InComing.CreationDto.Admin
 {
-    public class CreationDtoForAdminAdminProfile : BaseDto {
+    public class CreationDtoForAdminProfile : BaseDto {
 
         /// <summary>
         /// Gets or sets the name.
@@ -32,21 +32,8 @@ namespace eGuide.Data.Dto.InComing.CreationDto.Admin
         /// The email.
         /// </value>
         public string Email { get; set; }
-
-        /// <summary>
-        /// Gets or sets the password.
-        /// </summary>
-        /// <value>
-        /// The password.
-        /// </value>
+        public string Username { get; set; }
         public string Password { get; set; }
-
-        /// <summary>
-        /// Gets or sets the confirm password.
-        /// </summary>
-        /// <value>
-        /// The confirm password.
-        /// </value>
-        public string ConfirmPassword { get; set; }
+        //public string ConfirmPassword { get; set; }
     }
 }

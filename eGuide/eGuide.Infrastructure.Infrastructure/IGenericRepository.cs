@@ -1,4 +1,6 @@
-﻿using System;
+﻿using eGuide.Data.Entities;
+using Microsoft.AspNetCore.Mvc;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
@@ -38,7 +40,7 @@ namespace eGuide.Infrastructure.Interface
         /// Removes the specified entity.
         /// </summary>
         /// <param name="entity">The entity.</param>
-        void Remove(T entity);
+        void Remove(Guid id);
 
         /// <summary>
         /// Gets all.

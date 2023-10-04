@@ -11,7 +11,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Controllers\" />
+    <ProjectReference Include="..\eGuide.Business.Interface\eGuide.Business.Interface.csproj" />
+    <ProjectReference Include="..\eGuide.Data.Entites\eGuide.Data.Entites.csproj" />
   </ItemGroup>
 
 </Project>

@@ -29,5 +29,7 @@ namespace eGuide.Data.Dto.OutComing.Station
         /// The rating.
         /// </value>
         public float Rating { get; set; }
+        public Guid OwnerId { get; set; }
+        public Guid StationId { get; set; }
     }
 }

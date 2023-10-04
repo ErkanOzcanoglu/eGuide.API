@@ -1,4 +1,5 @@
-﻿using eGuide.Data.Entities.Client;
+﻿using eGuide.Data.Entites.Station;
+using eGuide.Data.Entities.Client;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -62,7 +63,7 @@ namespace eGuide.Data.Entities.Station
         /// <value>
         /// The facilities.
         /// </value>
-        public ICollection<Facility> Facilities { get; set; }
+        public ICollection<StationFacility> StationFacilities { get; set; }
 
         /// <summary>
         /// Gets or sets the users.

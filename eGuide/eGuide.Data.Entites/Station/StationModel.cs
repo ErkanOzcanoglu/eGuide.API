@@ -1,4 +1,5 @@
-﻿using System;
+﻿using eGuide.Data.Entites.Station;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -37,5 +38,13 @@ namespace eGuide.Data.Entities.Station
         /// The sockets.
         /// </value>
         public ICollection<Socket> Sockets { get; set; }
+
+        /// <summary>
+        /// Gets or sets the station sockets.
+        /// </summary>
+        /// <value>
+        /// The station sockets.
+        /// </value>
+        public ICollection<StationSockets> StationSockets { get; set; }
     }
 }
