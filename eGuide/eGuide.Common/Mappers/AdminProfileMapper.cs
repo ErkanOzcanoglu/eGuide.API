@@ -15,7 +15,7 @@ namespace eGuide.Common.Mappers {
                 .ForMember(dest => dest.Id, opt => opt.MapFrom(src => Guid.NewGuid()))
                 .ForMember(dest => dest.Status, opt => opt.MapFrom(src => 1))
                 .ForMember(dest => dest.CreatedDate, opt => opt.MapFrom(src => DateTime.Now))
-                .ForMember(dest => dest.UpdatedDate, opt => opt.MapFrom(src => DateTime.Now));
+                .ForMember(dest => dest.UpdatedDate, opt => opt.MapFrom(src => DateTime.Now)).ReverseMap();
         }
     }
 }

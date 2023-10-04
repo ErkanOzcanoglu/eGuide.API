@@ -16,13 +16,13 @@ namespace eGuide.Business.Concrete
     /// </summary>
     /// <typeparam name="T"></typeparam>
     /// <seealso cref="eGuide.Business.Interface.IBusiness&lt;T&gt;" />
-    public class Business<T, TDto, TUpdate, TCreate> : IBusiness<T, TDto, TUpdate, TCreate> where T : class
+    public class Business<T> : IBusiness<T> where T : class
     {
 
         /// <summary>
         /// The repository
         /// </summary>
-        private readonly IGenericRepository<T, TDto, TUpdate, TCreate> _repository;
+        private readonly IGenericRepository<T> _repository;
 
         /// <summary>
         /// The unit of work
@@ -34,7 +34,7 @@ namespace eGuide.Business.Concrete
         /// </summary>
         /// <param name="repository">The repository.</param>
         /// <param name="unitOfWork">The unit of work.</param>
-        public Business(IGenericRepository<T, TDto, TUpdate, TCreate> repository, IUnitOfWork unitOfWork)
+        public Business(IGenericRepository<T> repository, IUnitOfWork unitOfWork)
         {
             _repository = repository;
             _unitOfWork = unitOfWork;
@@ -45,7 +45,7 @@ namespace eGuide.Business.Concrete
         /// </summary>
         /// <param name="entity">The entity.</param>
         /// <returns></returns>
-        public async Task<TCreate> AddAsync(TCreate entity)
+        public async Task<T> AddAsync(T entity)
         {
             await _repository.Add(entity);
             await _unitOfWork.CommitAsync();

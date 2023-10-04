@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using eGuide.Data.Entities;
+using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -13,7 +14,7 @@ namespace eGuide.Infrastructure.Interface
     /// 
     /// </summary>
     /// <typeparam name="T"></typeparam>
-    public interface IGenericRepository<T, TDto, TUpdate, TCreate> where T : class
+    public interface IGenericRepository<T> where T : class
     {
         /// <summary>
         /// Getbies the identifier.
@@ -27,7 +28,7 @@ namespace eGuide.Infrastructure.Interface
         /// </summary>
         /// <param name="entity">The entity.</param>
         /// <returns></returns>
-        Task Add(TCreate entity);
+        Task Add(T entity);
 
         /// <summary>
         /// Updates the specified entity.

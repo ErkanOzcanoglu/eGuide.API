@@ -37,20 +37,13 @@ namespace eGuide.Data.Entities.Admin
         /// </value>
         public string Email { get; set; }
 
-        /// <summary>
-        /// Gets or sets the password.
-        /// </summary>
-        /// <value>
-        /// The password.
-        /// </value>
-        public string Password { get; set; }
+        public string Username { get; set; } = string.Empty;
+        public byte[] PassWordHash { get; set; }
+        public byte[] PassWordSalt { get; set; }
 
-        /// <summary>
-        /// Gets or sets the confirm password.
-        /// </summary>
-        /// <value>
-        /// The confirm password.
-        /// </value>
-        public string ConfirmPassword { get; set; }
+        //public DateTime? VerifiedAt { get; set; }
+        //public string PasswordResetToken { get; set; }
+        //public DateTime? PasswordResetTokenExpiresAt { get; set; }
+
     }
 }
