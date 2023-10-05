@@ -110,17 +110,45 @@ namespace eGuide.Service.ClientAPI.Controllers {
                 Name = register.Name,
                 Email = register.Email,
                 PassWordHash = passwordHash,
-                PassWordSalt = passwordSalt
-                
-            };         
+                PassWordSalt = passwordSalt,
+                ConfirmationToken = CreateRandomToken()
+
+            };
+
+            //await _business.AddAsync(user);
+
+            //string welcomeEmailBody = "Hoş geldiniz! Kaydınız başarıyla tamamlandı.";
+            //SendEmail(welcomeEmailBody, user.Email);
+
+            //return Ok(user);
 
             await _business.AddAsync(user);
-            
-            string welcomeEmailBody = "Hoş geldiniz! Kaydınız başarıyla tamamlandı.";
-            SendEmail(welcomeEmailBody, user.Email);
+          
+            string confirmationLink = Url.Action("ConfirmAccount", "User", new { token = user.ConfirmationToken }, Request.Scheme);
+            string confirmationEmailBody = $"Hesabınızı onaylamak için lütfen şu bağlantıya tıklayın: {confirmationLink}";
+            SendEmail(confirmationEmailBody, user.Email);
 
             return Ok(user);
         }
+
+        [HttpGet("confirm")]
+        public async Task<IActionResult> ConfirmAccount(string token)
+        {
+            var user = await _business.FirstOrDefault(u => u.ConfirmationToken == token);
+
+            if (user == null)
+            {
+                return BadRequest("Invalid confirmation code.");
+            }
+
+           
+            user.Status = 1;
+            //user.ConfirmationToken = null; 
+            await _business.UpdateAsync(user);
+
+            return Ok("Your account has been successfully approved.");
+        }
+
 
         private void CreatePasswordHash(string password, out byte[] passwordHash, out byte[] passwordSalt)
         {

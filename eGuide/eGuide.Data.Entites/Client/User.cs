@@ -70,6 +70,8 @@ namespace eGuide.Data.Entities.Client
         public DateTime? VerifiedAt { get; set; }
         public string? PasswordResetToken { get; set; }
         public DateTime? ResetTokenExpires { set; get; }
+
+        public string? ConfirmationToken { get; set; }
     }
         
 }
