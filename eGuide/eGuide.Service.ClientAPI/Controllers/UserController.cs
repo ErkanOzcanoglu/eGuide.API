@@ -93,26 +93,6 @@ namespace eGuide.Service.ClientAPI.Controllers {
 
         }
 
-        //[HttpPost("register")]
-        //public async Task<ActionResult<User>> Register(CreationDtoForUser register)
-        //{
-        //    byte[] passwordHash, passwordSalt;
-        //    CreatePasswordHash(register.Password, out passwordHash, out passwordSalt);
-
-        //    var user = new User
-        //    {
-        //        Id = register.Id,
-        //        Surname = register.Surname,
-        //        Name = register.Name,
-        //        Email = register.Email,
-        //        PassWordHash = passwordHash,
-        //        PassWordSalt = passwordSalt
-        //    };
-
-        //    await _business.AddAsync(user);
-        //    return Ok(user);
-        //}
-
         [HttpPost("register")]
         public async Task<ActionResult<User>> Register(CreationDtoForUser register)
         {
@@ -132,9 +112,13 @@ namespace eGuide.Service.ClientAPI.Controllers {
                 PassWordHash = passwordHash,
                 PassWordSalt = passwordSalt
                 
-            };
+            };         
 
             await _business.AddAsync(user);
+            
+            string welcomeEmailBody = "Hoş geldiniz! Kaydınız başarıyla tamamlandı.";
+            SendEmail(welcomeEmailBody, user.Email);
+
             return Ok(user);
         }
 
@@ -191,6 +175,59 @@ namespace eGuide.Service.ClientAPI.Controllers {
                 var computedHash = hmac.ComputeHash(Encoding.UTF8.GetBytes(password));
                 return computedHash.SequenceEqual(passwordHash);
             }
+        }
+
+        [HttpPost("forgot-password")]
+        public async Task<IActionResult> ForgotPassword(string email)
+        {
+            var user = await _business.FirstOrDefault(u => u.Email == email);
+
+            if (user == null)
+            {
+                return BadRequest("UserNotFound");
+               
+            }
+
+            user.PasswordResetToken = CreateRandomToken();
+            user.ResetTokenExpires = DateTime.Now.AddDays(1);
+            await  _business.UpdateAsync(user);
+
+            string resetEmailBody = $"Şifre sıfırlama tokeniniz: {user.PasswordResetToken}";
+            SendEmail(resetEmailBody, user.Email);
+
+            return Ok("ypu may now reset your password");         
+        }
+
+        private string CreateRandomToken()
+        {
+            
+            Random random = new Random();
+            const string chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+            return new string(Enumerable.Repeat(chars, 6)
+              .Select(s => s[random.Next(s.Length)]).ToArray());
+        }
+
+        [HttpPost("reset-password")]
+        public async Task<IActionResult> ResetPassword(ResetPassword request)
+        {
+            var user = await _business.FirstOrDefault(u => u.PasswordResetToken == request.Token);
+
+            if (user == null || user.ResetTokenExpires < DateTime.Now)
+            {
+                return BadRequest("INvalid Token");
+            }
+
+            CreatePasswordHash(request.Password, out byte[] passwordHash, out byte[] passwordSalt);
+
+            user.PassWordHash = passwordHash;
+            user.PassWordSalt = passwordSalt;
+            user.PasswordResetToken = null;
+            user.ResetTokenExpires = null;
+
+            await _business.UpdateAsync(user);
+
+            return Ok("password succesfully changed");
+
         }
 
     }

@@ -66,6 +66,10 @@ namespace eGuide.Data.Entities.Client
 
         public byte[] PassWordHash { get; set; }
         public byte[] PassWordSalt { get; set; }
+
+        public DateTime? VerifiedAt { get; set; }
+        public string? PasswordResetToken { get; set; }
+        public DateTime? ResetTokenExpires { set; get; }
     }
         
 }

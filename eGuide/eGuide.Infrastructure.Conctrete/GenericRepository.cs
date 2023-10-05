@@ -45,6 +45,11 @@ namespace eGuide.Infrastructure.Concrete
             await _dbSet.AddAsync(entity);
         }
 
+        public Task<T> FirstOrDefault(Expression<Func<T, bool>> predicate)
+        {
+            return _dbSet.FirstAsync(predicate);
+        }
+
         /// <summary>
         /// Gets all.
         /// </summary>
