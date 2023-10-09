@@ -83,6 +83,7 @@ namespace eGuide.Infrastructure.Concrete
         {
             var entity = _dbSet.Find(id);
             entity.Status = 0;
+            entity.DeletedDate= DateTime.Now;
         }
 
         /// <summary>

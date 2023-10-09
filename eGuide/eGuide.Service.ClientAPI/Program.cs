@@ -40,6 +40,7 @@ builder.Services.AddAuthentication().AddGoogle(googleOptions =>
 builder.Services.AddAutoMapper(typeof(UserVehicleMapper));
 builder.Services.AddAutoMapper(typeof(AdminProfileMapper));
 builder.Services.AddAutoMapper(typeof(UserMapper));
+builder.Services.AddAutoMapper(typeof(VehicleMapper));
 builder.Services.AddDbContext<eGuideContext>(options => options.UseSqlServer(builder.Configuration.GetConnectionString("eGuideContext")));
 var app = builder.Build();
 

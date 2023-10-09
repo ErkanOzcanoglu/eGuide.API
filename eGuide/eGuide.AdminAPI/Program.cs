@@ -32,6 +32,7 @@ builder.Services.AddSingleton<IMongoDatabase>(provider =>
 });
 
 builder.Services.AddAutoMapper(typeof(AdminProfileMapper));
+builder.Services.AddAutoMapper(typeof(VehicleMapper));
 builder.Services.AddDbContext<eGuideContext>(options => options.UseSqlServer(builder.Configuration.GetConnectionString("eGuideContext")));
 var app = builder.Build();
 

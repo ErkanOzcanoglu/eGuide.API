@@ -24,17 +24,31 @@ namespace eGuide.Service.ClientAPI.Controllers {
     [ApiController]
     public class UserController : ControllerBase
     {
+        /// <summary>
+        /// The business
+        /// </summary>
         private readonly IUserBusiness _business;
 
+        /// <summary>
+        /// The mapper
+        /// </summary>
         private readonly IMapper _mapper;
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="UserController"/> class.
+        /// </summary>
+        /// <param name="business">The business.</param>
+        /// <param name="mapper">The mapper.</param>
         public UserController(IUserBusiness business, IMapper mapper)
         {
-
             _business = business;
             _mapper = mapper;
         }
-        
+
+        /// <summary>
+        /// Alls this instance.
+        /// </summary>
+        /// <returns></returns>
         [HttpGet]
         public async Task<List<UserDto>> All()
         {
@@ -42,7 +56,12 @@ namespace eGuide.Service.ClientAPI.Controllers {
             var userdto = _mapper.Map<List<UserDto>>(user.ToList());
             return userdto;
         }
-      
+
+        /// <summary>
+        /// Gets the by identifier.
+        /// </summary>
+        /// <param name="id">The identifier.</param>
+        /// <returns></returns>
         [HttpGet("getbyId")]
         public async Task<UserDto> GetById(Guid id)
         {
@@ -51,12 +70,20 @@ namespace eGuide.Service.ClientAPI.Controllers {
             return userdto;
         }
 
+        /// <summary>
+        /// Creates the specified entity.
+        /// </summary>
+        /// <param name="entity">The entity.</param>
         [HttpPost]
         public async Task Create(CreationDtoForUser entity)
         {
             await _business.AddAsync(_mapper.Map<User>(entity));
         }
 
+        /// <summary>
+        /// Deletes the specified identifier.
+        /// </summary>
+        /// <param name="id">The identifier.</param>
         [HttpDelete]
         public async Task Delete(Guid id)
         {
@@ -64,12 +91,22 @@ namespace eGuide.Service.ClientAPI.Controllers {
         }
 
 
+        /// <summary>
+        /// Updates the specified entity.
+        /// </summary>
+        /// <param name="entity">The entity.</param>
         [HttpPut]
         public async Task Update(User entity)
         {
             await _business.UpdateAsync(entity);
         }
 
+        /// <summary>
+        /// Sends the email.
+        /// </summary>
+        /// <param name="body">The body.</param>
+        /// <param name="recipientEmail">The recipient email.</param>
+        /// <returns></returns>
         [HttpPost("mail")]
         public IActionResult SendEmail(string body, string recipientEmail)
         {
@@ -93,6 +130,11 @@ namespace eGuide.Service.ClientAPI.Controllers {
 
         }
 
+        /// <summary>
+        /// Registers the specified register.
+        /// </summary>
+        /// <param name="register">The register.</param>
+        /// <returns></returns>
         [HttpPost("register")]
         public async Task<ActionResult<User>> Register(CreationDtoForUser register)
         {
@@ -115,13 +157,6 @@ namespace eGuide.Service.ClientAPI.Controllers {
 
             };
 
-            //await _business.AddAsync(user);
-
-            //string welcomeEmailBody = "Hoş geldiniz! Kaydınız başarıyla tamamlandı.";
-            //SendEmail(welcomeEmailBody, user.Email);
-
-            //return Ok(user);
-
             await _business.AddAsync(user);
           
             string confirmationLink = Url.Action("ConfirmAccount", "User", new { token = user.ConfirmationToken }, Request.Scheme);
@@ -131,6 +166,11 @@ namespace eGuide.Service.ClientAPI.Controllers {
             return Ok(user);
         }
 
+        /// <summary>
+        /// Confirms the account.
+        /// </summary>
+        /// <param name="token">The token.</param>
+        /// <returns></returns>
         [HttpGet("confirm")]
         public async Task<IActionResult> ConfirmAccount(string token)
         {
@@ -140,16 +180,20 @@ namespace eGuide.Service.ClientAPI.Controllers {
             {
                 return BadRequest("Invalid confirmation code.");
             }
-
-           
+          
             user.Status = 1;
-            //user.ConfirmationToken = null; 
             await _business.UpdateAsync(user);
 
             return Ok("Your account has been successfully approved.");
         }
 
 
+        /// <summary>
+        /// Creates the password hash.
+        /// </summary>
+        /// <param name="password">The password.</param>
+        /// <param name="passwordHash">The password hash.</param>
+        /// <param name="passwordSalt">The password salt.</param>
         private void CreatePasswordHash(string password, out byte[] passwordHash, out byte[] passwordSalt)
         {
             using (var hmac = new HMACSHA512())
@@ -159,6 +203,11 @@ namespace eGuide.Service.ClientAPI.Controllers {
             }
         }
 
+        /// <summary>
+        /// Logins the specified login.
+        /// </summary>
+        /// <param name="login">The login.</param>
+        /// <returns></returns>
         [HttpPost("login")]
         public async Task<IActionResult> Login(Login login)
         {
@@ -174,10 +223,15 @@ namespace eGuide.Service.ClientAPI.Controllers {
             {
                 return Ok("wrong password");
             }
-            //return CreatedToken(entity);
+            
             return Ok(entity.Id);
         }
 
+        /// <summary>
+        /// Createds the token.
+        /// </summary>
+        /// <param name="user">The user.</param>
+        /// <returns></returns>
         private string CreatedToken(User user)
         {
             List<Claim> claims = new List<Claim> {
@@ -196,6 +250,13 @@ namespace eGuide.Service.ClientAPI.Controllers {
             return jwt;
         }
 
+        /// <summary>
+        /// Verifies the password hash.
+        /// </summary>
+        /// <param name="password">The password.</param>
+        /// <param name="passwordHash">The password hash.</param>
+        /// <param name="passwordSalt">The password salt.</param>
+        /// <returns></returns>
         private bool VerifyPasswordHash(string password, byte[] passwordHash, byte[] passwordSalt)
         {
             using (var hmac = new HMACSHA512(passwordSalt))
@@ -205,6 +266,11 @@ namespace eGuide.Service.ClientAPI.Controllers {
             }
         }
 
+        /// <summary>
+        /// Forgots the password.
+        /// </summary>
+        /// <param name="email">The email.</param>
+        /// <returns></returns>
         [HttpPost("forgot-password")]
         public async Task<IActionResult> ForgotPassword(string email)
         {
@@ -226,6 +292,10 @@ namespace eGuide.Service.ClientAPI.Controllers {
             return Ok("ypu may now reset your password");         
         }
 
+        /// <summary>
+        /// Creates the random token.
+        /// </summary>
+        /// <returns></returns>
         private string CreateRandomToken()
         {
             
@@ -235,6 +305,11 @@ namespace eGuide.Service.ClientAPI.Controllers {
               .Select(s => s[random.Next(s.Length)]).ToArray());
         }
 
+        /// <summary>
+        /// Resets the password.
+        /// </summary>
+        /// <param name="request">The request.</param>
+        /// <returns></returns>
         [HttpPost("reset-password")]
         public async Task<IActionResult> ResetPassword(ResetPassword request)
         {
