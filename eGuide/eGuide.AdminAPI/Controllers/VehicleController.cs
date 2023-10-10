@@ -126,7 +126,6 @@ namespace eGuide.Service.AdminAPI.Controllers
 
         }
 
-
         /// <summary>
         /// Updates the vehicle.
         /// </summary>
@@ -148,7 +147,7 @@ namespace eGuide.Service.AdminAPI.Controllers
                 existingVehicle.Brand = vehicleDto.Brand;
                 existingVehicle.Model = vehicleDto.Model;
 
-                await _business.UpdateAsync(_mapper.Map<Vehicle>(vehicleDto));
+                await _business.UpdateAsync(_mapper.Map<Vehicle>(existingVehicle));
 
                 return Ok(existingVehicle); 
             }

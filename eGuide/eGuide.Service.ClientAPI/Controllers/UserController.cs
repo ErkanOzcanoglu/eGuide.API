@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using eGuide.Business.Interface;
 using eGuide.Data.Dto.InComing.CreationDto.Client;
+using eGuide.Data.Dto.InComing.UpdateDto.Client;
 using eGuide.Data.Dto.OutComing.Client;
 using eGuide.Data.Entites.Authorization;
 using eGuide.Data.Entities.Client;
@@ -8,6 +9,7 @@ using MailKit.Net.Smtp;
 using MailKit.Security;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using MimeKit;
 using System.IdentityModel.Tokens.Jwt;
@@ -50,11 +52,29 @@ namespace eGuide.Service.ClientAPI.Controllers {
         /// </summary>
         /// <returns></returns>
         [HttpGet]
-        public async Task<List<UserDto>> All()
+        public async Task<IActionResult> All()
         {
-            var user = await _business.GetAllAsync();
-            var userdto = _mapper.Map<List<UserDto>>(user.ToList());
-            return userdto;
+            try
+            {
+                var users = await _business.GetAllAsync();
+
+                if (users == null || !users.Any())
+                {
+                    return NotFound("No users found in the database.");
+                }
+
+                var userDto = _mapper.Map<List<UserDto>>(users.ToList());
+
+                return Ok(userDto);
+            }
+            catch (DbUpdateException ex)
+            {
+                return BadRequest("A database connection error occurred. Please try again later.");
+            }
+            catch (Exception ex)
+            {
+                return BadRequest($"Error: {ex.Message}");
+            }
         }
 
         /// <summary>
@@ -63,31 +83,52 @@ namespace eGuide.Service.ClientAPI.Controllers {
         /// <param name="id">The identifier.</param>
         /// <returns></returns>
         [HttpGet("getbyId")]
-        public async Task<UserDto> GetById(Guid id)
+        public async Task<IActionResult> GetById(Guid id)
         {
-            var user = await _business.GetbyIdAsync(id);
-            var userdto = _mapper.Map<UserDto>(user);
-            return userdto;
-        }
+            try
+            {
+                var user = await _business.GetbyIdAsync(id);
 
-        /// <summary>
-        /// Creates the specified entity.
-        /// </summary>
-        /// <param name="entity">The entity.</param>
-        [HttpPost]
-        public async Task Create(CreationDtoForUser entity)
-        {
-            await _business.AddAsync(_mapper.Map<User>(entity));
-        }
+                if (user == null)
+                {
+                    return NotFound($"User with ID {id} not found.");
+                }
+
+                var userDto = _mapper.Map<UserDto>(user);
+
+                return Ok(userDto);
+            }
+            catch (DbUpdateException ex)
+            {
+                return BadRequest("An error occurred while accessing the database. Please try again later.");
+            }
+            catch (Exception ex)
+            {
+                return BadRequest($"Error: {ex.Message}");
+            }
+        }          
 
         /// <summary>
         /// Deletes the specified identifier.
         /// </summary>
         /// <param name="id">The identifier.</param>
         [HttpDelete]
-        public async Task Delete(Guid id)
+        public async Task<IActionResult> Delete(Guid id)
         {
-            _business.RemoveAsync(id);
+            try
+            {
+                await _business.RemoveAsync(id);
+
+                return Ok();
+            }
+            catch (DbUpdateException ex)
+            {
+                return BadRequest("An error occurred while accessing the database. Please try again later.");
+            }
+            catch (Exception ex)
+            {
+                return BadRequest($"Hata: {ex.Message}");
+            }
         }
 
 
@@ -95,10 +136,31 @@ namespace eGuide.Service.ClientAPI.Controllers {
         /// Updates the specified entity.
         /// </summary>
         /// <param name="entity">The entity.</param>
-        [HttpPut]
-        public async Task Update(User entity)
+        [HttpPut("{userId}")]
+        public async Task<IActionResult> UpdateUser(Guid userId, [FromBody] UpdateDtoForUser userDto)
         {
-            await _business.UpdateAsync(entity);
+            try
+            {
+                var existingUser = await _business.GetbyIdAsync(userId);
+
+                if (existingUser == null)
+                {
+                    return NotFound($"User with ID {userId} not found.");
+                }
+
+                existingUser.Name = userDto.Name;
+                existingUser.Surname = userDto.Surname;
+                existingUser.Email = userDto.Email;
+
+                await _business.UpdateAsync(_mapper.Map<User>(existingUser));
+
+                return Ok(existingUser);
+            }
+          
+            catch (Exception ex)
+            {
+                return BadRequest($"Error: {ex.Message}");
+            }
         }
 
         /// <summary>

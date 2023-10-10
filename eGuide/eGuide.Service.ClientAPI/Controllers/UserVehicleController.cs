@@ -99,8 +99,7 @@ namespace eGuide.Service.ClientAPI.Controllers
         public async Task<IActionResult> UpdateUserVehicle(Guid userid, Guid vehicleId, Guid idNew)
         {
             try
-            {
-               
+            {              
                 var existingVehicle = await _dbSet
                     .FirstOrDefaultAsync(v => v.UserId == userid && v.VehicleId == vehicleId);
 
