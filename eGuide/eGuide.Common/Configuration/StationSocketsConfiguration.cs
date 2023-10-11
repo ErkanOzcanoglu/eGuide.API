@@ -11,10 +11,6 @@ namespace eGuide.Common.Configuration {
         public void Configure(EntityTypeBuilder<StationSockets> builder) {
             builder.HasKey(builder => builder.Id);
 
-            builder.HasOne(builder => builder.StationModel)
-                .WithMany(builder => builder.StationSockets)
-                .HasForeignKey(builder => builder.StationModelId);
-
             builder.HasOne(builder => builder.Socket)
                 .WithMany(builder => builder.StationSockets)
                 .HasForeignKey(builder => builder.SocketId);

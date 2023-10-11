@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using eGuide.Data.Context.Context;
 
@@ -11,9 +12,11 @@ using eGuide.Data.Context.Context;
 namespace eGuide.Data.Context.Migrations
 {
     [DbContext(typeof(eGuideContext))]
-    partial class eGuideContextModelSnapshot : ModelSnapshot
+    [Migration("20231005125801_initialv2")]
+    partial class initialv2
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -115,11 +118,10 @@ namespace eGuide.Data.Context.Migrations
                     b.Property<DateTime?>("DeletedDate")
                         .HasColumnType("datetime2");
 
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<Guid>("SocketId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("StationModelId")
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<int>("Status")
@@ -131,6 +133,8 @@ namespace eGuide.Data.Context.Migrations
                     b.HasKey("Id");
 
                     b.HasIndex("SocketId");
+
+                    b.HasIndex("StationModelId");
 
                     b.ToTable("StationSockets");
                 });
@@ -357,7 +361,8 @@ namespace eGuide.Data.Context.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<string>("ConfirmationToken")
+                    b.Property<string>("ConfirmPassword")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<DateTime>("CreatedDate")
@@ -374,19 +379,9 @@ namespace eGuide.Data.Context.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<byte[]>("PassWordHash")
+                    b.Property<string>("Password")
                         .IsRequired()
-                        .HasColumnType("varbinary(max)");
-
-                    b.Property<byte[]>("PassWordSalt")
-                        .IsRequired()
-                        .HasColumnType("varbinary(max)");
-
-                    b.Property<string>("PasswordResetToken")
                         .HasColumnType("nvarchar(max)");
-
-                    b.Property<DateTime?>("ResetTokenExpires")
-                        .HasColumnType("datetime2");
 
                     b.Property<int>("Status")
                         .HasColumnType("int");
@@ -396,9 +391,6 @@ namespace eGuide.Data.Context.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<DateTime?>("UpdatedDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<DateTime?>("VerifiedAt")
                         .HasColumnType("datetime2");
 
                     b.HasKey("Id");
@@ -653,6 +645,33 @@ namespace eGuide.Data.Context.Migrations
                     b.ToTable("Socket");
                 });
 
+            modelBuilder.Entity("eGuide.Data.Entities.Station.StationModel", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTime>("CreatedDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime?>("DeletedDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("Status")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime?>("UpdatedDate")
+                        .HasColumnType("datetime2");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("StationModel");
+                });
+
             modelBuilder.Entity("eGuide.Data.Entities.Station.StationProfile", b =>
                 {
                     b.Property<Guid>("Id")
@@ -677,7 +696,7 @@ namespace eGuide.Data.Context.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<Guid>("StationSocketsId")
+                    b.Property<Guid>("StationModelId")
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<int>("Status")
@@ -688,7 +707,7 @@ namespace eGuide.Data.Context.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("StationSocketsId");
+                    b.HasIndex("StationModelId");
 
                     b.ToTable("Station");
                 });
@@ -754,7 +773,15 @@ namespace eGuide.Data.Context.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
+                    b.HasOne("eGuide.Data.Entities.Station.StationModel", "StationModel")
+                        .WithMany("StationSockets")
+                        .HasForeignKey("StationModelId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
                     b.Navigation("Socket");
+
+                    b.Navigation("StationModel");
                 });
 
             modelBuilder.Entity("eGuide.Data.Entities.Station.Comment", b =>
@@ -789,18 +816,13 @@ namespace eGuide.Data.Context.Migrations
 
             modelBuilder.Entity("eGuide.Data.Entities.Station.StationProfile", b =>
                 {
-                    b.HasOne("eGuide.Data.Entites.Station.StationSockets", "StationSockets")
+                    b.HasOne("eGuide.Data.Entities.Station.StationModel", "StationModel")
                         .WithMany("Stations")
-                        .HasForeignKey("StationSocketsId")
+                        .HasForeignKey("StationModelId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("StationSockets");
-                });
-
-            modelBuilder.Entity("eGuide.Data.Entites.Station.StationSockets", b =>
-                {
-                    b.Navigation("Stations");
+                    b.Navigation("StationModel");
                 });
 
             modelBuilder.Entity("eGuide.Data.Entities.Client.User", b =>
@@ -828,6 +850,13 @@ namespace eGuide.Data.Context.Migrations
             modelBuilder.Entity("eGuide.Data.Entities.Station.Socket", b =>
                 {
                     b.Navigation("StationSockets");
+                });
+
+            modelBuilder.Entity("eGuide.Data.Entities.Station.StationModel", b =>
+                {
+                    b.Navigation("StationSockets");
+
+                    b.Navigation("Stations");
                 });
 
             modelBuilder.Entity("eGuide.Data.Entities.Station.StationProfile", b =>
