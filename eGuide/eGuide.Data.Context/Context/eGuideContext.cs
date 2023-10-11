@@ -50,11 +50,56 @@ namespace eGuide.Data.Context.Context {
         /// examples.
         /// </para>
         /// </remarks>
-        protected override void OnModelCreating(ModelBuilder modelBuilder)
-        {
-            modelBuilder.ApplyConfigurationsFromAssembly(Assembly.GetExecutingAssembly());
-
+         protected override void OnModelCreating(ModelBuilder modelBuilder) {
             base.OnModelCreating(modelBuilder);
+
+            var adminProfileConfiguration = new AdminProfileConfiguration();
+            adminProfileConfiguration.Configure(modelBuilder.Entity<AdminProfile>());
+
+            var colorConfiguration = new ColorConfiguartion();
+            colorConfiguration.Configure(modelBuilder.Entity<Color>());
+
+            var commentConfiguration = new CommentConfiguration();
+            commentConfiguration.Configure(modelBuilder.Entity<Comment>());
+
+            var connectorConfiguration = new ConnectorConfiguration();
+            connectorConfiguration.Configure(modelBuilder.Entity<Connector>());
+
+            var facilityConfiguration = new FacilityConfiguration();
+            facilityConfiguration.Configure(modelBuilder.Entity<Facility>());
+
+            var pointConfiguration = new PointConfiguration();
+            pointConfiguration.Configure(modelBuilder.Entity<Point>());
+
+            var routeConfiguration = new RouteConfiguration();
+            routeConfiguration.Configure(modelBuilder.Entity<Route>());
+
+            var serviceConfiguration = new ServiceConfiguration();
+            serviceConfiguration.Configure(modelBuilder.Entity<Service>()); 
+
+            var socketConfiguration = new SocketConfiguration();
+            socketConfiguration.Configure(modelBuilder.Entity<Socket>());
+
+            var socialMediaConfiguration = new SocialMediaConfiguration();
+            socialMediaConfiguration.Configure(modelBuilder.Entity<SocialMedia>());
+
+            var stationConfiguration = new StationConfiguration();
+            stationConfiguration.Configure(modelBuilder.Entity<StationProfile>());
+
+            var userConfiguration = new UserConfiguration();
+            userConfiguration.Configure(modelBuilder.Entity<User>());
+
+            var vehicleConfiguration = new VehicleConfiguration();
+            vehicleConfiguration.Configure(modelBuilder.Entity<Vehicle>());
+
+            var websiteConfiguration = new WebSiteConfiguration();
+            websiteConfiguration.Configure(modelBuilder.Entity<Website>());
+
+            var stationFacilitiesConfiguration = new StationFacilityConfiguration();
+            stationFacilitiesConfiguration.Configure(modelBuilder.Entity<StationFacility>());
+
+            var stationSocketConfiguration = new StationSocketsConfiguration();
+            stationSocketConfiguration.Configure(modelBuilder.Entity<StationSockets>());
         }
 
         /// <summary>
@@ -144,14 +189,6 @@ namespace eGuide.Data.Context.Context {
         /// The station.
         /// </value>
         public DbSet<StationProfile> Station { get; set; }
-
-        /// <summary>
-        /// Gets or sets the station model.
-        /// </summary>
-        /// <value>
-        /// The station model.
-        /// </value>
-        public DbSet<StationModel> StationModel { get; set; }
 
         /// <summary>
         /// Gets or sets the user.

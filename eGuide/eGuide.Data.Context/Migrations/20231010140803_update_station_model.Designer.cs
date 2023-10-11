@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using eGuide.Data.Context.Context;
 
@@ -11,9 +12,11 @@ using eGuide.Data.Context.Context;
 namespace eGuide.Data.Context.Migrations
 {
     [DbContext(typeof(eGuideContext))]
-    partial class eGuideContextModelSnapshot : ModelSnapshot
+    [Migration("20231010140803_update_station_model")]
+    partial class update_station_model
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -120,6 +123,9 @@ namespace eGuide.Data.Context.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<Guid>("SocketId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("StationModelId")
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<int>("Status")

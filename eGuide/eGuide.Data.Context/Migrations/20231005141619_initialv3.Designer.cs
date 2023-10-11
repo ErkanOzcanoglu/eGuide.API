@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using eGuide.Data.Context.Context;
 
@@ -11,9 +12,11 @@ using eGuide.Data.Context.Context;
 namespace eGuide.Data.Context.Migrations
 {
     [DbContext(typeof(eGuideContext))]
-    partial class eGuideContextModelSnapshot : ModelSnapshot
+    [Migration("20231005141619_initialv3")]
+    partial class initialv3
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -115,11 +118,10 @@ namespace eGuide.Data.Context.Migrations
                     b.Property<DateTime?>("DeletedDate")
                         .HasColumnType("datetime2");
 
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<Guid>("SocketId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("StationModelId")
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<int>("Status")
@@ -131,6 +133,8 @@ namespace eGuide.Data.Context.Migrations
                     b.HasKey("Id");
 
                     b.HasIndex("SocketId");
+
+                    b.HasIndex("StationModelId");
 
                     b.ToTable("StationSockets");
                 });
@@ -641,6 +645,33 @@ namespace eGuide.Data.Context.Migrations
                     b.ToTable("Socket");
                 });
 
+            modelBuilder.Entity("eGuide.Data.Entities.Station.StationModel", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTime>("CreatedDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime?>("DeletedDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("Status")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime?>("UpdatedDate")
+                        .HasColumnType("datetime2");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("StationModel");
+                });
+
             modelBuilder.Entity("eGuide.Data.Entities.Station.StationProfile", b =>
                 {
                     b.Property<Guid>("Id")
@@ -742,7 +773,15 @@ namespace eGuide.Data.Context.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
+                    b.HasOne("eGuide.Data.Entities.Station.StationModel", "StationModel")
+                        .WithMany("StationSockets")
+                        .HasForeignKey("StationModelId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
                     b.Navigation("Socket");
+
+                    b.Navigation("StationModel");
                 });
 
             modelBuilder.Entity("eGuide.Data.Entities.Station.Comment", b =>
@@ -814,6 +853,11 @@ namespace eGuide.Data.Context.Migrations
                 });
 
             modelBuilder.Entity("eGuide.Data.Entities.Station.Socket", b =>
+                {
+                    b.Navigation("StationSockets");
+                });
+
+            modelBuilder.Entity("eGuide.Data.Entities.Station.StationModel", b =>
                 {
                     b.Navigation("StationSockets");
                 });

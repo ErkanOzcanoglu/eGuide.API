@@ -47,7 +47,7 @@ namespace eGuide.Data.Entities.Station
         /// <value>
         /// The station model identifier.
         /// </value>
-        public Guid StationModelId { get; set; }
+        public Guid StationSocketsId { get; set; }
 
         /// <summary>
         /// Gets or sets the station model.
@@ -55,7 +55,7 @@ namespace eGuide.Data.Entities.Station
         /// <value>
         /// The station model.
         /// </value>
-        public StationModel StationModel { get; set; }
+        public StationSockets StationSockets { get; set; }
 
         /// <summary>
         /// Gets or sets the facilities.
