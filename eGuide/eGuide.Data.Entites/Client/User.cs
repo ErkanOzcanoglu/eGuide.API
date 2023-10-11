@@ -41,22 +41,6 @@ namespace eGuide.Data.Entities.Client
         public string Email { get; set; }
 
         /// <summary>
-        /// Gets or sets the password.
-        /// </summary>
-        /// <value>
-        /// The password.
-        /// </value>
-        public string Password { get; set; }
-
-        /// <summary>
-        /// Gets or sets the confirm password.
-        /// </summary>
-        /// <value>
-        /// The confirm password.
-        /// </value>
-        public string ConfirmPassword { get; set; }
-
-        /// <summary>
         /// Gets or sets the comments.
         /// </summary>
         /// <value>
@@ -79,6 +63,54 @@ namespace eGuide.Data.Entities.Client
         /// The user vehicles.
         /// </value>
         public ICollection<UserVehicle> UserVehicles { get; set; }
+
+        /// <summary>
+        /// Gets or sets the pass word hash.
+        /// </summary>
+        /// <value>
+        /// The pass word hash.
+        /// </value>
+        public byte[] PassWordHash { get; set; }
+
+        /// <summary>
+        /// Gets or sets the pass word salt.
+        /// </summary>
+        /// <value>
+        /// The pass word salt.
+        /// </value>
+        public byte[] PassWordSalt { get; set; }
+
+        /// <summary>
+        /// Gets or sets the verified at.
+        /// </summary>
+        /// <value>
+        /// The verified at.
+        /// </value>
+        public DateTime? VerifiedAt { get; set; }
+
+        /// <summary>
+        /// Gets or sets the password reset token.
+        /// </summary>
+        /// <value>
+        /// The password reset token.
+        /// </value>
+        public string? PasswordResetToken { get; set; }
+
+        /// <summary>
+        /// Gets or sets the reset token expires.
+        /// </summary>
+        /// <value>
+        /// The reset token expires.
+        /// </value>
+        public DateTime? ResetTokenExpires { set; get; }
+
+        /// <summary>
+        /// Gets or sets the confirmation token.
+        /// </summary>
+        /// <value>
+        /// The confirmation token.
+        /// </value>
+        public string? ConfirmationToken { get; set; }
     }
         
 }

@@ -7,26 +7,22 @@ using System.Threading.Tasks;
 
 namespace eGuide.Data.Dto.InComing.UpdateDto.Client
 {
-
-    /// <summary>
-    /// 
-    /// </summary>
-    /// <seealso cref="eGuide.Data.Entities.BaseDto" />
-    public class UpdateDtoForVehicle 
+    public class UpdateDtoForUserVehicle:BaseDto
     {
         /// <summary>
-        /// Gets or sets the brand.
+        /// Gets or sets the user identifier.
         /// </summary>
         /// <value>
-        /// The brand.
+        /// The user identifier.
         /// </value>
-        public string Brand { get; set; }
+        public Guid UserId { get; set; }
+
         /// <summary>
-        /// Gets or sets the model.
+        /// Gets or sets the vehicle identifier.
         /// </summary>
         /// <value>
-        /// The model.
+        /// The vehicle identifier.
         /// </value>
-        public string Model { get; set; }
+        public Guid VehicleId { get; set; }
     }
 }

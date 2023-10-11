@@ -45,6 +45,11 @@ namespace eGuide.Infrastructure.Concrete
             await _dbSet.AddAsync(entity);
         }
 
+        public Task<T> FirstOrDefault(Expression<Func<T, bool>> predicate)
+        {
+            return _dbSet.FirstAsync(predicate);
+        }
+
         /// <summary>
         /// Gets all.
         /// </summary>
@@ -78,6 +83,7 @@ namespace eGuide.Infrastructure.Concrete
         {
             var entity = _dbSet.Find(id);
             entity.Status = 0;
+            entity.DeletedDate= DateTime.Now;
         }
 
         /// <summary>

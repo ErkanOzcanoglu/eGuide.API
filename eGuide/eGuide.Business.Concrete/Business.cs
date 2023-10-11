@@ -52,6 +52,11 @@ namespace eGuide.Business.Concrete
             return entity;
         }
 
+        public Task<T> FirstOrDefault(Expression<Func<T, bool>> predicate)
+        {
+            return _repository.FirstOrDefault(predicate);
+        }
+
         /// <summary>
         /// Gets all asynchronous.
         /// </summary>
