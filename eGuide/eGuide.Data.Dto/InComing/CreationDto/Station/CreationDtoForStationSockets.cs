@@ -1,13 +1,12 @@
-﻿using eGuide.Data.Entities;
-using eGuide.Data.Entities.Station;
+﻿using eGuide.Data.Dto.OutComing;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace eGuide.Data.Entites.Station {
-    public class StationSockets : BaseModel {
+namespace eGuide.Data.Dto.InComing.CreationDto.Station {
+    public class CreationDtoForStationSockets : BaseDto {
 
         /// <summary>
         /// Gets or sets the name.
@@ -16,7 +15,6 @@ namespace eGuide.Data.Entites.Station {
         /// The name.
         /// </value>
         public string Name { get; set; }
-
         /// <summary>
         /// Gets or sets the socket identifier.
         /// </summary>
@@ -26,19 +24,11 @@ namespace eGuide.Data.Entites.Station {
         public Guid SocketId { get; set; }
 
         /// <summary>
-        /// Gets or sets the socket.
+        /// Gets or sets the station model identifier.
         /// </summary>
         /// <value>
-        /// The socket.
+        /// The station model identifier.
         /// </value>
-        public Socket Socket { get; set; }
-
-        /// <summary>
-        /// Gets or sets the stations.
-        /// </summary>
-        /// <value>
-        /// The stations.
-        /// </value>
-        public ICollection<StationProfile> Stations { get; set; }
+        public Guid StationModelId { get; set; }
     }
 }

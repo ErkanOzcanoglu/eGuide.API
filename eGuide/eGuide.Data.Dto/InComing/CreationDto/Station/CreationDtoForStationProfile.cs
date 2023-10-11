@@ -38,5 +38,13 @@ namespace eGuide.Data.Dto.InComing.CreationDto.Station
         /// The longtitude.
         /// </value>
         public string Longtitude { get; set; }
+
+        /// <summary>
+        /// Gets or sets the station socket identifier.
+        /// </summary>
+        /// <value>
+        /// The station socket identifier.
+        /// </value>
+        public Guid StationSocketId { get; set; }
     }
 }

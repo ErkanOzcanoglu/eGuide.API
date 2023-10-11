@@ -31,7 +31,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Service", "Service", "{D3C2
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "eGuide.Service.AdminAPI", "eGuide.AdminAPI\eGuide.Service.AdminAPI.csproj", "{34DE98F0-1EB1-4D37-B737-DF8E37DB913D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "eGuide.Service.ClientAPI", "eGuide.Service.ClientAPI\eGuide.Service.ClientAPI.csproj", "{0219A56A-1AEE-48C9-8E07-5F68014DBF06}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "eGuide.Service.ClientAPI", "eGuide.Service.ClientAPI\eGuide.Service.ClientAPI.csproj", "{0219A56A-1AEE-48C9-8E07-5F68014DBF06}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

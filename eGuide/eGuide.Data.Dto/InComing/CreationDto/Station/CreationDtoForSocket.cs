@@ -54,5 +54,13 @@ namespace eGuide.Data.Dto.InComing.CreationDto.Station
         /// The name.
         /// </value>
         public string Name { get; set; }
+
+        /// <summary>
+        /// Gets or sets the connector identifier.
+        /// </summary>
+        /// <value>
+        /// The connector identifier.
+        /// </value>
+        public Guid ConnectorId { get; set; }
     }
 }

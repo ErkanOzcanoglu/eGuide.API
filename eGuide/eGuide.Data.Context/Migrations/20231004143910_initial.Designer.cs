@@ -12,7 +12,7 @@ using eGuide.Data.Context.Context;
 namespace eGuide.Data.Context.Migrations
 {
     [DbContext(typeof(eGuideContext))]
-    [Migration("20231004084754_initial")]
+    [Migration("20231004143910_initial")]
     partial class initial
     {
         /// <inheritdoc />
