@@ -10,5 +10,6 @@ namespace eGuide.Data.Entites.Authorization
     {
         public string Username { get; set; }=string.Empty;
         public string Password { get; set; }=string.Empty;
+
     }
 }

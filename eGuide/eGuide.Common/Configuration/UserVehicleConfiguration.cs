@@ -21,7 +21,7 @@ namespace eGuide.Common.Configuration
 
             builder.HasOne(builder => builder.Vehicle)
                 .WithMany(builder => builder.UserVehicles)
-                .HasForeignKey(builder => builder.VehicleId);
+                .HasForeignKey(builder => builder.VehicleId).OnDelete(Microsoft.EntityFrameworkCore.DeleteBehavior.Cascade);
 
 
         }

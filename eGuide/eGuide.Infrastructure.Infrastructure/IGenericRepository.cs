@@ -54,5 +54,9 @@ namespace eGuide.Infrastructure.Interface
         /// <param name="expression">The expression.</param>
         /// <returns></returns>
         IQueryable<T> Where(Expression<Func<T, bool>> expression);
+
+        Task<T> FirstOrDefault(Expression<Func<T, bool>> predicate);
+
+
     }
 }

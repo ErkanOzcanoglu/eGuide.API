@@ -12,7 +12,7 @@ namespace eGuide.Data.Dto.InComing.UpdateDto.Client
     /// 
     /// </summary>
     /// <seealso cref="eGuide.Data.Entities.BaseDto" />
-    public class UpdateDtoForUser : BaseDto 
+    public class UpdateDtoForUser 
     {
 
         /// <summary>
@@ -45,14 +45,14 @@ namespace eGuide.Data.Dto.InComing.UpdateDto.Client
         /// <value>
         /// The password.
         /// </value>
-        public string Password { get; set; }
+        //public string Password { get; set; }
 
-        /// <summary>
-        /// Gets or sets the confirm password.
-        /// </summary>
-        /// <value>
-        /// The confirm password.
-        /// </value>
-        public string ConfirmPassword { get; set; }
+        ///// <summary>
+        ///// Gets or sets the confirm password.
+        ///// </summary>
+        ///// <value>
+        ///// The confirm password.
+        ///// </value>
+        //public string ConfirmPassword { get; set; }
     }
 }
