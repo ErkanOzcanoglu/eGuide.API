@@ -46,5 +46,10 @@ namespace eGuide.Business.Concrete
         {
             return await _vehicleRepository.GetPrimaryKeyByBrandAndModelAsync(brand, model);
         }
+
+        public async Task<IEnumerable<string>> GetAllBrandsAsync()
+        {
+            return await _vehicleRepository.GetAllBrandsAsync();
+        }
     }
 }

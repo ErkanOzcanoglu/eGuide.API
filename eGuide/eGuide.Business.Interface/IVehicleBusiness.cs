@@ -23,5 +23,7 @@ namespace eGuide.Business.Interface
         /// <param name="model">The model.</param>
         /// <returns></returns>
         public Task<Guid> GetPrimaryKeyByBrandAndModelAsync(string brand, string model);
+
+        public Task<IEnumerable<string>> GetAllBrandsAsync();
     }
 }

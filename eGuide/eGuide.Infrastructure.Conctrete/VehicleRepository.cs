@@ -33,6 +33,12 @@ namespace eGuide.Infrastructure.Conctrete
             _dbSet = _context.Set<Vehicle>();
         }
 
+        public async Task<IEnumerable<string>> GetAllBrandsAsync()
+        {
+            var brands = await _dbSet.Select(v => v.Brand).Distinct().ToListAsync();
+            return brands;
+        }
+
         /// <summary>
         /// Gets the models by brand asynchronous.
         /// </summary>
