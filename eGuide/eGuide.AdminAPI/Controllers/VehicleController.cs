@@ -17,7 +17,7 @@ namespace eGuide.Service.AdminAPI.Controllers
         /// <summary>
         /// The business
         /// </summary>
-        private readonly IBusiness<Vehicle> _business;
+        private readonly IVehicleBusiness _business;
 
         /// <summary>
         /// The mapper
@@ -29,7 +29,7 @@ namespace eGuide.Service.AdminAPI.Controllers
         /// </summary>
         /// <param name="business">The business.</param>
         /// <param name="mapper">The mapper.</param>
-        public VehicleController(IBusiness<Vehicle> business, IMapper mapper)
+        public VehicleController(IVehicleBusiness business, IMapper mapper)
         {
             _business = business;
             _mapper = mapper;
@@ -71,34 +71,11 @@ namespace eGuide.Service.AdminAPI.Controllers
         /// <param name="entity">The entity.</param>
         [HttpPost]
         public async Task<IActionResult> Create(CreationDtoForVehicle entity)
-        {
-            try
-            {
-                
-                string brand = entity.Brand;
-                string model = entity.Model;
-
-                
-                var existingVehicle = await _business.FirstOrDefault(v => v.Brand == brand && v.Model == model);
-
-                if (existingVehicle != null)
-                {
-                    return BadRequest("This brand is already in the database.");
-                }
-
-                await _business.AddAsync(_mapper.Map<Vehicle>(entity));
-
-                return Ok();
-            }
-            catch (DbUpdateException ex)
-            {             
-                return BadRequest("An error occurred while accessing the database. Please try again later.");
-            }
-            catch (Exception ex)
-            {
-                
-                return BadRequest($"Hata: {ex.Message}");
-            }
+        {          
+                        
+             await _business.AddAsync(_mapper.Map<Vehicle>(entity));
+             return Ok();
+              
         }
 
         /// <summary>
@@ -160,5 +137,65 @@ namespace eGuide.Service.AdminAPI.Controllers
                 return BadRequest($"Hata: {ex.Message}");
             }
         }
+
+        /// <summary>
+        /// Gets the models by brand.
+        /// </summary>
+        /// <param name="brand">The brand.</param>
+        /// <returns></returns>
+        [HttpGet("models/{brand}")]
+        public async Task<ActionResult<List<string>>> GetModelsByBrand(string brand)
+        {
+            try
+            {
+                var models = await _business.GetModelsByBrandAsync(brand);
+
+                if (models == null || !models.Any())
+                {
+                    return NotFound("No models found for the specified brand.");
+                }
+
+                return Ok(models);
+            }
+            catch (DbUpdateException ex)
+            {
+                return BadRequest("An error occurred while accessing the database. Please try again later.");
+            }
+            catch (Exception ex)
+            {
+                return BadRequest($"Error: {ex.Message}");
+            }
+        }
+
+        /// <summary>
+        /// Gets the primary key by brand and model.
+        /// </summary>
+        /// <param name="brand">The brand.</param>
+        /// <param name="model">The model.</param>
+        /// <returns></returns>
+        [HttpGet("primarykey/{brand}/{model}")]
+        public async Task<ActionResult<Guid>> GetPrimaryKeyByBrandAndModel(string brand, string model)
+        {
+            try
+            {
+                var primaryKey = await _business.GetPrimaryKeyByBrandAndModelAsync(brand, model);
+
+                if (primaryKey == null)
+                {
+                    return NotFound("No vehicle found for the specified brand and model.");
+                }
+
+                return Ok(primaryKey);
+            }
+            catch (DbUpdateException ex)
+            {
+                return BadRequest("An error occurred while accessing the database. Please try again later.");
+            }
+            catch (Exception ex)
+            {
+                return BadRequest($"Error: {ex.Message}");
+            }
+        }
+
     }
 }

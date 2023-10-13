@@ -11,20 +11,7 @@ using System.Threading.Tasks;
 
 namespace eGuide.Common.Mappers
 {
-    public class UserMapper:Profile
+    public class UserMapper : BaseMapper<User, UserDto, UpdateDtoForUser, CreationDtoForUser>
     {
-        public UserMapper()
-        {
-            CreateMap<CreationDtoForUser, User>()
-                .ForMember(dest => dest.Id, opt => opt.MapFrom(src => Guid.NewGuid()))
-                .ForMember(dest => dest.Status, opt => opt.MapFrom(src => 1))
-                .ForMember(dest => dest.CreatedDate, opt => opt.MapFrom(src => DateTime.Now))
-                .ForMember(dest => dest.UpdatedDate, opt => opt.MapFrom(src => DateTime.Now)).ReverseMap();
-
-            CreateMap<UserDto, User>().ReverseMap();
-
-            CreateMap<UpdateDtoForUser, User>()
-                .ForMember(dest => dest.UpdatedDate, opt => opt.MapFrom(src => DateTime.Now)).ReverseMap();
-        }
     }
 }

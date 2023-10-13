@@ -18,6 +18,7 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
+
 builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
 
 builder.Services.AddScoped<IAdminAuthorizationBusiness, AdminAuthorizationBusiness>();
@@ -40,6 +41,9 @@ builder.Services.AddScoped(typeof(IStationSocketRepository), typeof(StationSocke
 
 builder.Services.AddScoped(typeof(IStationBusiness), typeof(StationBusiness));
 builder.Services.AddScoped(typeof(IStationRepository), typeof(StationRepository));
+
+builder.Services.AddScoped(typeof(IVehicleBusiness), typeof(VehicleBusiness));
+builder.Services.AddScoped(typeof(IVehicleRepository), typeof(VehicleRepository));
 
 builder.Services.AddSingleton<IMongoClient>(new MongoClient("mongodb://localhost:27017"));
 builder.Services.AddSingleton<IMongoDatabase>(provider =>
@@ -69,6 +73,7 @@ if (app.Environment.IsDevelopment())
     app.UseSwagger();
     app.UseSwaggerUI();
 }
+
 
 app.UseHttpsRedirection();
 

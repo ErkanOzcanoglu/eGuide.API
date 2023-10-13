@@ -172,7 +172,6 @@ namespace eGuide.Service.ClientAPI.Controllers {
         [HttpPost("mail")]
         public IActionResult SendEmail(string body, string recipientEmail)
         {
-
             var email = new MimeMessage();
             email.From.Add(MailboxAddress.Parse("crntrim@gmail.com"));
             email.To.Add(MailboxAddress.Parse(recipientEmail));
@@ -273,20 +272,25 @@ namespace eGuide.Service.ClientAPI.Controllers {
         [HttpPost("login")]
         public async Task<IActionResult> Login(Login login)
         {
-
-            var entity = _business.Where(x => x.Name == login.Username).FirstOrDefault();
+            var entity = _business.Where(x => x.Email == login.Email).FirstOrDefault();
 
             if (entity == null)
             {
-                return Ok("wrong username");
+                return Ok("wrong email");
             }
 
             if (!VerifyPasswordHash(login.Password, entity.PassWordHash, entity.PassWordSalt))
             {
                 return Ok("wrong password");
             }
-            
-            return Ok(entity.Id);
+            if(entity.Status==1)
+            {
+                return Ok(entity.Id);
+            }
+            else
+            {
+                return Ok("verify your email");
+            }
         }
 
         /// <summary>
