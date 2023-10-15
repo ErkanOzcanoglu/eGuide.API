@@ -22,13 +22,19 @@ builder.Services.AddCors(options => options.AddPolicy(name: "eGuideOrigins",
     policy => { policy.WithOrigins("http://localhost:4200").AllowAnyMethod().AllowAnyHeader(); }));
 
 builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
-builder.Services.AddScoped<IUserBusiness, UserBusiness>();
-builder.Services.AddScoped<IUserRepository, UserRepository>();
+
 builder.Services.AddScoped(typeof(IGenericRepository<>), typeof(GenericRepository<>));
 builder.Services.AddScoped(typeof(IBusiness<>), typeof(Business<>));
 
+builder.Services.AddScoped<IUserBusiness, UserBusiness>();
+builder.Services.AddScoped<IUserRepository, UserRepository>();
+
 builder.Services.AddScoped(typeof(IVehicleBusiness), typeof(VehicleBusiness));
 builder.Services.AddScoped(typeof(IVehicleRepository), typeof(VehicleRepository));
+
+builder.Services.AddScoped(typeof(IUserVehicleBusiness), typeof(UserVehicleBusiness));
+builder.Services.AddScoped(typeof(IUserVehicleRepository), typeof(UserVehicleRepository));
+
 
 
 builder.Services.AddSingleton<IMongoClient>(new MongoClient("mongodb://localhost:27017"));
