@@ -172,7 +172,6 @@ namespace eGuide.Service.ClientAPI.Controllers {
         [HttpPost("mail")]
         public IActionResult SendEmail(string body, string recipientEmail)
         {
-
             var email = new MimeMessage();
             email.From.Add(MailboxAddress.Parse("crntrim@gmail.com"));
             email.To.Add(MailboxAddress.Parse(recipientEmail));
@@ -273,20 +272,25 @@ namespace eGuide.Service.ClientAPI.Controllers {
         [HttpPost("login")]
         public async Task<IActionResult> Login(Login login)
         {
-
-            var entity = _business.Where(x => x.Name == login.Username).FirstOrDefault();
+            var entity = _business.Where(x => x.Email == login.Email).FirstOrDefault();
 
             if (entity == null)
             {
-                return Ok("wrong username");
+                return Ok("wrong email");
             }
 
             if (!VerifyPasswordHash(login.Password, entity.PassWordHash, entity.PassWordSalt))
             {
                 return Ok("wrong password");
             }
-            
-            return Ok(entity.Id);
+            if(entity.Status==1)
+            {
+                return Ok(entity.Id);
+            }
+            else
+            {
+                return Ok("verify your email");
+            }
         }
 
         /// <summary>
@@ -334,24 +338,20 @@ namespace eGuide.Service.ClientAPI.Controllers {
         /// <param name="email">The email.</param>
         /// <returns></returns>
         [HttpPost("forgot-password")]
-        public async Task<IActionResult> ForgotPassword(string email)
+        public async Task<IActionResult> ForgotPassword(Guid userId)
         {
-            var user = await _business.FirstOrDefault(u => u.Email == email);
+            var user = await _business.FirstOrDefault(u => u.Id == userId);
 
             if (user == null)
             {
                 return BadRequest("UserNotFound");
-               
             }
 
             user.PasswordResetToken = CreateRandomToken();
             user.ResetTokenExpires = DateTime.Now.AddDays(1);
-            await  _business.UpdateAsync(user);
+            await _business.UpdateAsync(user);
 
-            string resetEmailBody = $"Şifre sıfırlama tokeniniz: {user.PasswordResetToken}";
-            SendEmail(resetEmailBody, user.Email);
-
-            return Ok("ypu may now reset your password");         
+            return Ok("You may now reset your password");
         }
 
         /// <summary>
@@ -373,13 +373,19 @@ namespace eGuide.Service.ClientAPI.Controllers {
         /// <param name="request">The request.</param>
         /// <returns></returns>
         [HttpPost("reset-password")]
-        public async Task<IActionResult> ResetPassword(ResetPassword request)
+        public async Task<IActionResult> ResetPassword(ResetPassword request,Guid userId)
         {
-            var user = await _business.FirstOrDefault(u => u.PasswordResetToken == request.Token);
+            var user = await _business.FirstOrDefault(u => u.PasswordResetToken != null && u.Id==userId);
 
-            if (user == null || user.ResetTokenExpires < DateTime.Now)
+            if (user == null)
             {
-                return BadRequest("INvalid Token");
+                return BadRequest("Invalid Token");
+            }
+
+            
+            if (user.ResetTokenExpires.HasValue && user.ResetTokenExpires < DateTime.Now)
+            {
+                return BadRequest("Token Expired");
             }
 
             CreatePasswordHash(request.Password, out byte[] passwordHash, out byte[] passwordSalt);

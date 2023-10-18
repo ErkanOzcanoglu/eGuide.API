@@ -19,7 +19,7 @@ namespace eGuide.Service.ClientAPI.Controllers
         /// <summary>
         /// The business
         /// </summary>
-        private readonly IBusiness<UserVehicle> _business;
+        private readonly IUserVehicleBusiness _business;
 
         /// <summary>
         /// The mapper
@@ -42,7 +42,7 @@ namespace eGuide.Service.ClientAPI.Controllers
         /// <param name="business">The business.</param>
         /// <param name="mapper">The mapper.</param>
         /// <param name="context">The context.</param>
-        public UserVehicleController(IBusiness<UserVehicle> business, IMapper mapper, eGuideContext context)
+        public UserVehicleController(IUserVehicleBusiness business, IMapper mapper, eGuideContext context)
         {
             _business = business;
             _mapper = mapper;
@@ -100,8 +100,7 @@ namespace eGuide.Service.ClientAPI.Controllers
         {
             try
             {              
-                var existingVehicle = await _dbSet
-                    .FirstOrDefaultAsync(v => v.UserId == userid && v.VehicleId == vehicleId);
+                var existingVehicle = await _dbSet.FirstOrDefaultAsync(v => v.UserId == userid && v.VehicleId == vehicleId && v.Status == 1);//kontrol et
 
                 if (existingVehicle == null)
                 {
@@ -122,6 +121,32 @@ namespace eGuide.Service.ClientAPI.Controllers
             }
         }
 
-       
+        [HttpDelete("DeleteByVehicleId/{vehicleId}")]
+
+        public async Task<IActionResult> DeleteByVehicleId(Guid userid,Guid vehicleId)
+        {
+            try
+            {
+
+                var existingVehicle = await _dbSet.FirstOrDefaultAsync(v => v.UserId == userid && v.VehicleId == vehicleId && v.Status == 1);
+
+                if (existingVehicle == null)
+                {
+                    return NotFound($"UserId {userid} ve VehicleId {vehicleId} olan araç kaydı bulunamadı.");
+                }
+
+                await _business.RemoveAsync(existingVehicle.Id); 
+                return Ok();
+            }
+            catch (DbUpdateException ex)
+            {
+                return BadRequest("Veritabanına erişim sırasında bir hata oluştu. Lütfen daha sonra tekrar deneyin.");
+            }
+            catch (Exception ex)
+            {
+                return BadRequest($"Hata: {ex.Message}");
+            }
+        }
+
     }
 }

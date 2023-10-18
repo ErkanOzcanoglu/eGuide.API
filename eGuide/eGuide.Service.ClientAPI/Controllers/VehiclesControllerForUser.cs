@@ -8,11 +8,11 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
-namespace eGuide.Service.AdminAPI.Controllers
+namespace eGuide.Service.ClientAPI.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class VehicleController : ControllerBase
+    public class VehiclesControllerForUser : ControllerBase
     {
         /// <summary>
         /// The business
@@ -29,7 +29,7 @@ namespace eGuide.Service.AdminAPI.Controllers
         /// </summary>
         /// <param name="business">The business.</param>
         /// <param name="mapper">The mapper.</param>
-        public VehicleController(IVehicleBusiness business, IMapper mapper)
+        public VehiclesControllerForUser(IVehicleBusiness business, IMapper mapper)
         {
             _business = business;
             _mapper = mapper;
@@ -64,7 +64,11 @@ namespace eGuide.Service.AdminAPI.Controllers
                 return BadRequest($"Hata: {ex.Message}");
             }
         }
-       
+
+        /// <summary>
+        /// Gets all brands.
+        /// </summary>
+        /// <returns></returns>
         [HttpGet("brands")]
         public async Task<ActionResult<IEnumerable<string>>> GetAllBrands()
         {
@@ -95,11 +99,11 @@ namespace eGuide.Service.AdminAPI.Controllers
         /// <param name="entity">The entity.</param>
         [HttpPost]
         public async Task<IActionResult> Create(CreationDtoForVehicle entity)
-        {          
-                        
-             await _business.AddAsync(_mapper.Map<Vehicle>(entity));
-             return Ok();
-              
+        {
+
+            await _business.AddAsync(_mapper.Map<Vehicle>(entity));
+            return Ok();
+
         }
 
         /// <summary>
@@ -111,7 +115,7 @@ namespace eGuide.Service.AdminAPI.Controllers
         public async Task<IActionResult> Delete(Guid id)
         {
             try
-            {              
+            {
                 await _business.RemoveAsync(id);
 
                 return Ok();
@@ -122,7 +126,7 @@ namespace eGuide.Service.AdminAPI.Controllers
             }
             catch (Exception ex)
             {
-                return BadRequest($"Hata: {ex.Message}"); 
+                return BadRequest($"Hata: {ex.Message}");
             }
 
         }
@@ -137,20 +141,20 @@ namespace eGuide.Service.AdminAPI.Controllers
         public async Task<IActionResult> UpdateVehicle(Guid vehicleId, [FromBody] UpdateDtoForVehicle vehicleDto)
         {
             try
-            {             
+            {
                 var existingVehicle = await _business.GetbyIdAsync(vehicleId);
 
                 if (existingVehicle == null)
                 {
                     return NotFound($"Vehicle with ID {vehicleId} not found.");
                 }
-                
+
                 existingVehicle.Brand = vehicleDto.Brand;
                 existingVehicle.Model = vehicleDto.Model;
 
                 await _business.UpdateAsync(_mapper.Map<Vehicle>(existingVehicle));
 
-                return Ok(existingVehicle); 
+                return Ok(existingVehicle);
             }
             catch (DbUpdateException ex)
             {
@@ -223,3 +227,4 @@ namespace eGuide.Service.AdminAPI.Controllers
 
     }
 }
+

@@ -11,20 +11,5 @@ using System.Threading.Tasks;
 
 namespace eGuide.Common.Mappers
 {
-    public class VehicleMapper:Profile
-    {
-        public VehicleMapper()
-        {
-            CreateMap<UpdateDtoForVehicle, Vehicle>()
-                .ForMember(dest => dest.UpdatedDate, opt => opt.MapFrom(src => DateTime.Now)).ReverseMap();
-
-            CreateMap<CreationDtoForVehicle, Vehicle>()
-               .ForMember(dest => dest.Id, opt => opt.MapFrom(src => Guid.NewGuid()))
-               .ForMember(dest => dest.Status, opt => opt.MapFrom(src => 1))
-               .ForMember(dest => dest.CreatedDate, opt => opt.MapFrom(src => DateTime.Now))
-               .ForMember(dest => dest.UpdatedDate, opt => opt.MapFrom(src => DateTime.Now)).ReverseMap();
-
-            CreateMap<VehicleDto, Vehicle>().ReverseMap();
-        }
-    }
+    public class VehicleMapper : BaseMapper<Vehicle, VehicleDto, UpdateDtoForVehicle, CreationDtoForVehicle>{}
 }
