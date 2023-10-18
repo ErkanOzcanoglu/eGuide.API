@@ -15,6 +15,7 @@ namespace eGuide.Business.Concrete
         /// The vehicle repository
         /// </summary>
         private readonly IVehicleRepository _vehicleRepository;
+        
         /// <summary>
         /// Initializes a new instance of the <see cref="VehicleBusiness"/> class.
         /// </summary>
@@ -47,6 +48,10 @@ namespace eGuide.Business.Concrete
             return await _vehicleRepository.GetPrimaryKeyByBrandAndModelAsync(brand, model);
         }
 
+        /// <summary>
+        /// Gets all brands asynchronous.
+        /// </summary>
+        /// <returns></returns>
         public async Task<IEnumerable<string>> GetAllBrandsAsync()
         {
             return await _vehicleRepository.GetAllBrandsAsync();

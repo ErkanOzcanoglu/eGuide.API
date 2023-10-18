@@ -65,6 +65,10 @@ namespace eGuide.Service.ClientAPI.Controllers
             }
         }
 
+        /// <summary>
+        /// Gets all brands.
+        /// </summary>
+        /// <returns></returns>
         [HttpGet("brands")]
         public async Task<ActionResult<IEnumerable<string>>> GetAllBrands()
         {

@@ -100,8 +100,7 @@ namespace eGuide.Service.ClientAPI.Controllers
         {
             try
             {              
-                var existingVehicle = await _dbSet
-                    .FirstOrDefaultAsync(v => v.UserId == userid && v.VehicleId == vehicleId);
+                var existingVehicle = await _dbSet.FirstOrDefaultAsync(v => v.UserId == userid && v.VehicleId == vehicleId && v.Status == 1);//kontrol et
 
                 if (existingVehicle == null)
                 {
@@ -124,18 +123,19 @@ namespace eGuide.Service.ClientAPI.Controllers
 
         [HttpDelete("DeleteByVehicleId/{vehicleId}")]
 
-        public async Task<IActionResult> DeleteByVehicleId(Guid vehicleId)
+        public async Task<IActionResult> DeleteByVehicleId(Guid userid,Guid vehicleId)
         {
             try
             {
 
-                var uservehicle = await _business.GetByVehicleIdAsync(vehicleId);
-                if (uservehicle == null)
+                var existingVehicle = await _dbSet.FirstOrDefaultAsync(v => v.UserId == userid && v.VehicleId == vehicleId && v.Status == 1);
+
+                if (existingVehicle == null)
                 {
-                    return NotFound();
+                    return NotFound($"UserId {userid} ve VehicleId {vehicleId} olan araç kaydı bulunamadı.");
                 }
 
-                await _business.RemoveAsync(uservehicle.Id); 
+                await _business.RemoveAsync(existingVehicle.Id); 
                 return Ok();
             }
             catch (DbUpdateException ex)

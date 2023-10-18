@@ -24,6 +24,10 @@ namespace eGuide.Infrastructure.Interface
         /// <returns></returns>
         Task<Guid> GetPrimaryKeyByBrandAndModelAsync(string brand, string model);
 
+        /// <summary>
+        /// Gets all brands asynchronous.
+        /// </summary>
+        /// <returns></returns>
         Task<IEnumerable<string>> GetAllBrandsAsync();
     }
 }
