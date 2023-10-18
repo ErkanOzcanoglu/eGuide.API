@@ -16,6 +16,14 @@ namespace eGuide.Data.Dto.InComing.CreationDto.Station
     {
 
         /// <summary>
+        /// Gets or sets the name.
+        /// </summary>
+        /// <value>
+        /// The name.
+        /// </value>
+        public string Name { get; set; }
+
+        /// <summary>
         /// Gets or sets the address.
         /// </summary>
         /// <value>
@@ -37,14 +45,8 @@ namespace eGuide.Data.Dto.InComing.CreationDto.Station
         /// <value>
         /// The longtitude.
         /// </value>
-        public string Longtitude { get; set; }
+        public string Longitude { get; set; }
 
-        /// <summary>
-        /// Gets or sets the station socket identifier.
-        /// </summary>
-        /// <value>
-        /// The station socket identifier.
-        /// </value>
-        public Guid StationSocketId { get; set; }
+        public Guid StationModelId { get; set; }
     }
 }

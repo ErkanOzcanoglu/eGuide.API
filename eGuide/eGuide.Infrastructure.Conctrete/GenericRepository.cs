@@ -92,7 +92,8 @@ namespace eGuide.Infrastructure.Concrete
         /// <param name="entity">The entity.</param>
         public void Update(T entity)
         {
-             _dbSet.Update(entity);
+            entity.UpdatedDate = DateTime.Now;
+            _dbSet.Update(entity);
         }
 
         /// <summary>

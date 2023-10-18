@@ -12,7 +12,7 @@ namespace eGuide.Data.Dto.InComing.UpdateDto.Station
     /// 
     /// </summary>
     /// <seealso cref="eGuide.Data.Dto.OutComing.BaseDto" />
-    public class UpdateDtoForSocket : BaseDto
+    public class UpdateDtoForSocket 
     {
 
         /// <summary>

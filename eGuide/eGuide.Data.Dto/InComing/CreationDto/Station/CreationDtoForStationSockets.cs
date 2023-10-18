@@ -9,13 +9,6 @@ namespace eGuide.Data.Dto.InComing.CreationDto.Station {
     public class CreationDtoForStationSockets : BaseDto {
 
         /// <summary>
-        /// Gets or sets the name.
-        /// </summary>
-        /// <value>
-        /// The name.
-        /// </value>
-        public string Name { get; set; }
-        /// <summary>
         /// Gets or sets the socket identifier.
         /// </summary>
         /// <value>
@@ -24,10 +17,10 @@ namespace eGuide.Data.Dto.InComing.CreationDto.Station {
         public Guid SocketId { get; set; }
 
         /// <summary>
-        /// Gets or sets the station model identifier.
+        /// Gets or sets the station profile identifier.
         /// </summary>
         /// <value>
-        /// The station model identifier.
+        /// The station profile identifier.
         /// </value>
         public Guid StationModelId { get; set; }
     }

@@ -6,43 +6,43 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace eGuide.Data.Context.Migrations
 {
     /// <inheritdoc />
-    public partial class initialv2 : Migration
+    public partial class initial2 : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropForeignKey(
-                name: "FK_Socket_StationModel_StationModelId",
-                table: "Socket");
+                name: "FK_StationSockets_Station_StationProfileId",
+                table: "StationSockets");
 
             migrationBuilder.DropIndex(
-                name: "IX_Socket_StationModelId",
-                table: "Socket");
+                name: "IX_StationSockets_StationProfileId",
+                table: "StationSockets");
 
             migrationBuilder.DropColumn(
-                name: "StationModelId",
-                table: "Socket");
+                name: "StationProfileId",
+                table: "StationSockets");
         }
 
         /// <inheritdoc />
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.AddColumn<Guid>(
-                name: "StationModelId",
-                table: "Socket",
+                name: "StationProfileId",
+                table: "StationSockets",
                 type: "uniqueidentifier",
                 nullable: true);
 
             migrationBuilder.CreateIndex(
-                name: "IX_Socket_StationModelId",
-                table: "Socket",
-                column: "StationModelId");
+                name: "IX_StationSockets_StationProfileId",
+                table: "StationSockets",
+                column: "StationProfileId");
 
             migrationBuilder.AddForeignKey(
-                name: "FK_Socket_StationModel_StationModelId",
-                table: "Socket",
-                column: "StationModelId",
-                principalTable: "StationModel",
+                name: "FK_StationSockets_Station_StationProfileId",
+                table: "StationSockets",
+                column: "StationProfileId",
+                principalTable: "Station",
                 principalColumn: "Id");
         }
     }

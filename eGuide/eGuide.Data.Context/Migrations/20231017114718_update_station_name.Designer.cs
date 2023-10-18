@@ -12,8 +12,8 @@ using eGuide.Data.Context.Context;
 namespace eGuide.Data.Context.Migrations
 {
     [DbContext(typeof(eGuideContext))]
-    [Migration("20231004143910_initial")]
-    partial class initial
+    [Migration("20231017114718_update_station_name")]
+    partial class update_station_name
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -88,7 +88,7 @@ namespace eGuide.Data.Context.Migrations
                     b.Property<Guid>("FacilityId")
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<Guid>("StationId")
+                    b.Property<Guid?>("StationProfileId")
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<int>("Status")
@@ -101,7 +101,7 @@ namespace eGuide.Data.Context.Migrations
 
                     b.HasIndex("FacilityId");
 
-                    b.HasIndex("StationId");
+                    b.HasIndex("StationProfileId");
 
                     b.ToTable("StationFacility");
                 });
@@ -361,8 +361,7 @@ namespace eGuide.Data.Context.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<string>("ConfirmPassword")
-                        .IsRequired()
+                    b.Property<string>("ConfirmationToken")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<DateTime>("CreatedDate")
@@ -379,9 +378,19 @@ namespace eGuide.Data.Context.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("Password")
+                    b.Property<byte[]>("PassWordHash")
                         .IsRequired()
+                        .HasColumnType("varbinary(max)");
+
+                    b.Property<byte[]>("PassWordSalt")
+                        .IsRequired()
+                        .HasColumnType("varbinary(max)");
+
+                    b.Property<string>("PasswordResetToken")
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime?>("ResetTokenExpires")
+                        .HasColumnType("datetime2");
 
                     b.Property<int>("Status")
                         .HasColumnType("int");
@@ -391,6 +400,9 @@ namespace eGuide.Data.Context.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<DateTime?>("UpdatedDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime?>("VerifiedAt")
                         .HasColumnType("datetime2");
 
                     b.HasKey("Id");
@@ -624,9 +636,6 @@ namespace eGuide.Data.Context.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<Guid?>("StationModelId")
-                        .HasColumnType("uniqueidentifier");
-
                     b.Property<int>("Status")
                         .HasColumnType("int");
 
@@ -644,8 +653,6 @@ namespace eGuide.Data.Context.Migrations
                     b.HasKey("Id");
 
                     b.HasIndex("ConnectorId");
-
-                    b.HasIndex("StationModelId");
 
                     b.ToTable("Socket");
                 });
@@ -674,7 +681,7 @@ namespace eGuide.Data.Context.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("StationModel");
+                    b.ToTable("StationModels");
                 });
 
             modelBuilder.Entity("eGuide.Data.Entities.Station.StationProfile", b =>
@@ -698,6 +705,10 @@ namespace eGuide.Data.Context.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Longtitude")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Name")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
@@ -759,15 +770,11 @@ namespace eGuide.Data.Context.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("eGuide.Data.Entities.Station.StationProfile", "Station")
+                    b.HasOne("eGuide.Data.Entities.Station.StationProfile", null)
                         .WithMany("StationFacilities")
-                        .HasForeignKey("StationId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("StationProfileId");
 
                     b.Navigation("Facility");
-
-                    b.Navigation("Station");
                 });
 
             modelBuilder.Entity("eGuide.Data.Entites.Station.StationSockets", b =>
@@ -816,10 +823,6 @@ namespace eGuide.Data.Context.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("eGuide.Data.Entities.Station.StationModel", null)
-                        .WithMany("Sockets")
-                        .HasForeignKey("StationModelId");
-
                     b.Navigation("Connector");
                 });
 
@@ -863,8 +866,6 @@ namespace eGuide.Data.Context.Migrations
 
             modelBuilder.Entity("eGuide.Data.Entities.Station.StationModel", b =>
                 {
-                    b.Navigation("Sockets");
-
                     b.Navigation("StationSockets");
 
                     b.Navigation("Stations");
