@@ -21,9 +21,9 @@ namespace eGuide.Common.Configuration {
         {
             builder.HasKey(builder => builder.Id);
 
-            builder.HasOne(builder => builder.StationSockets)
+            builder.HasOne(builder => builder.StationModel)
                 .WithMany(builder => builder.Stations)
-                .HasForeignKey(builder=> builder.StationSocketsId);
+                .HasForeignKey(builder => builder.StationModelId);
         }
     }
 }

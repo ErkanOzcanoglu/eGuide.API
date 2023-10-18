@@ -55,6 +55,11 @@ namespace eGuide.Infrastructure.Interface
         /// <returns></returns>
         IQueryable<T> Where(Expression<Func<T, bool>> expression);
 
+        /// <summary>
+        /// Firsts the or default.
+        /// </summary>
+        /// <param name="predicate">The predicate.</param>
+        /// <returns></returns>
         Task<T> FirstOrDefault(Expression<Func<T, bool>> predicate);
 
 

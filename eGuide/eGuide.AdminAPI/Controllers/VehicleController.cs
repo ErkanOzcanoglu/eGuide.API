@@ -72,31 +72,18 @@ namespace eGuide.Service.AdminAPI.Controllers
         [HttpPost]
         public async Task<IActionResult> Create(CreationDtoForVehicle entity)
         {
-            try
-            {
-                
-                string brand = entity.Brand;
-                string model = entity.Model;
+            try {
 
-                
-                var existingVehicle = await _business.FirstOrDefault(v => v.Brand == brand && v.Model == model);
+                var vehicle = _mapper.Map<Vehicle>(entity);
 
-                if (existingVehicle != null)
-                {
-                    return BadRequest("This brand is already in the database.");
-                }
-
-                await _business.AddAsync(_mapper.Map<Vehicle>(entity));
+                await _business.AddAsync(vehicle);
 
                 return Ok();
             }
-            catch (DbUpdateException ex)
-            {             
+            catch (DbUpdateException ex) {
                 return BadRequest("An error occurred while accessing the database. Please try again later.");
             }
-            catch (Exception ex)
-            {
-                
+            catch (Exception ex) {
                 return BadRequest($"Hata: {ex.Message}");
             }
         }
