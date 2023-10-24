@@ -50,7 +50,13 @@ namespace eGuide.Data.Context.Context {
         /// examples.
         /// </para>
         /// </remarks>
-        protected override void OnModelCreating(ModelBuilder modelBuilder) {
+        //protected override void OnModelCreating(ModelBuilder modelBuilder) {
+        //    modelBuilder.ApplyConfigurationsFromAssembly(Assembly.GetExecutingAssembly());
+
+        //    base.OnModelCreating(modelBuilder);
+        //}
+        protected override void OnModelCreating(ModelBuilder modelBuilder)//PROTECTED 
+        {
             modelBuilder.ApplyConfigurationsFromAssembly(Assembly.GetExecutingAssembly());
 
             base.OnModelCreating(modelBuilder);

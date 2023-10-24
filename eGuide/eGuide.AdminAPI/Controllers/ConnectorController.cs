@@ -42,13 +42,19 @@ namespace eGuide.Service.AdminAPI.Controllers {
             return Ok(result);
         }
 
+        [HttpGet("{id}")]
+        public async Task<ActionResult<Connector>> GetById(Guid id) {
+            var result = await _business.GetbyIdAsync(id);
+            return Ok(result);
+        }
+
         /// <summary>
         /// Posts the specified connector.
         /// </summary>
         /// <param name="connector">The connector.</param>
         /// <returns></returns>
         [HttpPost]
-        public async Task<ActionResult> Post(CreationDtoForConnector connector) {
+        public async Task<ActionResult<Connector>> Post(CreationDtoForConnector connector) {
             var entity = _mapper.Map<Connector>(connector);
             var result = await _business.AddAsync(entity);
             return Ok(result);
@@ -71,9 +77,9 @@ namespace eGuide.Service.AdminAPI.Controllers {
         }
 
         [HttpDelete]
-        public async Task<ActionResult> Delete(Guid id) {
-            await _business.RemoveAsync(id);
-            return Ok();
+        public async Task<ActionResult<Connector>> Delete(Guid id) {
+            var result = _business.RemoveAsync(id);
+            return Ok(result);
         }
     }
 }

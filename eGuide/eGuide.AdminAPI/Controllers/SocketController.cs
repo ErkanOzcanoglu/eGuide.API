@@ -48,10 +48,10 @@ namespace eGuide.Service.AdminAPI.Controllers {
         /// <param name="socket">The socket.</param>
         /// <returns></returns>
         [HttpPost]
-        public async Task<IActionResult> AddSocket(CreationDtoForSocket socket) {
+        public async Task<ActionResult<Socket>> AddSocket(CreationDtoForSocket socket) {
             var socketEntity = _mapper.Map<Socket>(socket);
-            await _socketBusiness.AddAsync(socketEntity);
-            return Ok();
+            var result = await _socketBusiness.AddAsync(socketEntity);
+            return Ok(result);
         }
 
         /// <summary>
@@ -85,9 +85,9 @@ namespace eGuide.Service.AdminAPI.Controllers {
         /// <param name="id">The identifier.</param>
         /// <returns></returns>
         [HttpDelete]
-        public async Task<ActionResult> Delete(Guid id) {
-            await _socketBusiness.RemoveAsync(id);
-            return Ok();
+        public async Task<ActionResult<Socket>> Delete(Guid id) {
+            var result = _socketBusiness.RemoveAsync(id);
+            return Ok(result);
         }
 
     }
