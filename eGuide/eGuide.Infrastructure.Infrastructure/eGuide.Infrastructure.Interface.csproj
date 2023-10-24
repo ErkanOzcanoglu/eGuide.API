@@ -13,6 +13,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\eGuide.Data.Dto\eGuide.Data.Dto.csproj" />
     <ProjectReference Include="..\eGuide.Data.Entites\eGuide.Data.Entites.csproj" />
   </ItemGroup>
 

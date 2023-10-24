@@ -10,10 +10,11 @@ using System.Threading.Tasks;
 namespace eGuide.Business.Concrete {
     public class ConnectorBusiness : Business<Connector>, IConnectorBusiness {
         private readonly IConnectorRepository _connectorRepository;
+        private readonly IUnitOfWork _unitOfWork;
 
         public ConnectorBusiness(IConnectorRepository connectorRepository, IUnitOfWork unitOfWork) : base(connectorRepository, unitOfWork) {
             _connectorRepository = connectorRepository;
+            _unitOfWork = unitOfWork;
         }
-
     }
 }

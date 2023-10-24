@@ -77,7 +77,7 @@ namespace eGuide.Service.AdminAPI.Controllers {
         public async Task<IActionResult> Login(Login login)
         {
 
-            var entity = _business.Where(x => x.Name == login.Username).FirstOrDefault();
+            var entity = _business.Where(x => x.Email == login.Email).FirstOrDefault();
 
             if (entity == null)
             {

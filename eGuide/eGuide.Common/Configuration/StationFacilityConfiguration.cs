@@ -12,10 +12,6 @@ namespace eGuide.Common.Configuration {
         public void Configure(EntityTypeBuilder<StationFacility> builder) {
             builder.HasKey(builder => builder.Id);
 
-            builder.HasOne(builder => builder.Station)
-                .WithMany(builder => builder.StationFacilities)
-                .HasForeignKey(builder => builder.StationId);
-
             builder.HasOne(builder => builder.Facility)
                 .WithMany(builder => builder.StationFacilities)
                 .HasForeignKey(builder => builder.FacilityId);

@@ -18,6 +18,14 @@ namespace eGuide.Data.Entities.Station
     {
 
         /// <summary>
+        /// Gets or sets the name.
+        /// </summary>
+        /// <value>
+        /// The name.
+        /// </value>
+        public string Name { get; set; }
+
+        /// <summary>
         /// Gets or sets the address.
         /// </summary>
         /// <value>
@@ -39,7 +47,7 @@ namespace eGuide.Data.Entities.Station
         /// <value>
         /// The longtitude.
         /// </value>
-        public string Longtitude { get; set; }
+        public string Longitude { get; set; }
 
         /// <summary>
         /// Gets or sets the station model identifier.
@@ -47,7 +55,7 @@ namespace eGuide.Data.Entities.Station
         /// <value>
         /// The station model identifier.
         /// </value>
-        public Guid StationSocketsId { get; set; }
+        public Guid StationModelId { get; set; }
 
         /// <summary>
         /// Gets or sets the station model.
@@ -55,7 +63,7 @@ namespace eGuide.Data.Entities.Station
         /// <value>
         /// The station model.
         /// </value>
-        public StationSockets StationSockets { get; set; }
+        public StationModel StationModel { get; set; }
 
         /// <summary>
         /// Gets or sets the facilities.
@@ -80,5 +88,6 @@ namespace eGuide.Data.Entities.Station
         /// The comments.
         /// </value>
         public ICollection<Comment> Comments { get; set; }
+
     }
 }

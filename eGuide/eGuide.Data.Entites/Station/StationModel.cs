@@ -32,19 +32,12 @@ namespace eGuide.Data.Entities.Station
         public ICollection<StationProfile> Stations { get; set; }
 
         /// <summary>
-        /// Gets or sets the sockets.
-        /// </summary>
-        /// <value>
-        /// The sockets.
-        /// </value>
-        public ICollection<Socket> Sockets { get; set; }
-
-        /// <summary>
         /// Gets or sets the station sockets.
         /// </summary>
         /// <value>
         /// The station sockets.
         /// </value>
         public ICollection<StationSockets> StationSockets { get; set; }
+
     }
 }

@@ -14,6 +14,8 @@ namespace eGuide.Common.Mappers {
                 .ForMember(dest => dest.Status, opt => opt.MapFrom(src => 1))
                 .ForMember(dest => dest.CreatedDate, opt => opt.MapFrom(src => DateTime.Now));
 
+            CreateMap<T, TCreate>();
+
             CreateMap<TUpdate, T>()
                 .ForMember(dest => dest.UpdatedDate, opt => opt.MapFrom(src => DateTime.Now));
 

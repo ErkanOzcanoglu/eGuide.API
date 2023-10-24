@@ -6,12 +6,11 @@ using System.Text;
 using System.Threading.Tasks;
 
 namespace eGuide.Infrastructure.Interface {
-   
+
     /// <summary>
     /// 
     /// </summary>
-    /// <seealso cref="eGuide.Infrastructure.Interface.IGenericRepository&lt;eGuide.Data.Entities.Station.StationProfile&gt;" />
-    public interface IStationRepository: IGenericRepository<StationProfile> {
-
+    /// <seealso cref="eGuide.Infrastructure.Interface.IGenericRepository&lt;eGuide.Data.Entities.Station.StationModel&gt;" />
+    public interface IStationModelRepository : IGenericRepository<StationModel>{
     }
 }

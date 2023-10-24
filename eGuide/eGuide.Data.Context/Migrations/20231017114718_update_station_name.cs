@@ -5,24 +5,25 @@
 namespace eGuide.Data.Context.Migrations
 {
     /// <inheritdoc />
-    public partial class initialconfirmtoken : Migration
+    public partial class update_station_name : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.AddColumn<string>(
-                name: "ConfirmationToken",
-                table: "User",
+                name: "Name",
+                table: "Station",
                 type: "nvarchar(max)",
-                nullable: true);
+                nullable: false,
+                defaultValue: "");
         }
 
         /// <inheritdoc />
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropColumn(
-                name: "ConfirmationToken",
-                table: "User");
+                name: "Name",
+                table: "Station");
         }
     }
 }
