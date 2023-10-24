@@ -48,7 +48,7 @@ namespace eGuide.Service.AdminAPI.Controllers {
         /// <param name="station">The station.</param>
         /// <returns></returns>
         [HttpPost]
-        public async Task<ActionResult> Post(CreationDtoForStationProfile station) {
+        public async Task<ActionResult<StationProfile>> Post(CreationDtoForStationProfile station) {
             var entity = _mapper.Map<StationProfile>(station);
             var result = await _business.AddAsync(entity);
             return Ok(result);
@@ -61,7 +61,7 @@ namespace eGuide.Service.AdminAPI.Controllers {
         /// <param name="station">The station.</param>
         /// <returns></returns>
         [HttpPut]
-        public async Task<ActionResult> Put(Guid id, UpdateDtoForStationProfile station) {
+        public async Task<ActionResult<StationProfile>> Put(Guid id, UpdateDtoForStationProfile station) {
             var entity = await _business.GetbyIdAsync(id);
             if (entity == null) {
                 return NotFound();
