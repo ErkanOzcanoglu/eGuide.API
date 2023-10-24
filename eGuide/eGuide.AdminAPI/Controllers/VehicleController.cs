@@ -64,7 +64,11 @@ namespace eGuide.Service.AdminAPI.Controllers
                 return BadRequest($"Hata: {ex.Message}");
             }
         }
-       
+
+        /// <summary>
+        /// Gets all brands.
+        /// </summary>
+        /// <returns></returns>
         [HttpGet("brands")]
         public async Task<ActionResult<IEnumerable<string>>> GetAllBrands()
         {
@@ -220,6 +224,5 @@ namespace eGuide.Service.AdminAPI.Controllers
                 return BadRequest($"Error: {ex.Message}");
             }
         }
-
     }
 }

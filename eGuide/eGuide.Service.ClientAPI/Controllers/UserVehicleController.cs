@@ -121,13 +121,17 @@ namespace eGuide.Service.ClientAPI.Controllers
             }
         }
 
+        /// <summary>
+        /// Deletes the by vehicle identifier.
+        /// </summary>
+        /// <param name="userid">The userid.</param>
+        /// <param name="vehicleId">The vehicle identifier.</param>
+        /// <returns></returns>
         [HttpDelete("DeleteByVehicleId/{vehicleId}")]
-
         public async Task<IActionResult> DeleteByVehicleId(Guid userid,Guid vehicleId)
         {
             try
             {
-
                 var existingVehicle = await _dbSet.FirstOrDefaultAsync(v => v.UserId == userid && v.VehicleId == vehicleId && v.Status == 1);
 
                 if (existingVehicle == null)
@@ -147,6 +151,5 @@ namespace eGuide.Service.ClientAPI.Controllers
                 return BadRequest($"Hata: {ex.Message}");
             }
         }
-
     }
 }

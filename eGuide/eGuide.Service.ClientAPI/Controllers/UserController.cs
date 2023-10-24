@@ -131,7 +131,6 @@ namespace eGuide.Service.ClientAPI.Controllers {
             }
         }
 
-
         /// <summary>
         /// Updates the specified entity.
         /// </summary>
@@ -214,13 +213,20 @@ namespace eGuide.Service.ClientAPI.Controllers {
                 Email = register.Email,
                 PassWordHash = passwordHash,
                 PassWordSalt = passwordSalt,
-                ConfirmationToken = CreateRandomToken()
+                ConfirmationToken = CreatedToken(register),
+                CreatedDate=DateTime.Now
 
             };
+            
+            user.Status = 1;
 
             await _business.AddAsync(user);
-          
-            string confirmationLink = Url.Action("ConfirmAccount", "User", new { token = user.ConfirmationToken }, Request.Scheme);
+
+            //string confirmationLink = Url.Action("ConfirmAccount", "User", new { token = user.ConfirmationToken }, Request.Scheme);
+            //string confirmationEmailBody = $"Hesabınızı onaylamak için lütfen şu bağlantıya tıklayın: {confirmationLink}";
+            //SendEmail(confirmationEmailBody, user.Email);
+
+            string confirmationLink = "http://localhost:4200/home"; // İstenilen URL ile değiştirin
             string confirmationEmailBody = $"Hesabınızı onaylamak için lütfen şu bağlantıya tıklayın: {confirmationLink}";
             SendEmail(confirmationEmailBody, user.Email);
 
@@ -241,8 +247,8 @@ namespace eGuide.Service.ClientAPI.Controllers {
             {
                 return BadRequest("Invalid confirmation code.");
             }
-          
-            user.Status = 1;
+
+            user.VerifiedAt = DateTime.Now;
             await _business.UpdateAsync(user);
 
             return Ok("Your account has been successfully approved.");
@@ -298,7 +304,7 @@ namespace eGuide.Service.ClientAPI.Controllers {
         /// </summary>
         /// <param name="user">The user.</param>
         /// <returns></returns>
-        private string CreatedToken(User user)
+        private string CreatedToken(CreationDtoForUser  user)
         {
             List<Claim> claims = new List<Claim> {
                 new Claim(ClaimTypes.Name, user.Name)};
@@ -341,30 +347,19 @@ namespace eGuide.Service.ClientAPI.Controllers {
         public async Task<IActionResult> ForgotPassword(Guid userId)
         {
             var user = await _business.FirstOrDefault(u => u.Id == userId);
-
+            
             if (user == null)
             {
                 return BadRequest("UserNotFound");
             }
 
-            user.PasswordResetToken = CreateRandomToken();
+            var userMap=_mapper.Map<CreationDtoForUser>(user);
+
+            user.PasswordResetToken = CreatedToken(userMap);
             user.ResetTokenExpires = DateTime.Now.AddDays(1);
             await _business.UpdateAsync(user);
 
             return Ok("You may now reset your password");
-        }
-
-        /// <summary>
-        /// Creates the random token.
-        /// </summary>
-        /// <returns></returns>
-        private string CreateRandomToken()
-        {
-            
-            Random random = new Random();
-            const string chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
-            return new string(Enumerable.Repeat(chars, 6)
-              .Select(s => s[random.Next(s.Length)]).ToArray());
         }
 
         /// <summary>
@@ -373,16 +368,16 @@ namespace eGuide.Service.ClientAPI.Controllers {
         /// <param name="request">The request.</param>
         /// <returns></returns>
         [HttpPost("reset-password")]
-        public async Task<IActionResult> ResetPassword(ResetPassword request,Guid userId)
+        public async Task<IActionResult> ResetPassword(ResetPassword request, Guid userId)
         {
-            var user = await _business.FirstOrDefault(u => u.PasswordResetToken != null && u.Id==userId);
+            var user = await _business.FirstOrDefault(u => u.PasswordResetToken != null && u.Id == userId);
 
             if (user == null)
             {
                 return BadRequest("Invalid Token");
             }
 
-            
+
             if (user.ResetTokenExpires.HasValue && user.ResetTokenExpires < DateTime.Now)
             {
                 return BadRequest("Token Expired");
@@ -401,5 +396,68 @@ namespace eGuide.Service.ClientAPI.Controllers {
 
         }
 
+        /// <summary>
+        /// Forgots the password screen.
+        /// </summary>
+        /// <param name="userEmail">The user email.</param>
+        /// <returns></returns>
+        [HttpPost("forgot-password/{userEmail}")]
+        public async Task<IActionResult> ForgotPasswordScreen(string userEmail)
+        {
+            var user = await _business.FirstOrDefault(u => u.Email == userEmail);
+
+            if (user == null)
+            {
+                return BadRequest("UserNotFound");
+            }
+
+            var userMap = _mapper.Map<CreationDtoForUser>(user);
+
+            user.PasswordResetToken = CreatedToken(userMap);
+            user.ResetTokenExpires = DateTime.Now.AddDays(1);
+            await _business.UpdateAsync(user);
+
+            string confirmationLink = $"http://localhost:4200/forgot-password/{user.PasswordResetToken}";
+            string confirmationEmailBody = $"Hesabınızı şifrenizi sıfırlamak için lütfen şu bağlantıya tıklayın: {confirmationLink}";
+            string recipientEmail = user.Email;
+
+            SendEmail(confirmationEmailBody, recipientEmail);
+
+            return Ok("You may now reset your password");
+
+        }
+
+        /// <summary>
+        /// Resets the password screen.
+        /// </summary>
+        /// <param name="request">The request.</param>
+        /// <param name="token">The token.</param>
+        /// <returns></returns>
+        [HttpPost("reset-password-screen")]
+        public async Task<IActionResult> ResetPasswordScreen(ResetPassword request, string token)
+        {
+            var user = await _business.FirstOrDefault(u => u.PasswordResetToken != null && u.PasswordResetToken == token);
+
+            if (user == null)
+            {
+                return BadRequest("Invalid Token");
+            }
+
+            if (user.ResetTokenExpires.HasValue && user.ResetTokenExpires < DateTime.Now)
+            {
+                return BadRequest("Token Expired");
+            }
+
+            CreatePasswordHash(request.Password, out byte[] passwordHash, out byte[] passwordSalt);
+
+            user.PassWordHash = passwordHash;
+            user.PassWordSalt = passwordSalt;
+            user.PasswordResetToken = null;
+            user.ResetTokenExpires = null;
+
+            await _business.UpdateAsync(user);
+
+            return Ok("Password successfully changed");
+        }
     }
 }

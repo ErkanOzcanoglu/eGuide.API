@@ -82,8 +82,8 @@ namespace eGuide.Infrastructure.Concrete
         public async void Remove(Guid id)
         {
             var entity = _dbSet.Find(id);
-            entity.Status = 0;
             entity.DeletedDate= DateTime.Now;
+            entity.Status = 0;
         }
 
         /// <summary>
