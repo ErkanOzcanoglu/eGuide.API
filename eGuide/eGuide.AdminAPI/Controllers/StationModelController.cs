@@ -2,7 +2,6 @@
 using eGuide.Business.Interface;
 using eGuide.Data.Dto.InComing.CreationDto.Station;
 using eGuide.Data.Dto.InComing.UpdateDto.Station;
-using eGuide.Data.Dto.OutComing.Station;
 using eGuide.Data.Entities.Station;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -10,12 +9,12 @@ using Microsoft.AspNetCore.Mvc;
 namespace eGuide.Service.AdminAPI.Controllers {
     [Route("api/[controller]")]
     [ApiController]
-    public class ConnectorController : ControllerBase {
+    public class StationModelController : ControllerBase {
 
         /// <summary>
         /// The business
         /// </summary>
-        private readonly IConnectorBusiness _business;
+        private readonly IStationModelBusiness _business;
 
         /// <summary>
         /// The mapper
@@ -23,11 +22,11 @@ namespace eGuide.Service.AdminAPI.Controllers {
         private readonly IMapper _mapper;
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="ConnectorController"/> class.
+        /// Initializes a new instance of the <see cref="StationModelController"/> class.
         /// </summary>
         /// <param name="business">The business.</param>
         /// <param name="mapper">The mapper.</param>
-        public ConnectorController(IConnectorBusiness business, IMapper mapper) {
+        public StationModelController(IStationModelBusiness business, IMapper mapper) {
             _business = business;
             _mapper = mapper;
         }
@@ -43,33 +42,43 @@ namespace eGuide.Service.AdminAPI.Controllers {
         }
 
         /// <summary>
-        /// Posts the specified connector.
+        /// Posts the specified entity.
         /// </summary>
-        /// <param name="connector">The connector.</param>
+        /// <param name="entity">The entity.</param>
         /// <returns></returns>
         [HttpPost]
-        public async Task<ActionResult> Post(CreationDtoForConnector connector) {
-            var entity = _mapper.Map<Connector>(connector);
-            var result = await _business.AddAsync(entity);
+        public async Task<ActionResult> Post(CreationDtoForStationModel entity) {
+            var entityMapped = _mapper.Map<StationModel>(entity);
+            var result = await _business.AddAsync(entityMapped);
             return Ok(result);
         }
 
+        /// <summary>
+        /// Puts the specified identifier.
+        /// </summary>
+        /// <param name="id">The identifier.</param>
+        /// <param name="stationModel">The station model.</param>
+        /// <returns></returns>
         [HttpPut]
-        public async Task<ActionResult> Put(Guid id, UpdateDtoForConnector connector) {
+        public async Task<ActionResult> Put(Guid id, UpdateDtoForStationModel stationModel) {
             var entity = await _business.GetbyIdAsync(id);
             if (entity == null) {
                 return NotFound();
             }
 
-            entity.Icon = connector.Icon;
-            entity.Type = connector.Type;
+            entity.Name = stationModel.Name;
 
-            var mappedEntity = _mapper.Map<Connector>(entity);
+            var mappedEntity = _mapper.Map<StationModel>(entity);
 
             await _business.UpdateAsync(mappedEntity);
             return Ok();
         }
 
+        /// <summary>
+        /// Deletes the specified identifier.
+        /// </summary>
+        /// <param name="id">The identifier.</param>
+        /// <returns></returns>
         [HttpDelete]
         public async Task<ActionResult> Delete(Guid id) {
             await _business.RemoveAsync(id);

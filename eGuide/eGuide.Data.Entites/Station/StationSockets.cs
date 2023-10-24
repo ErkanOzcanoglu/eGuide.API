@@ -10,14 +10,6 @@ namespace eGuide.Data.Entites.Station {
     public class StationSockets : BaseModel {
 
         /// <summary>
-        /// Gets or sets the name.
-        /// </summary>
-        /// <value>
-        /// The name.
-        /// </value>
-        public string Name { get; set; }
-
-        /// <summary>
         /// Gets or sets the socket identifier.
         /// </summary>
         /// <value>
@@ -34,11 +26,19 @@ namespace eGuide.Data.Entites.Station {
         public Socket Socket { get; set; }
 
         /// <summary>
-        /// Gets or sets the stations.
+        /// Gets or sets the station model identifier.
         /// </summary>
         /// <value>
-        /// The stations.
+        /// The station model identifier.
         /// </value>
-        public ICollection<StationProfile> Stations { get; set; }
+        public Guid StationModelId { get; set; }
+
+        /// <summary>
+        /// Gets or sets the station model.
+        /// </summary>
+        /// <value>
+        /// The station model.
+        /// </value>
+        public StationModel StationModel { get; set; }
     }
 }

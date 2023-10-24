@@ -12,8 +12,8 @@ using eGuide.Data.Context.Context;
 namespace eGuide.Data.Context.Migrations
 {
     [DbContext(typeof(eGuideContext))]
-    [Migration("20231005070818_initialpassword")]
-    partial class initialpassword
+    [Migration("20231016105345_initial2")]
+    partial class initial2
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -88,7 +88,7 @@ namespace eGuide.Data.Context.Migrations
                     b.Property<Guid>("FacilityId")
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<Guid>("StationId")
+                    b.Property<Guid?>("StationProfileId")
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<int>("Status")
@@ -101,7 +101,7 @@ namespace eGuide.Data.Context.Migrations
 
                     b.HasIndex("FacilityId");
 
-                    b.HasIndex("StationId");
+                    b.HasIndex("StationProfileId");
 
                     b.ToTable("StationFacility");
                 });
@@ -360,6 +360,9 @@ namespace eGuide.Data.Context.Migrations
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("ConfirmationToken")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<DateTime>("CreatedDate")
                         .HasColumnType("datetime2");
@@ -633,9 +636,6 @@ namespace eGuide.Data.Context.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<Guid?>("StationModelId")
-                        .HasColumnType("uniqueidentifier");
-
                     b.Property<int>("Status")
                         .HasColumnType("int");
 
@@ -653,8 +653,6 @@ namespace eGuide.Data.Context.Migrations
                     b.HasKey("Id");
 
                     b.HasIndex("ConnectorId");
-
-                    b.HasIndex("StationModelId");
 
                     b.ToTable("Socket");
                 });
@@ -683,7 +681,7 @@ namespace eGuide.Data.Context.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("StationModel");
+                    b.ToTable("StationModels");
                 });
 
             modelBuilder.Entity("eGuide.Data.Entities.Station.StationProfile", b =>
@@ -768,15 +766,11 @@ namespace eGuide.Data.Context.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("eGuide.Data.Entities.Station.StationProfile", "Station")
+                    b.HasOne("eGuide.Data.Entities.Station.StationProfile", null)
                         .WithMany("StationFacilities")
-                        .HasForeignKey("StationId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("StationProfileId");
 
                     b.Navigation("Facility");
-
-                    b.Navigation("Station");
                 });
 
             modelBuilder.Entity("eGuide.Data.Entites.Station.StationSockets", b =>
@@ -825,10 +819,6 @@ namespace eGuide.Data.Context.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("eGuide.Data.Entities.Station.StationModel", null)
-                        .WithMany("Sockets")
-                        .HasForeignKey("StationModelId");
-
                     b.Navigation("Connector");
                 });
 
@@ -872,8 +862,6 @@ namespace eGuide.Data.Context.Migrations
 
             modelBuilder.Entity("eGuide.Data.Entities.Station.StationModel", b =>
                 {
-                    b.Navigation("Sockets");
-
                     b.Navigation("StationSockets");
 
                     b.Navigation("Stations");

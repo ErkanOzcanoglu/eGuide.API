@@ -6,12 +6,21 @@ using System.Threading.Tasks;
 
 namespace eGuide.Data.Dto.OutComing.Station {
     public class StationSocketDto {
+
         /// <summary>
-        /// Gets or sets the name.
+        /// Gets or sets the station model identifier.
         /// </summary>
         /// <value>
-        /// The name.
+        /// The station model identifier.
         /// </value>
-        public string Name { get; set; }
+        public Guid StationModelId { get; set; }
+
+        /// <summary>
+        /// Gets or sets the socket identifier.
+        /// </summary>
+        /// <value>
+        /// The socket identifier.
+        /// </value>
+        public Guid SocketId { get; set; }
     }
 }

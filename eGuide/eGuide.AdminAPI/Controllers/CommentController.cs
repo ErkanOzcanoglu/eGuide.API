@@ -9,15 +9,33 @@ namespace eGuide.Service.AdminAPI.Controllers {
     [Route("api/[controller]")]
     [ApiController]
     public class CommentController : ControllerBase {
+
+        /// <summary>
+        /// The business
+        /// </summary>
         private readonly ICommentBusiness<Comment> _business;
+
+        /// <summary>
+        /// The mapper
+        /// </summary>
         private readonly IMapper _mapper;
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="CommentController"/> class.
+        /// </summary>
+        /// <param name="business">The business.</param>
+        /// <param name="mapper">The mapper.</param>
         public CommentController(ICommentBusiness<Comment> business, IMapper mapper) {
             _business = business;
             _mapper = mapper;
 
         }
 
+        /// <summary>
+        /// Creates the comment.
+        /// </summary>
+        /// <param name="comment">The comment.</param>
+        /// <returns></returns>
         [HttpPost]
         public IActionResult CreateComment(CommentDto comment) {
             var commentEntity = _mapper.Map<Comment>(comment);
@@ -25,6 +43,10 @@ namespace eGuide.Service.AdminAPI.Controllers {
             return Ok();
         }
 
+        /// <summary>
+        /// Gets all comments.
+        /// </summary>
+        /// <returns></returns>
         [HttpGet]
         public async Task<IActionResult> GetAllComments() {
             var comments = await _business.GetAllComments();

@@ -19,8 +19,6 @@ namespace eGuide.Common.Configuration {
         /// <param name="builder">The builder.</param>
         public void Configure(EntityTypeBuilder<StationModel> builder) {
             builder.HasKey(builder => builder.Id);
-
-           
         }
     }
 }

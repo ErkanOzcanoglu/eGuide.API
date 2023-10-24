@@ -7,10 +7,27 @@ using System.Text;
 using System.Threading.Tasks;
 
 namespace eGuide.Data.Entites.Station {
+
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <seealso cref="eGuide.Data.Entities.BaseModel" />
     public class StationFacility : BaseModel {
-        public Guid StationId { get; set; }
-        public StationProfile Station { get; set; }
+
+        /// <summary>
+        /// Gets or sets the facility identifier.
+        /// </summary>
+        /// <value>
+        /// The facility identifier.
+        /// </value>
         public Guid FacilityId { get; set; }
+
+        /// <summary>
+        /// Gets or sets the facility.
+        /// </summary>
+        /// <value>
+        /// The facility.
+        /// </value>
         public Facility Facility { get; set; }
     }
 }
