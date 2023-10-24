@@ -224,7 +224,6 @@ namespace eGuide.Service.ClientAPI.Controllers
                 return BadRequest($"Error: {ex.Message}");
             }
         }
-
     }
 }
 
