@@ -1,4 +1,5 @@
-﻿using eGuide.Common.Configuration;
+﻿
+using eGuide.Data.Dto.OutComing.Station;
 using eGuide.Data.Entites.Client;
 using eGuide.Data.Entites.Station;
 using eGuide.Data.Entities.Admin;
@@ -6,12 +7,7 @@ using eGuide.Data.Entities.Client;
 using eGuide.Data.Entities.Map;
 using eGuide.Data.Entities.Station;
 using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Reflection;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace eGuide.Data.Context.Context {
     public class eGuideContext : DbContext {
@@ -189,5 +185,21 @@ namespace eGuide.Data.Context.Context {
         /// The station model.
         /// </value>
         public DbSet<StationModel> StationModels { get; set; }
+
+        /// <summary>
+        /// Gets or sets the station socket.
+        /// </summary>
+        /// <value>
+        /// The station socket.
+        /// </value>
+        public DbSet<StationSockets> StationSockets { get; set; }
+
+        /// <summary>
+        /// Gets or sets the station information dto.
+        /// </summary>
+        /// <value>
+        /// The station information dto.
+        /// </value>
+        public DbSet<StationInformationDto> StationInformationDto { get; set; }
     }
 }

@@ -90,5 +90,15 @@ namespace eGuide.Service.AdminAPI.Controllers {
             return Ok(result);
         }
 
+        /// <summary>
+        /// Hards the delete.
+        /// </summary>
+        /// <param name="id">The identifier.</param>
+        /// <returns></returns>
+        [HttpDelete("{id}")]
+        public async Task<ActionResult<Socket>> HardDelete(Guid id) {
+            await _socketBusiness.HardRemoveAsync(id);
+            return Ok();
+        }
     }
 }

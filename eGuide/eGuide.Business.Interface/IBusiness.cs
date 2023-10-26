@@ -42,6 +42,13 @@ namespace eGuide.Business.Interface
         Task RemoveAsync(Guid id);
 
         /// <summary>
+        /// Hards the remove asynchronous.
+        /// </summary>
+        /// <param name="id">The identifier.</param>
+        /// <returns></returns>
+        Task HardRemoveAsync(Guid id);
+
+        /// <summary>
         /// Gets all asynchronous.
         /// </summary>
         /// <returns></returns>

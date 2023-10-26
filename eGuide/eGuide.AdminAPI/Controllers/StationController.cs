@@ -88,5 +88,16 @@ namespace eGuide.Service.AdminAPI.Controllers {
             await _business.RemoveAsync(id);
             return Ok();
         }
+
+        /// <summary>
+        /// Hards the delete.
+        /// </summary>
+        /// <param name="id">The identifier.</param>
+        /// <returns></returns>
+        [HttpDelete("{id}")]
+        public async Task<ActionResult<StationProfile>> HardDelete(Guid id) {
+            await _business.HardRemoveAsync(id);
+            return Ok();
+        }
     }
 }

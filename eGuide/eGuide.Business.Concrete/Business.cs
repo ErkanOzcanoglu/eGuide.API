@@ -105,5 +105,14 @@ namespace eGuide.Business.Concrete
         {
             return _repository.Where(expression);
         }
+
+        /// <summary>
+        /// Hards the remove asynchronous.
+        /// </summary>
+        /// <param name="id">The identifier.</param>
+        public async Task HardRemoveAsync(Guid id) {
+            _repository.HardRemove(id);
+            await _unitOfWork.CommitAsync();
+        }
     }
 }

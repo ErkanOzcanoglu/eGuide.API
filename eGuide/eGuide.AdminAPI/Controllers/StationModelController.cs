@@ -2,6 +2,7 @@
 using eGuide.Business.Interface;
 using eGuide.Data.Dto.InComing.CreationDto.Station;
 using eGuide.Data.Dto.InComing.UpdateDto.Station;
+using eGuide.Data.Entites.Station;
 using eGuide.Data.Entities.Station;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -82,6 +83,17 @@ namespace eGuide.Service.AdminAPI.Controllers {
         [HttpDelete]
         public async Task<ActionResult> Delete(Guid id) {
             await _business.RemoveAsync(id);
+            return Ok();
+        }
+
+        /// <summary>
+        /// Hards the delete.
+        /// </summary>
+        /// <param name="id">The identifier.</param>
+        /// <returns></returns>
+        [HttpDelete("{id}")]
+        public async Task<ActionResult<StationModel>> HardDelete(Guid id) {
+            await _business.HardRemoveAsync(id);
             return Ok();
         }
     }
