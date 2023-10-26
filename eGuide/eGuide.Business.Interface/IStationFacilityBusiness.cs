@@ -1,4 +1,4 @@
-﻿using eGuide.Data.Entites.Station;
+﻿using eGuide.Data.Entities.Station;
 using System;
 using System.Collections.Generic;
 using System.Linq;

@@ -1,4 +1,4 @@
-﻿using eGuide.Data.Entites.Client;
+﻿using eGuide.Data.Entities.Client;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using System;

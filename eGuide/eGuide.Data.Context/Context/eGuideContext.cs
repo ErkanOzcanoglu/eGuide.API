@@ -1,6 +1,6 @@
 ﻿using eGuide.Common.Configuration;
-using eGuide.Data.Entites.Client;
-using eGuide.Data.Entites.Station;
+using eGuide.Data.Entities.Client;
+using eGuide.Data.Entities.Station;
 using eGuide.Data.Entities.Admin;
 using eGuide.Data.Entities.Client;
 using eGuide.Data.Entities.Map;
@@ -124,7 +124,7 @@ namespace eGuide.Data.Context.Context {
         /// <value>
         /// The service.
         /// </value>
-        public DbSet<Service> Service { get; set; }
+        public DbSet<Services> Service { get; set; }
 
         /// <summary>
         /// Gets or sets the socket.

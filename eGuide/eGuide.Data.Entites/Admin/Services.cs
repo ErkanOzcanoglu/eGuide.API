@@ -11,7 +11,7 @@ namespace eGuide.Data.Entities.Admin
     /// 
     /// </summary>
     /// <seealso cref="eGuide.Data.Entities.BaseModel" />
-    public class Service : BaseModel
+    public class Services : BaseModel
     {
 
         /// <summary>

@@ -19,7 +19,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "eGuide.Data.Context", "eGui
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "eGuide.Data.Dto", "eGuide.Data.Dto\eGuide.Data.Dto.csproj", "{1F374B9B-B449-4EF6-930D-DD31357F9CF0}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "eGuide.Data.Entites", "eGuide.Data.Entites\eGuide.Data.Entites.csproj", "{061753C1-2EA3-4563-96DA-C5B4B8D52061}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "eGuide.Data.Entities", "eGuide.Data.Entites\eGuide.Data.Entities.csproj", "{061753C1-2EA3-4563-96DA-C5B4B8D52061}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Infrastructure", "Infrastructure", "{3B639F85-9361-48FD-BC8B-A745305204FF}"
 EndProject
