@@ -188,6 +188,6 @@ namespace eGuide.Data.Context.Context {
         /// <value>
         /// The station model.
         /// </value>
-        public DbSet<StationModel> StationModels { get; set; }
+        public DbSet<StationModel> StationModel { get; set; }
     }
 }

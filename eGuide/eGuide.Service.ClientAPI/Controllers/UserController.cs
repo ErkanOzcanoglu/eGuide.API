@@ -3,7 +3,7 @@ using eGuide.Business.Interface;
 using eGuide.Data.Dto.InComing.CreationDto.Client;
 using eGuide.Data.Dto.InComing.UpdateDto.Client;
 using eGuide.Data.Dto.OutComing.Client;
-using eGuide.Data.Entites.Authorization;
+using eGuide.Data.Entities.Authorization;
 using eGuide.Data.Entities.Client;
 using MailKit.Net.Smtp;
 using MailKit.Security;
