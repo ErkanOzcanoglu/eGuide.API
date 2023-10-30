@@ -48,6 +48,9 @@ builder.Services.AddScoped(typeof(IVehicleRepository), typeof(VehicleRepository)
 builder.Services.AddScoped(typeof(IStationModelBusiness), typeof(StationModelBusiness));
 builder.Services.AddScoped(typeof(IStationModelRepository), typeof(StationModelRepository));
 
+builder.Services.AddScoped(typeof(IServiceBusiness), typeof(ServiceBusiness));
+builder.Services.AddScoped(typeof(IServiceRepository), typeof(ServiceRepository));
+
 builder.Services.AddSingleton<IMongoClient>(new MongoClient("mongodb://localhost:27017"));
 builder.Services.AddSingleton<IMongoDatabase>(provider =>
 {
@@ -58,7 +61,7 @@ builder.Services.AddSingleton<IMongoDatabase>(provider =>
 builder.Services.AddCors(options => {
     options.AddPolicy("AllowSpecificOrigin",
         builder => {
-            builder.WithOrigins("http://localhost:54819") // Replace with your frontend application's URL
+            builder.WithOrigins("http://localhost:4200") // Replace with your frontend application's URL
                     .AllowAnyHeader()
                     .AllowAnyMethod()
                     .AllowCredentials(); // You might need this if your WebSocket server requires credentials

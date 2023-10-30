@@ -1,4 +1,4 @@
-﻿using eGuide.Data.Entites.Station;
+﻿using eGuide.Data.Entities.Station;
 using eGuide.Data.Entities.Admin;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using System;

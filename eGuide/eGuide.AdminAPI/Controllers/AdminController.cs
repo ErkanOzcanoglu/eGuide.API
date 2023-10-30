@@ -4,7 +4,7 @@ using eGuide.Common.Mappers;
 using eGuide.Data.Dto.InComing.CreationDto.Admin;
 using eGuide.Data.Dto.InComing.UpdateDto.Admin;
 using eGuide.Data.Dto.OutComing.Admin;
-using eGuide.Data.Entites.Authorization;
+using eGuide.Data.Entities.Authorization;
 using eGuide.Data.Entities.Admin;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;

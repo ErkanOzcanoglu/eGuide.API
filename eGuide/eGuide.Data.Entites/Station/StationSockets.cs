@@ -6,7 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace eGuide.Data.Entites.Station {
+namespace eGuide.Data.Entities.Station {
     public class StationSockets : BaseModel {
 
         /// <summary>

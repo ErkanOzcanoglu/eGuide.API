@@ -1,5 +1,5 @@
 ﻿using eGuide.Business.Interface;
-using eGuide.Data.Entites.Client;
+using eGuide.Data.Entities.Client;
 using eGuide.Infrastructure.Interface;
 using System;
 using System.Collections.Generic;
