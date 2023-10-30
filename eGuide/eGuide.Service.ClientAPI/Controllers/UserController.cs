@@ -187,7 +187,6 @@ namespace eGuide.Service.ClientAPI.Controllers {
             smtp.Disconnect(true);
 
             return Ok();
-
         }
 
         /// <summary>
@@ -222,11 +221,7 @@ namespace eGuide.Service.ClientAPI.Controllers {
 
             await _business.AddAsync(user);
 
-            //string confirmationLink = Url.Action("ConfirmAccount", "User", new { token = user.ConfirmationToken }, Request.Scheme);
-            //string confirmationEmailBody = $"Hesabınızı onaylamak için lütfen şu bağlantıya tıklayın: {confirmationLink}";
-            //SendEmail(confirmationEmailBody, user.Email);
-
-            string confirmationLink = "http://localhost:4200/home"; // İstenilen URL ile değiştirin
+            string confirmationLink = $"http://localhost:4200/verify-email/{user.ConfirmationToken}";
             string confirmationEmailBody = $"Hesabınızı onaylamak için lütfen şu bağlantıya tıklayın: {confirmationLink}";
             SendEmail(confirmationEmailBody, user.Email);
 

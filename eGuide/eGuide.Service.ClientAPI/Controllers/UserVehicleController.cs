@@ -76,7 +76,7 @@ namespace eGuide.Service.ClientAPI.Controllers
                     Value = userId.ToString() 
                 };
 
-                var result = _context.Vehicle
+                var result = _context.Vehicle //from vehicle table
                     .FromSqlRaw("EXEC GetVehiclesByUserID_V2 @UserId", userIdParameter)
                     .ToList();
 
