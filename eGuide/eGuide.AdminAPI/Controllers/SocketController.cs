@@ -43,6 +43,17 @@ namespace eGuide.Service.AdminAPI.Controllers {
         }
 
         /// <summary>
+        /// Gets the by identifier.
+        /// </summary>
+        /// <param name="id">The identifier.</param>
+        /// <returns></returns>
+        [HttpGet("{id}")]
+        public async Task<IActionResult> GetById(Guid id) {
+            var socket = await _socketBusiness.GetbyIdAsync(id);
+            return Ok(socket);
+        }
+
+        /// <summary>
         /// Adds the socket.
         /// </summary>
         /// <param name="socket">The socket.</param>

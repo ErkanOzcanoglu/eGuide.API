@@ -11,8 +11,6 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
-using MongoDB.Bson.IO;
-
 
 namespace eGuide.Service.AdminAPI.Controllers {
     [Route("api/[controller]")]
@@ -133,20 +131,21 @@ namespace eGuide.Service.AdminAPI.Controllers {
         [HttpGet("GetAllStationProfile")]
         public async Task<IActionResult> GetAllStationProfileInformation() {
             try {
+                //var parameters = new SqlParameter[]
+                //{
+                //new SqlParameter("@stationModelId", stationModelId)
+                //};
+
                 var stationInformation = await _dbSet.FromSqlRaw("EXEC [GetStationInformation]").ToListAsync();
 
                 if (stationInformation == null) {
                     return NotFound();
                 }
 
-                var jsonString = JsonConvert.
-                var parsedData = JsonConvert.DeserializeObject<List<StationInformationDto>>(jsonString);
-
-                return Ok(parsedData);
+                return Ok(stationInformation);
             } catch (Exception ex) {
                 return StatusCode(500, $"Internal server error: {ex}");
             }
         }
-
-    } 
+    }
 }
