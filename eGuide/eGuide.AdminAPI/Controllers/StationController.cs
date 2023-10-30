@@ -20,10 +20,14 @@ namespace eGuide.Service.AdminAPI.Controllers {
         /// </summary>
         private readonly IStationBusiness _business;
 
-        private readonly DbSet<StationProfile> _dbSet;
+        /// <summary>
+        /// The database set
+        /// </summary>
+        private readonly DbSet<StationInformationModel> _dbSet;
 
-        private readonly DbSet<StationInformationModel> _dbSet2;
-
+        /// <summary>
+        /// The context
+        /// </summary>
         private readonly eGuideContext _context;
 
 
@@ -42,7 +46,7 @@ namespace eGuide.Service.AdminAPI.Controllers {
             _business = business;
             _mapper = mapper;
             _context = context;
-            _dbSet2=_context.Set<StationInformationModel>();
+            _dbSet=_context.Set<StationInformationModel>();
         }
 
         /// <summary>
@@ -102,17 +106,17 @@ namespace eGuide.Service.AdminAPI.Controllers {
             return Ok();
         }
 
-
-
+        /// <summary>
+        /// Gets all station profile information.
+        /// </summary>
+        /// <returns></returns>
         [HttpGet("GetAllStationProfile")]
         public async Task<IActionResult> GetAllStationProfileInformation()
         {
             try
             {
-
-                var stationInformation = _dbSet2.FromSqlRaw("EXEC [GetStationInformation]").ToList();
+                var stationInformation = _dbSet.FromSqlRaw("EXEC [GetStationInformation]").ToList();
                 return new JsonResult(stationInformation);
-
             }
             catch (Exception ex)
             {
@@ -120,7 +124,6 @@ namespace eGuide.Service.AdminAPI.Controllers {
             }
 
         }
-
  
     }
 }
