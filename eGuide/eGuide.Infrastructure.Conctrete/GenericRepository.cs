@@ -105,5 +105,16 @@ namespace eGuide.Infrastructure.Concrete
         {
             return _dbSet.Where(expression);
         }
+
+        /// <summary>
+        /// Hards the remove.
+        /// </summary>
+        /// <param name="id">The identifier.</param>
+        public void HardRemove(Guid id) {
+            var entity = _dbSet.Find(id);
+            if(entity != null) {
+                _dbSet.Remove(entity);
+            }
+        }
     }
 }

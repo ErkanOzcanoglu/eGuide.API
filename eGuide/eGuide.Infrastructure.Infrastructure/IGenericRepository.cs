@@ -43,6 +43,12 @@ namespace eGuide.Infrastructure.Interface
         void Remove(Guid id);
 
         /// <summary>
+        /// Hards the remove.
+        /// </summary>
+        /// <param name="id">The identifier.</param>
+        void HardRemove(Guid id);
+
+        /// <summary>
         /// Gets all.
         /// </summary>
         /// <returns></returns>

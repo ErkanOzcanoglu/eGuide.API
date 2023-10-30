@@ -25,7 +25,7 @@
   <ItemGroup>
     <ProjectReference Include="..\eGuide.Business.Concrete\eGuide.Business.Concrete.csproj" />
     <ProjectReference Include="..\eGuide.Business.Interface\eGuide.Business.Interface.csproj" />
-    <ProjectReference Include="..\eGuide.Data.Entites\eGuide.Data.Entites.csproj" />
+    <ProjectReference Include="..\eGuide.Data.Entites\eGuide.Data.Entities.csproj" />
     <ProjectReference Include="..\eGuide.Infrastructure.Conctrete\eGuide.Infrastructure.Conctrete.csproj" />
     <ProjectReference Include="..\eGuide.Infrastructure.Infrastructure\eGuide.Infrastructure.Interface.csproj" />
   </ItemGroup>
