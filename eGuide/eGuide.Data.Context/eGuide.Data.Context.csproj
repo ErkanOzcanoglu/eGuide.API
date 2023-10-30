@@ -22,7 +22,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\eGuide.Common\eGuide.Common.csproj" />
-    <ProjectReference Include="..\eGuide.Data.Entites\eGuide.Data.Entities.csproj" />
+    <ProjectReference Include="..\eGuide.Data.Entites\eGuide.Data.Entites.csproj" />
   </ItemGroup>
 
 </Project>

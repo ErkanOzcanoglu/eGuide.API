@@ -12,7 +12,7 @@ namespace eGuide.Data.Dto.InComing.CreationDto.Admin
     /// 
     /// </summary>
     /// <seealso cref="eGuide.Data.Entities.BaseModel" />
-    public class CreationDtoForService : BaseDto
+    public class UpdateDtoForService : BaseDto
     {
 
         /// <summary>

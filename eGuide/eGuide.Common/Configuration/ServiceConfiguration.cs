@@ -17,7 +17,7 @@ namespace eGuide.Common.Configuration {
         /// Configures the specified builder.
         /// </summary>
         /// <param name="builder">The builder.</param>
-        public void Configure(EntityTypeBuilder<Services> builder) {
+        public void Configure(EntityTypeBuilder<Service> builder) {
 
             builder.HasKey(builder => builder.Id);
         }

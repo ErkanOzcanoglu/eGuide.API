@@ -3,7 +3,7 @@ using eGuide.Business.Interface;
 using eGuide.Data.Context.Context;
 using eGuide.Data.Dto.InComing.CreationDto.Client;
 using eGuide.Data.Dto.InComing.UpdateDto.Client;
-using eGuide.Data.Entities.Client;
+using eGuide.Data.Entites.Client;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Data.SqlClient;

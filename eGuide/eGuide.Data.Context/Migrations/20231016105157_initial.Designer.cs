@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using eGuide.Data.Context.Context;
 
@@ -11,9 +12,11 @@ using eGuide.Data.Context.Context;
 namespace eGuide.Data.Context.Migrations
 {
     [DbContext(typeof(eGuideContext))]
-    partial class eGuideContextModelSnapshot : ModelSnapshot
+    [Migration("20231016105157_initial")]
+    partial class initial
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -121,6 +124,9 @@ namespace eGuide.Data.Context.Migrations
                     b.Property<Guid>("StationModelId")
                         .HasColumnType("uniqueidentifier");
 
+                    b.Property<Guid?>("StationProfileId")
+                        .HasColumnType("uniqueidentifier");
+
                     b.Property<int>("Status")
                         .HasColumnType("int");
 
@@ -132,6 +138,8 @@ namespace eGuide.Data.Context.Migrations
                     b.HasIndex("SocketId");
 
                     b.HasIndex("StationModelId");
+
+                    b.HasIndex("StationProfileId");
 
                     b.ToTable("StationSockets");
                 });
@@ -701,11 +709,7 @@ namespace eGuide.Data.Context.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("Longitude")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Name")
+                    b.Property<string>("Longtitude")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
@@ -787,6 +791,10 @@ namespace eGuide.Data.Context.Migrations
                         .HasForeignKey("StationModelId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+
+                    b.HasOne("eGuide.Data.Entities.Station.StationProfile", null)
+                        .WithMany("StationSockets")
+                        .HasForeignKey("StationProfileId");
 
                     b.Navigation("Socket");
 
@@ -873,6 +881,8 @@ namespace eGuide.Data.Context.Migrations
                     b.Navigation("Comments");
 
                     b.Navigation("StationFacilities");
+
+                    b.Navigation("StationSockets");
                 });
 #pragma warning restore 612, 618
         }

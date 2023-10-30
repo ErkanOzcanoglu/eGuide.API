@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace eGuide.Data.Entities.Authorization
+namespace eGuide.Data.Entites.Authorization
 {
     public class Register
     {

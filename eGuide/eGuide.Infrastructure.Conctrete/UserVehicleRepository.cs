@@ -1,5 +1,5 @@
 ﻿using eGuide.Data.Context.Context;
-using eGuide.Data.Entities.Client;
+using eGuide.Data.Entites.Client;
 using eGuide.Infrastructure.Concrete;
 using eGuide.Infrastructure.Interface;
 using Microsoft.EntityFrameworkCore;

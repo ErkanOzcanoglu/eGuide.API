@@ -6,7 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace eGuide.Data.Entities.Station {
+namespace eGuide.Data.Entites.Station {
 
     /// <summary>
     /// 
