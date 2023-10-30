@@ -6,7 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace eGuide.Data.Entities.Client
+namespace eGuide.Data.Entites.Client
 {
     public class UserVehicle:BaseModel
     {

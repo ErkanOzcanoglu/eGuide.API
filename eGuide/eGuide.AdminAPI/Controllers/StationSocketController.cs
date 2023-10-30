@@ -3,7 +3,7 @@ using eGuide.Business.Concrete;
 using eGuide.Business.Interface;
 using eGuide.Data.Dto.InComing.CreationDto.Station;
 using eGuide.Data.Dto.InComing.UpdateDto.Station;
-using eGuide.Data.Entities.Station;
+using eGuide.Data.Entites.Station;
 using eGuide.Data.Entities.Station;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;

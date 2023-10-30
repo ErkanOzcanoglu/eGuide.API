@@ -1,14 +1,11 @@
 ﻿using AutoMapper;
 using eGuide.Business.Concrete;
 using eGuide.Business.Interface;
-using eGuide.Data.Context.Context;
 using eGuide.Data.Dto.InComing.CreationDto.Station;
 using eGuide.Data.Dto.InComing.UpdateDto.Station;
 using eGuide.Data.Entities.Station;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
-using Newtonsoft.Json;
 
 namespace eGuide.Service.AdminAPI.Controllers {
     [Route("api/[controller]")]
@@ -20,13 +17,6 @@ namespace eGuide.Service.AdminAPI.Controllers {
         /// </summary>
         private readonly IStationBusiness _business;
 
-        private readonly DbSet<StationProfile> _dbSet;
-
-        private readonly DbSet<StationInformationModel> _dbSet2;
-
-        private readonly eGuideContext _context;
-
-
         /// <summary>
         /// The mapper
         /// </summary>
@@ -37,12 +27,9 @@ namespace eGuide.Service.AdminAPI.Controllers {
         /// </summary>
         /// <param name="business">The business.</param>
         /// <param name="mapper">The mapper.</param>
-        public StationController(IStationBusiness business, IMapper mapper ,eGuideContext context) {
-           
+        public StationController(IStationBusiness business, IMapper mapper) {
             _business = business;
             _mapper = mapper;
-            _context = context;
-            _dbSet2=_context.Set<StationInformationModel>();
         }
 
         /// <summary>
@@ -101,26 +88,5 @@ namespace eGuide.Service.AdminAPI.Controllers {
             await _business.RemoveAsync(id);
             return Ok();
         }
-
-
-
-        [HttpGet("GetAllStationProfile")]
-        public async Task<IActionResult> GetAllStationProfileInformation()
-        {
-            try
-            {
-
-                var stationInformation = _dbSet2.FromSqlRaw("EXEC [GetStationInformation]").ToList();
-                return new JsonResult(stationInformation);
-
-            }
-            catch (Exception ex)
-            {
-                return StatusCode(500, $"Internal server error: {ex}");
-            }
-
-        }
-
- 
     }
 }

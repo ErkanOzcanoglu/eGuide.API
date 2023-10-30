@@ -1,7 +1,7 @@
 ﻿using AutoMapper;
 using eGuide.Business.Interface;
 using eGuide.Data.Dto.InComing.CreationDto.Station;
-using eGuide.Data.Entities.Station;
+using eGuide.Data.Entites.Station;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 

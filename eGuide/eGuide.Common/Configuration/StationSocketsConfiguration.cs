@@ -1,4 +1,4 @@
-﻿using eGuide.Data.Entities.Station;
+﻿using eGuide.Data.Entites.Station;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using System;
 using System.Collections.Generic;
