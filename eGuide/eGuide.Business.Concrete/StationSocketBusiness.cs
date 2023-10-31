@@ -1,4 +1,5 @@
 ﻿using eGuide.Business.Interface;
+using eGuide.Data.Dto.OutComing.Station;
 using eGuide.Data.Entites.Station;
 using eGuide.Infrastructure.Interface;
 using System;
@@ -13,6 +14,14 @@ namespace eGuide.Business.Concrete {
 
         public StationSocketBusiness(IStationSocketRepository stationSocketRepository, IUnitOfWork unitOfWork) : base(stationSocketRepository, unitOfWork) {
             _stationSocketRepository = stationSocketRepository;
+        }
+
+        public async Task<StationSockets> GetSocketsByStationId(Guid id) {
+            var sockets = await _stationSocketRepository.GetSocketsByStationId(id);
+            if (sockets == null) {
+                return null;
+            }
+            return sockets;
         }
     }
 }

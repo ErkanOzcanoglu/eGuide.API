@@ -18,6 +18,5 @@ namespace eGuide.Infrastructure.Conctrete {
             _context = context;
             _dbSet = _context.Set<Socket>();
         }
-
     }
 }

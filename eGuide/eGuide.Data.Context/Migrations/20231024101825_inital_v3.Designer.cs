@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using eGuide.Data.Context.Context;
 
@@ -11,9 +12,11 @@ using eGuide.Data.Context.Context;
 namespace eGuide.Data.Context.Migrations
 {
     [DbContext(typeof(eGuideContext))]
-    partial class eGuideContextModelSnapshot : ModelSnapshot
+    [Migration("20231024101825_inital_v3")]
+    partial class inital_v3
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -35,68 +38,6 @@ namespace eGuide.Data.Context.Migrations
                     b.HasIndex("UsersId");
 
                     b.ToTable("StationProfileUser");
-                });
-
-            modelBuilder.Entity("eGuide.Data.Dto.OutComing.Station.StationInformationDto", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<string>("ConnectorType")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<DateTime?>("CreatedDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("Current")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<DateTime?>("DeletedDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("Icon")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Latitude")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Longitude")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Power")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<Guid>("SocketId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<string>("SocketType")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<Guid>("StationModelId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<DateTime?>("UpdatedDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("Voltage")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("StationInformationDto");
                 });
 
             modelBuilder.Entity("eGuide.Data.Entites.Client.UserVehicle", b =>
@@ -785,6 +726,30 @@ namespace eGuide.Data.Context.Migrations
                     b.HasIndex("StationModelId");
 
                     b.ToTable("Station");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = new Guid("4837ff86-6796-44b9-bbb0-f02ad670911d"),
+                            Address = "Address1",
+                            CreatedDate = new DateTime(2023, 10, 24, 13, 18, 25, 152, DateTimeKind.Local).AddTicks(2011),
+                            Latitude = "39.28490810034864",
+                            Longitude = "32.83302000000003",
+                            Name = "Name1",
+                            StationModelId = new Guid("fcd65466-6362-4ae3-bc9a-092c7aaeaeaa"),
+                            Status = 1
+                        },
+                        new
+                        {
+                            Id = new Guid("f572ff7b-cdb6-41a2-bb21-75641a631d3c"),
+                            Address = "Address2",
+                            CreatedDate = new DateTime(2023, 10, 24, 13, 18, 25, 152, DateTimeKind.Local).AddTicks(2022),
+                            Latitude = "39.28490810034864",
+                            Longitude = "32.83302000000003",
+                            Name = "Name2",
+                            StationModelId = new Guid("4057a7c1-bab2-4c6d-96ea-dfea4a2448a8"),
+                            Status = 1
+                        });
                 });
 
             modelBuilder.Entity("StationProfileUser", b =>

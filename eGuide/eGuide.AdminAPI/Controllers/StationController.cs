@@ -48,7 +48,7 @@ namespace eGuide.Service.AdminAPI.Controllers {
         /// <param name="station">The station.</param>
         /// <returns></returns>
         [HttpPost]
-        public async Task<ActionResult> Post(CreationDtoForStationProfile station) {
+        public async Task<ActionResult<StationProfile>> Post(CreationDtoForStationProfile station) {
             var entity = _mapper.Map<StationProfile>(station);
             var result = await _business.AddAsync(entity);
             return Ok(result);
@@ -61,7 +61,7 @@ namespace eGuide.Service.AdminAPI.Controllers {
         /// <param name="station">The station.</param>
         /// <returns></returns>
         [HttpPut]
-        public async Task<ActionResult> Put(Guid id, UpdateDtoForStationProfile station) {
+        public async Task<ActionResult<StationProfile>> Put(Guid id, UpdateDtoForStationProfile station) {
             var entity = await _business.GetbyIdAsync(id);
             if (entity == null) {
                 return NotFound();
@@ -86,6 +86,17 @@ namespace eGuide.Service.AdminAPI.Controllers {
         [HttpDelete]
         public async Task<ActionResult> Delete(Guid id) {
             await _business.RemoveAsync(id);
+            return Ok();
+        }
+
+        /// <summary>
+        /// Hards the delete.
+        /// </summary>
+        /// <param name="id">The identifier.</param>
+        /// <returns></returns>
+        [HttpDelete("{id}")]
+        public async Task<ActionResult<StationProfile>> HardDelete(Guid id) {
+            await _business.HardRemoveAsync(id);
             return Ok();
         }
     }

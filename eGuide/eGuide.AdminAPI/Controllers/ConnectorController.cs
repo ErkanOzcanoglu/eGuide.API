@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using eGuide.Business.Concrete;
 using eGuide.Business.Interface;
 using eGuide.Data.Dto.InComing.CreationDto.Station;
 using eGuide.Data.Dto.InComing.UpdateDto.Station;
@@ -42,18 +43,30 @@ namespace eGuide.Service.AdminAPI.Controllers {
             return Ok(result);
         }
 
+        [HttpGet("{id}")]
+        public async Task<ActionResult<Connector>> GetById(Guid id) {
+            var result = await _business.GetbyIdAsync(id);
+            return Ok(result);
+        }
+
         /// <summary>
         /// Posts the specified connector.
         /// </summary>
         /// <param name="connector">The connector.</param>
         /// <returns></returns>
         [HttpPost]
-        public async Task<ActionResult> Post(CreationDtoForConnector connector) {
+        public async Task<ActionResult<Connector>> Post(CreationDtoForConnector connector) {
             var entity = _mapper.Map<Connector>(connector);
             var result = await _business.AddAsync(entity);
             return Ok(result);
         }
 
+        /// <summary>
+        /// Puts the specified identifier.
+        /// </summary>
+        /// <param name="id">The identifier.</param>
+        /// <param name="connector">The connector.</param>
+        /// <returns></returns>
         [HttpPut]
         public async Task<ActionResult> Put(Guid id, UpdateDtoForConnector connector) {
             var entity = await _business.GetbyIdAsync(id);
@@ -70,9 +83,25 @@ namespace eGuide.Service.AdminAPI.Controllers {
             return Ok();
         }
 
+        /// <summary>
+        /// Deletes the specified identifier.
+        /// </summary>
+        /// <param name="id">The identifier.</param>
+        /// <returns></returns>
         [HttpDelete]
-        public async Task<ActionResult> Delete(Guid id) {
-            await _business.RemoveAsync(id);
+        public async Task<ActionResult<Connector>> Delete(Guid id) {
+            var result = _business.RemoveAsync(id);
+            return Ok(result);
+        }
+
+        /// <summary>
+        /// Hards the delete.
+        /// </summary>
+        /// <param name="id">The identifier.</param>
+        /// <returns></returns>
+        [HttpDelete("{id}")]
+        public async Task<ActionResult<Connector>> HardDelete(Guid id) {
+            await _business.HardRemoveAsync(id);
             return Ok();
         }
     }

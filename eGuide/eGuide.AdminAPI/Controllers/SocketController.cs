@@ -43,15 +43,26 @@ namespace eGuide.Service.AdminAPI.Controllers {
         }
 
         /// <summary>
+        /// Gets the by identifier.
+        /// </summary>
+        /// <param name="id">The identifier.</param>
+        /// <returns></returns>
+        [HttpGet("{id}")]
+        public async Task<IActionResult> GetById(Guid id) {
+            var socket = await _socketBusiness.GetbyIdAsync(id);
+            return Ok(socket);
+        }
+
+        /// <summary>
         /// Adds the socket.
         /// </summary>
         /// <param name="socket">The socket.</param>
         /// <returns></returns>
         [HttpPost]
-        public async Task<IActionResult> AddSocket(CreationDtoForSocket socket) {
+        public async Task<ActionResult<Socket>> AddSocket(CreationDtoForSocket socket) {
             var socketEntity = _mapper.Map<Socket>(socket);
-            await _socketBusiness.AddAsync(socketEntity);
-            return Ok();
+            var result = await _socketBusiness.AddAsync(socketEntity);
+            return Ok(result);
         }
 
         /// <summary>
@@ -85,10 +96,20 @@ namespace eGuide.Service.AdminAPI.Controllers {
         /// <param name="id">The identifier.</param>
         /// <returns></returns>
         [HttpDelete]
-        public async Task<ActionResult> Delete(Guid id) {
-            await _socketBusiness.RemoveAsync(id);
-            return Ok();
+        public async Task<ActionResult<Socket>> Delete(Guid id) {
+            var result = _socketBusiness.RemoveAsync(id);
+            return Ok(result);
         }
 
+        /// <summary>
+        /// Hards the delete.
+        /// </summary>
+        /// <param name="id">The identifier.</param>
+        /// <returns></returns>
+        [HttpDelete("{id}")]
+        public async Task<ActionResult<Socket>> HardDelete(Guid id) {
+            await _socketBusiness.HardRemoveAsync(id);
+            return Ok();
+        }
     }
 }
