@@ -1,11 +1,14 @@
-﻿using AutoMapper;
+﻿﻿using AutoMapper;
 using eGuide.Business.Concrete;
 using eGuide.Business.Interface;
+using eGuide.Data.Context.Context;
 using eGuide.Data.Dto.InComing.CreationDto.Station;
 using eGuide.Data.Dto.InComing.UpdateDto.Station;
 using eGuide.Data.Entities.Station;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
+using Newtonsoft.Json;
 
 namespace eGuide.Service.AdminAPI.Controllers {
     [Route("api/[controller]")]
@@ -18,6 +21,17 @@ namespace eGuide.Service.AdminAPI.Controllers {
         private readonly IStationBusiness _business;
 
         /// <summary>
+        /// The database set
+        /// </summary>
+        private readonly DbSet<StationInformationModel> _dbSet;
+
+        /// <summary>
+        /// The context
+        /// </summary>
+        private readonly eGuideContext _context;
+
+
+        /// <summary>
         /// The mapper
         /// </summary>
         private readonly IMapper _mapper;
@@ -27,9 +41,12 @@ namespace eGuide.Service.AdminAPI.Controllers {
         /// </summary>
         /// <param name="business">The business.</param>
         /// <param name="mapper">The mapper.</param>
-        public StationController(IStationBusiness business, IMapper mapper) {
+        public StationController(IStationBusiness business, IMapper mapper ,eGuideContext context) {
+           
             _business = business;
             _mapper = mapper;
+            _context = context;
+            _dbSet=_context.Set<StationInformationModel>();
         }
 
         /// <summary>
@@ -90,14 +107,23 @@ namespace eGuide.Service.AdminAPI.Controllers {
         }
 
         /// <summary>
-        /// Hards the delete.
+        /// Gets all station profile information.
         /// </summary>
-        /// <param name="id">The identifier.</param>
         /// <returns></returns>
-        [HttpDelete("{id}")]
-        public async Task<ActionResult<StationProfile>> HardDelete(Guid id) {
-            await _business.HardRemoveAsync(id);
-            return Ok();
+        [HttpGet("GetAllStationProfile")]
+        public async Task<IActionResult> GetAllStationProfileInformation()
+        {
+            try
+            {
+                var stationInformation = _dbSet.FromSqlRaw("EXEC [GetStationInformation]").ToList();
+                return new JsonResult(stationInformation);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, $"Internal server error: {ex}");
+            }
+
         }
+ 
     }
 }
