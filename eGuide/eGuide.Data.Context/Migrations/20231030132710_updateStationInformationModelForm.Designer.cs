@@ -12,8 +12,8 @@ using eGuide.Data.Context.Context;
 namespace eGuide.Data.Context.Migrations
 {
     [DbContext(typeof(eGuideContext))]
-    [Migration("20231024101825_inital_v3")]
-    partial class inital_v3
+    [Migration("20231030132710_updateStationInformationModelForm")]
+    partial class updateStationInformationModelForm
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -657,6 +657,43 @@ namespace eGuide.Data.Context.Migrations
                     b.ToTable("Socket");
                 });
 
+            modelBuilder.Entity("eGuide.Data.Entities.Station.StationInformationModel", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("Address")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("CreatedDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Latitude")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Longitude")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Socket")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<Guid>("StationModelId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("StationName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("StationInformationModel");
+                });
+
             modelBuilder.Entity("eGuide.Data.Entities.Station.StationModel", b =>
                 {
                     b.Property<Guid>("Id")
@@ -726,30 +763,6 @@ namespace eGuide.Data.Context.Migrations
                     b.HasIndex("StationModelId");
 
                     b.ToTable("Station");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = new Guid("4837ff86-6796-44b9-bbb0-f02ad670911d"),
-                            Address = "Address1",
-                            CreatedDate = new DateTime(2023, 10, 24, 13, 18, 25, 152, DateTimeKind.Local).AddTicks(2011),
-                            Latitude = "39.28490810034864",
-                            Longitude = "32.83302000000003",
-                            Name = "Name1",
-                            StationModelId = new Guid("fcd65466-6362-4ae3-bc9a-092c7aaeaeaa"),
-                            Status = 1
-                        },
-                        new
-                        {
-                            Id = new Guid("f572ff7b-cdb6-41a2-bb21-75641a631d3c"),
-                            Address = "Address2",
-                            CreatedDate = new DateTime(2023, 10, 24, 13, 18, 25, 152, DateTimeKind.Local).AddTicks(2022),
-                            Latitude = "39.28490810034864",
-                            Longitude = "32.83302000000003",
-                            Name = "Name2",
-                            StationModelId = new Guid("4057a7c1-bab2-4c6d-96ea-dfea4a2448a8"),
-                            Status = 1
-                        });
                 });
 
             modelBuilder.Entity("StationProfileUser", b =>

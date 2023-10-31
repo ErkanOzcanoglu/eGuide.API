@@ -67,12 +67,8 @@ namespace eGuide.Infrastructure.Concrete
         public async Task<T> GetbyId(Guid id)
         {
             var entity = await _dbSet.FindAsync(id);
-            if (entity.Status == 1) {
                 return entity;
-            }
-            else {
-                return null;
-            }
+            
         }
 
         /// <summary>
