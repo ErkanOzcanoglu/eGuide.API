@@ -21,8 +21,8 @@ builder.Services.AddSwaggerGen();
 
 builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
 
-builder.Services.AddScoped<IAdminAuthorizationBusiness, AdminAuthorizationBusiness>();
-builder.Services.AddScoped<IAdminAuthorizationRepository, AdminAuthorizationRepository>();
+builder.Services.AddScoped(typeof(IAdminProfileBusiness), typeof(AdminProfileBusiness));
+builder.Services.AddScoped(typeof(IAdminProfileRepository),typeof( AdminProfileRepository));
 
 builder.Services.AddScoped(typeof(IGenericRepository<>), typeof(GenericRepository<>));
 builder.Services.AddScoped(typeof(IBusiness<>), typeof(Business<>));
@@ -51,6 +51,9 @@ builder.Services.AddScoped(typeof(IStationModelRepository), typeof(StationModelR
 builder.Services.AddScoped(typeof(IWebsiteBusiness), typeof(WebsiteBusiness));
 builder.Services.AddScoped(typeof(IWebsiteRepository), typeof(WebsiteRepository));
 
+builder.Services.AddScoped(typeof(IWebsiteBusiness), typeof(WebsiteBusiness));
+builder.Services.AddScoped(typeof(IWebsiteRepository), typeof(WebsiteRepository));
+
 builder.Services.AddSingleton<IMongoClient>(new MongoClient("mongodb://localhost:27017"));
 builder.Services.AddSingleton<IMongoDatabase>(provider =>
 {
@@ -68,6 +71,9 @@ builder.Services.AddCors(options => {
         });
 });
 
+builder.Services.AddCors(options => options.AddPolicy(name: "eGuideOrigins",
+    policy => { policy.WithOrigins("http://localhost:4200").AllowAnyMethod().AllowAnyHeader(); }));
+
 builder.Services.AddAutoMapper(typeof(AdminProfileMapper));
 builder.Services.AddAutoMapper(typeof(BaseMapper<,,,>));
 builder.Services.AddDbContext<eGuideContext>(options => options.UseSqlServer(builder.Configuration.GetConnectionString("eGuideContext")));
@@ -83,7 +89,8 @@ if (app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 
-app.UseCors("AllowSpecificOrigin");
+
+app.UseCors("eGuideOrigins");
 
 app.UseAuthorization();
 

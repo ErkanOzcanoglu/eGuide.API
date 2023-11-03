@@ -37,13 +37,53 @@ namespace eGuide.Data.Entities.Admin
         /// </value>
         public string Email { get; set; }
 
-        public string Username { get; set; } = string.Empty;
+        /// <summary>
+        /// Gets or sets the pass word hash.
+        /// </summary>
+        /// <value>
+        /// The pass word hash.
+        /// </value>
         public byte[] PassWordHash { get; set; }
+
+        /// <summary>
+        /// Gets or sets the pass word salt.
+        /// </summary>
+        /// <value>
+        /// The pass word salt.
+        /// </value>
         public byte[] PassWordSalt { get; set; }
 
-        //public DateTime? VerifiedAt { get; set; }
-        //public string PasswordResetToken { get; set; }
-        //public DateTime? PasswordResetTokenExpiresAt { get; set; }
+        /// <summary>
+        /// Gets or sets the verified at.
+        /// </summary>
+        /// <value>
+        /// The verified at.
+        /// </value>
+        public DateTime? VerifiedAt { get; set; }
+
+        /// <summary>
+        /// Gets or sets the password reset token.
+        /// </summary>
+        /// <value>
+        /// The password reset token.
+        /// </value>
+        public string? PasswordResetToken { get; set; }
+
+        /// <summary>
+        /// Gets or sets the reset token expires.
+        /// </summary>
+        /// <value>
+        /// The reset token expires.
+        /// </value>
+        public DateTime? ResetTokenExpires { set; get; }
+
+        /// <summary>
+        /// Gets or sets the confirmation token.
+        /// </summary>
+        /// <value>
+        /// The confirmation token.
+        /// </value>
+        public string? ConfirmationToken { get; set; }
 
     }
 }
