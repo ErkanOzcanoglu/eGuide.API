@@ -10,13 +10,25 @@ using System.Text;
 using System.Threading.Tasks;
 
 namespace eGuide.Infrastructure.Conctrete {
-    public class SocketRepository : GenericRepository<Socket>, ISocketRepository {
-        private readonly eGuideContext _context;
-        private readonly DbSet<Socket> _dbSet;
 
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <seealso cref="eGuide.Infrastructure.Concrete.GenericRepository&lt;eGuide.Data.Entities.Station.Socket&gt;" />
+    /// <seealso cref="eGuide.Infrastructure.Interface.ISocketRepository" />
+    public class SocketRepository : GenericRepository<Socket>, ISocketRepository {
+
+        /// <summary>
+        /// The context
+        /// </summary>
+        private readonly eGuideContext _context;
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="SocketRepository"/> class.
+        /// </summary>
+        /// <param name="context">The context.</param>
         public SocketRepository(eGuideContext context) : base(context) {
             _context = context;
-            _dbSet = _context.Set<Socket>();
         }
     }
 }
