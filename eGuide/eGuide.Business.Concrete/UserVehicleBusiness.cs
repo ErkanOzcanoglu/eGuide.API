@@ -1,5 +1,6 @@
 ﻿using eGuide.Business.Interface;
 using eGuide.Data.Entites.Client;
+using eGuide.Data.Entities.Client;
 using eGuide.Infrastructure.Interface;
 using System;
 using System.Collections.Generic;
@@ -35,6 +36,16 @@ namespace eGuide.Business.Concrete
         public async Task<UserVehicle> GetByVehicleIdAsync(Guid vehicleId)
         {
             return await _vehicleRepository.GetByVehicleIdAsync(vehicleId);
+        }
+
+        /// <summary>
+        /// Gets the user vehicles.
+        /// </summary>
+        /// <param name="id">The identifier.</param>
+        /// <returns></returns>
+        public async Task<List<Vehicle>> GetUserVehicles(Guid id)
+        {
+            return await _vehicleRepository.GetUserVehicles(id);
         }
     }
 }

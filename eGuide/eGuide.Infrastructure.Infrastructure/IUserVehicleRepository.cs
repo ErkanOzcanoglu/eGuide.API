@@ -1,4 +1,5 @@
 ﻿using eGuide.Data.Entites.Client;
+using eGuide.Data.Entities.Client;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -19,5 +20,12 @@ namespace eGuide.Infrastructure.Interface
         /// <param name="vehicleId">The vehicle identifier.</param>
         /// <returns></returns>
         Task<UserVehicle> GetByVehicleIdAsync(Guid vehicleId);
+
+        /// <summary>
+        /// Gets the user vehicles.
+        /// </summary>
+        /// <param name="userId">The user identifier.</param>
+        /// <returns></returns>
+        Task<List<Vehicle>> GetUserVehicles(Guid userId);
     }
 }

@@ -1,5 +1,6 @@
 ﻿using eGuide.Data.Context.Context;
 using eGuide.Data.Entites.Client;
+using eGuide.Data.Entities.Client;
 using eGuide.Infrastructure.Concrete;
 using eGuide.Infrastructure.Interface;
 using Microsoft.EntityFrameworkCore;
@@ -22,6 +23,7 @@ namespace eGuide.Infrastructure.Conctrete
         /// The database set
         /// </summary>
         private readonly DbSet<UserVehicle> _dbSet;
+
         /// <summary>
         /// Initializes a new instance of the <see cref="UserVehicleRepository"/> class.
         /// </summary>
@@ -30,6 +32,7 @@ namespace eGuide.Infrastructure.Conctrete
         {
             _context = context;
             _dbSet = _context.Set<UserVehicle>();
+
         }
 
         /// <summary>
@@ -41,5 +44,23 @@ namespace eGuide.Infrastructure.Conctrete
         {
             return await _context.Set<UserVehicle>().FirstOrDefaultAsync(uv => uv.VehicleId == vehicleId);
         }
+
+        /// <summary>
+        /// Gets the user vehicles.
+        /// </summary>
+        /// <param name="userId">The user identifier.</param>
+        /// <returns></returns>
+        public async Task<List<Vehicle>> GetUserVehicles(Guid userId)
+        {
+            return await _dbSet.Where(uv => uv.UserId == userId && uv.Status == 1).Select(uv => uv.Vehicle).AsNoTracking().ToListAsync();
+        }
+
+        //return await _dbSet.Include(uv => uv.Vehicle).Where(uv => uv.UserId == userId).Select(uv => new Vehicle
+        //{
+        //    Brand = uv.Vehicle.Brand,
+        //    Model = uv.Vehicle.Model,
+        //    UserVehicles = uv.Vehicle.UserVehicles
+
+        //}).AsNoTracking().ToListAsync();
     }
 }
