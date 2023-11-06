@@ -200,6 +200,6 @@ namespace eGuide.Data.Context.Context {
         /// <value>
         /// The station information dto.
         /// </value>
-        public DbSet<StationInformationDto> StationInformationDto { get; set; }
+        public DbSet<StationInformationModel> StationInformationModel { get; set; }
     }
 }

@@ -64,7 +64,7 @@ builder.Services.AddSingleton<IMongoDatabase>(provider =>
 builder.Services.AddCors(options => {
     options.AddPolicy("AllowSpecificOrigin",
         builder => {
-            builder.WithOrigins("http://localhost:55847") // Replace with your frontend application's URL
+            builder.WithOrigins("http://localhost:58746") // Replace with your frontend application's URL
                     .AllowAnyHeader()
                     .AllowAnyMethod()
                     .AllowCredentials(); // You might need this if your WebSocket server requires credentials
