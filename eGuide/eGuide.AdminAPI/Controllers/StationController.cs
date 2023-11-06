@@ -55,7 +55,7 @@ namespace eGuide.Service.AdminAPI.Controllers {
         /// <returns></returns>
         [HttpGet]
         public async Task<ActionResult> Get() {
-            var result = await _business.GetAllAsync();
+            var result = await _business.GetAllStationInformation();
             return Ok(result);
         }
 
@@ -122,8 +122,6 @@ namespace eGuide.Service.AdminAPI.Controllers {
             {
                 return StatusCode(500, $"Internal server error: {ex}");
             }
-
         }
- 
     }
 }

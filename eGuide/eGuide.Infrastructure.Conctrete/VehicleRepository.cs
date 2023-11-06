@@ -19,23 +19,17 @@ namespace eGuide.Infrastructure.Conctrete
         protected readonly eGuideContext _context;
 
         /// <summary>
-        /// The database set
-        /// </summary>
-        private readonly DbSet<Vehicle> _dbSet;
-
-        /// <summary>
-        /// Initializes a new instance of the <see cref="UserRepository"/> class.
+        /// Initializes a new instance of the <see cref="UserRepository" /> class.
         /// </summary>
         /// <param name="context">The context.</param>
         public VehicleRepository(eGuideContext context) : base(context)
         {
             _context = context;
-            _dbSet = _context.Set<Vehicle>();
         }
 
         public async Task<IEnumerable<string>> GetAllBrandsAsync()
         {
-            var brands = await _dbSet.Select(v => v.Brand).Distinct().ToListAsync();
+            var brands = await _context.Vehicle.Select(v => v.Brand).Distinct().ToListAsync();
             return brands;
         }
 
@@ -58,7 +52,7 @@ namespace eGuide.Infrastructure.Conctrete
         /// <returns></returns>
         public async Task<Guid> GetPrimaryKeyByBrandAndModelAsync(string brand, string model)
         {
-            var vehicle = await _dbSet.FirstOrDefaultAsync(v => v.Brand == brand && v.Model == model);
+            var vehicle = await _context.Vehicle.FirstOrDefaultAsync(v => v.Brand == brand && v.Model == model);
 
             return vehicle.Id;
         }

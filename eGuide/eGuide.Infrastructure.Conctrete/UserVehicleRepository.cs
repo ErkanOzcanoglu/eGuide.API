@@ -18,12 +18,11 @@ namespace eGuide.Infrastructure.Conctrete
         /// The context
         /// </summary>
         protected readonly eGuideContext _context;
-
+        
         /// <summary>
         /// The database set
         /// </summary>
         private readonly DbSet<UserVehicle> _dbSet;
-
         /// <summary>
         /// Initializes a new instance of the <see cref="UserVehicleRepository"/> class.
         /// </summary>
@@ -32,7 +31,6 @@ namespace eGuide.Infrastructure.Conctrete
         {
             _context = context;
             _dbSet = _context.Set<UserVehicle>();
-
         }
 
         /// <summary>

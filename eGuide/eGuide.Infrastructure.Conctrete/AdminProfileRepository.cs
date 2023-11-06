@@ -16,12 +16,7 @@ namespace eGuide.Infrastructure.Conctrete
         /// <summary>
         /// The context
         /// </summary>
-        protected readonly eGuideContext _context;
-
-        /// <summary>
-        /// The database set
-        /// </summary>
-        private readonly DbSet<AdminProfile> _dbSet;
+        private readonly eGuideContext _context;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="UserRepository"/> class.
@@ -30,7 +25,6 @@ namespace eGuide.Infrastructure.Conctrete
         public AdminProfileRepository(eGuideContext context) : base(context)
         {
             _context = context;
-            _dbSet = _context.Set<AdminProfile>();
         }
     }
 }
