@@ -1,6 +1,4 @@
-﻿using AutoMapper;
-using eGuide.Data.Context.Context;
-using eGuide.Data.Entities;
+﻿using eGuide.Data.Context.Context;
 using eGuide.Data.Entities.Admin;
 using eGuide.Infrastructure.Concrete;
 using eGuide.Infrastructure.Interface;
@@ -13,9 +11,11 @@ using System.Threading.Tasks;
 
 namespace eGuide.Infrastructure.Conctrete
 {
-    public class AdminAuthorizationRepository : GenericRepository<AdminProfile>, IAdminAuthorizationRepository
+    public class AdminProfileRepository : GenericRepository<AdminProfile>, IAdminProfileRepository
     {
-        /// <summary>The context</summary>
+        /// <summary>
+        /// The context
+        /// </summary>
         protected readonly eGuideContext _context;
 
         /// <summary>
@@ -23,22 +23,14 @@ namespace eGuide.Infrastructure.Conctrete
         /// </summary>
         private readonly DbSet<AdminProfile> _dbSet;
 
-        public AdminAuthorizationRepository(eGuideContext context) : base(context)
+        /// <summary>
+        /// Initializes a new instance of the <see cref="UserRepository"/> class.
+        /// </summary>
+        /// <param name="context">The context.</param>
+        public AdminProfileRepository(eGuideContext context) : base(context)
         {
             _context = context;
             _dbSet = _context.Set<AdminProfile>();
-        }
-
-        /// <summary>
-        /// Initializes a new instance of the <see cref="GenericRepository{T}"/> class.
-        /// </summary>
-        /// <param name="context">The context.</param>
-
-
-
-        public async Task Register(AdminProfile entity)
-        {
-            await _dbSet.AddAsync(entity);
         }
     }
 }
