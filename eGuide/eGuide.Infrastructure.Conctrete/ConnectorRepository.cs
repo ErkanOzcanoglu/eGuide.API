@@ -18,17 +18,11 @@ namespace eGuide.Infrastructure.Conctrete {
         private readonly eGuideContext _context;
 
         /// <summary>
-        /// The connectors
-        /// </summary>
-        private readonly DbSet<Connector> _connectors;
-
-        /// <summary>
         /// Initializes a new instance of the <see cref="ConnectorRepository"/> class.
         /// </summary>
         /// <param name="context">The context.</param>
         public ConnectorRepository(eGuideContext context) : base(context) {
             _context = context;
-            _connectors = _context.Set<Connector>();
         }
 
     }

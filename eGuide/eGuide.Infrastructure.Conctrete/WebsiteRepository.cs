@@ -18,17 +18,11 @@ namespace eGuide.Infrastructure.Conctrete {
         private readonly eGuideContext _context;
 
         /// <summary>
-        /// The database set
-        /// </summary>
-        private readonly DbSet<Website> _dbSet;
-
-        /// <summary>
-        /// Initializes a new instance of the <see cref="WebsiteRepository"/> class.
+        /// Initializes a new instance of the <see cref="WebsiteRepository" /> class.
         /// </summary>
         /// <param name="context">The context.</param>
         public WebsiteRepository(eGuideContext context) : base(context) {
             _context = context;
-            _dbSet = _context.Set<Website>();
         }
 
     }
