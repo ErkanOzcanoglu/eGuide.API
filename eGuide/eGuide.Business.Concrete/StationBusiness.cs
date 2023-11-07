@@ -15,9 +15,8 @@ namespace eGuide.Business.Concrete {
             _stationRepository = stationRepository;
         }
 
-        public async Task<List<StationProfile>> GetAllStationInformation() {
-            var result = await _stationRepository.GetAllStationInformation();
-            return result;
+        public Task<List<StationProfile>> GetAllS() {
+            return _stationRepository.GetStationProf();
         }
     }
 }

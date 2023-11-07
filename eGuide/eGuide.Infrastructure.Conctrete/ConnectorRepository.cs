@@ -24,6 +24,13 @@ namespace eGuide.Infrastructure.Conctrete {
         public ConnectorRepository(eGuideContext context) : base(context) {
             _context = context;
         }
+        public async Task<List<Connector>> GetCons() {
+            var res = _connectors.Include(s => s.Sockets).ToList();
+            if(res != null)
+            return res;
 
+            return null;
+
+        }
     }
 }

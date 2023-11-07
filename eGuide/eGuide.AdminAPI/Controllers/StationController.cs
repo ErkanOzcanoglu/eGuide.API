@@ -1,4 +1,4 @@
-﻿﻿using AutoMapper;
+using AutoMapper;
 using eGuide.Business.Concrete;
 using eGuide.Business.Interface;
 using eGuide.Data.Context.Context;
@@ -55,7 +55,7 @@ namespace eGuide.Service.AdminAPI.Controllers {
         /// <returns></returns>
         [HttpGet]
         public async Task<ActionResult> Get() {
-            var result = await _business.GetAllStationInformation();
+            var result = await _business.GetAllS();
             return Ok(result);
         }
 

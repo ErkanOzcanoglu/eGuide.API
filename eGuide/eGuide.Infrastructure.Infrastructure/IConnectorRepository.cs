@@ -13,6 +13,6 @@ namespace eGuide.Infrastructure.Interface {
     /// </summary>
     /// <seealso cref="eGuide.Infrastructure.Interface.IGenericRepository&lt;eGuide.Data.Entities.Station.Connector&gt;" />
     public interface IConnectorRepository : IGenericRepository<Connector> {
-      
+        Task<List<Connector>> GetCons();
     }
 }
