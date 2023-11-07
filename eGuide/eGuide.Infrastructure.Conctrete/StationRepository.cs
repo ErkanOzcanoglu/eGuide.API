@@ -19,5 +19,19 @@ namespace eGuide.Infrastructure.Conctrete {
             _context = context;
             _dbSet = _context.Set<StationProfile>();
         }
+
+        public async Task<List<StationProfile>> GetStationProf() {
+            var res = _context.Station.Where(x => x.Status == 1)
+                .Include(x => x.StationModel)
+                .ThenInclude(y => y.StationSockets)
+                .ThenInclude(z => z.Socket)
+                .ThenInclude(k => k.Connector)
+                .ToList();
+
+            if (res != null)
+                return res;
+
+            return null;
+        }
     }
 }

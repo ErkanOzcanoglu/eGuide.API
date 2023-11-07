@@ -30,6 +30,13 @@ namespace eGuide.Infrastructure.Conctrete {
             _context = context;
             _connectors = _context.Set<Connector>();
         }
+        public async Task<List<Connector>> GetCons() {
+            var res = _connectors.Include(s => s.Sockets).ToList();
+            if(res != null)
+            return res;
 
+            return null;
+
+        }
     }
 }

@@ -6,8 +6,11 @@ using eGuide.Data.Entities.Admin;
 using eGuide.Infrastructure.Concrete;
 using eGuide.Infrastructure.Conctrete;
 using eGuide.Infrastructure.Interface;
+using Microsoft.AspNetCore.Mvc.Formatters;
 using Microsoft.EntityFrameworkCore;
 using MongoDB.Driver;
+using System.Text.Json;
+using System.Text.Json.Serialization;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -18,6 +21,21 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
+//builder.Services.AddControllers(options => {
+//    options.OutputFormatters.RemoveType<SystemTextJsonOutputFormatter>();
+//    options.OutputFormatters.Add(new SystemTextJsonOutputFormatter(new JsonSerializerOptions(JsonSerializerDefaults.Web) {
+//        ReferenceHandler = ReferenceHandler.Preserve,
+//    }));
+//});
+
+builder.Services.AddControllers()
+    .AddJsonOptions(options => options.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.IgnoreCycles);
+
+
+JsonSerializerOptions options = new() {
+    ReferenceHandler = ReferenceHandler.IgnoreCycles,
+    WriteIndented = true
+};
 
 builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
 
@@ -61,7 +79,7 @@ builder.Services.AddSingleton<IMongoDatabase>(provider =>
 builder.Services.AddCors(options => {
     options.AddPolicy("AllowSpecificOrigin",
         builder => {
-            builder.WithOrigins("http://localhost:58746") // Replace with your frontend application's URL
+            builder.WithOrigins("http://localhost:4200") // Replace with your frontend application's URL
                     .AllowAnyHeader()
                     .AllowAnyMethod()
                     .AllowCredentials(); // You might need this if your WebSocket server requires credentials

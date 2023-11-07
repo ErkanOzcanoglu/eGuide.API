@@ -14,5 +14,9 @@ namespace eGuide.Business.Concrete {
         public StationBusiness(IStationRepository stationRepository, IUnitOfWork unitOfWork) : base(stationRepository, unitOfWork) {
             _stationRepository = stationRepository;
         }
+
+        public Task<List<StationProfile>> GetAllS() {
+            return _stationRepository.GetStationProf();
+        }
     }
 }

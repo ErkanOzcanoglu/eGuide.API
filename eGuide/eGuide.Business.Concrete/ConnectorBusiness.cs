@@ -16,5 +16,10 @@ namespace eGuide.Business.Concrete {
             _connectorRepository = connectorRepository;
             _unitOfWork = unitOfWork;
         }
+
+        public async Task<List<Connector>> GetCon() {
+            var re = await _connectorRepository.GetCons();
+            return re;
+        }
     }
 }
