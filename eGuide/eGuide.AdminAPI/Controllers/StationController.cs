@@ -1,4 +1,4 @@
-﻿﻿using AutoMapper;
+using AutoMapper;
 using eGuide.Business.Concrete;
 using eGuide.Business.Interface;
 using eGuide.Data.Context.Context;
@@ -122,8 +122,6 @@ namespace eGuide.Service.AdminAPI.Controllers {
             {
                 return StatusCode(500, $"Internal server error: {ex}");
             }
-
         }
- 
     }
 }

@@ -24,18 +24,12 @@ namespace eGuide.Infrastructure.Conctrete
         protected readonly eGuideContext _context;
 
         /// <summary>
-        /// The database set
-        /// </summary>
-        private readonly DbSet<User> _dbSet;
-
-        /// <summary>
         /// Initializes a new instance of the <see cref="UserRepository"/> class.
         /// </summary>
         /// <param name="context">The context.</param>
         public UserRepository(eGuideContext context) : base(context)
         {
             _context = context;
-            _dbSet = _context.Set<User>();
         }
     }
 }

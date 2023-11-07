@@ -9,21 +9,22 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace eGuide.Infrastructure.Conctrete {
-    public class WebsiteRepository : GenericRepository<Website>, IWebsiteRepository {
-
+namespace eGuide.Infrastructure.Conctrete
+{
+    public class AdminProfileRepository : GenericRepository<AdminProfile>, IAdminProfileRepository
+    {
         /// <summary>
         /// The context
         /// </summary>
         private readonly eGuideContext _context;
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="WebsiteRepository" /> class.
+        /// Initializes a new instance of the <see cref="UserRepository"/> class.
         /// </summary>
         /// <param name="context">The context.</param>
-        public WebsiteRepository(eGuideContext context) : base(context) {
+        public AdminProfileRepository(eGuideContext context) : base(context)
+        {
             _context = context;
         }
-
     }
 }

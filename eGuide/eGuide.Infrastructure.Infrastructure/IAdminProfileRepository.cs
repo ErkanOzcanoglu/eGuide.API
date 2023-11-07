@@ -5,10 +5,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace eGuide.Business.Interface
+namespace eGuide.Infrastructure.Interface
 {
-    public interface IAdminAuthorizationBusiness : IBusiness<AdminProfile>
+    public interface IAdminProfileRepository : IGenericRepository<AdminProfile>
     {
-        Task Register(AdminProfile entity);
     }
 }
