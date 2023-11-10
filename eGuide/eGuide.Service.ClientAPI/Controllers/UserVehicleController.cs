@@ -62,33 +62,6 @@ namespace eGuide.Service.ClientAPI.Controllers
         }
 
         /// <summary>
-        /// Gets the specified user identifier.
-        /// </summary>
-        /// <param name="userId">The user identifier.</param>
-        /// <returns></returns>
-        [HttpGet]
-        public IActionResult Get(Guid userId) 
-        {
-            try
-            {
-                var userIdParameter = new SqlParameter("@UserId", SqlDbType.NVarChar, 60)
-                {
-                    Value = userId.ToString() 
-                };
-
-                var result = _context.Vehicle //from vehicle table
-                    .FromSqlRaw("EXEC GetVehiclesByUserID @UserId", userIdParameter)
-                    .ToList();
-
-                return Ok(result);
-            }
-            catch (Exception ex)
-            {
-                return BadRequest($"Hata: {ex.Message}"); 
-            }
-        }
-
-        /// <summary>
         /// Updates the user vehicle.
         /// </summary>
         /// <param name="userid">The userid.</param>
@@ -151,5 +124,53 @@ namespace eGuide.Service.ClientAPI.Controllers
                 return BadRequest($"Hata: {ex.Message}");
             }
         }
+
+        /// <summary>
+        /// Gets the user vehicles.
+        /// </summary>
+        /// <param name="userId">The user identifier.</param>
+        /// <returns></returns>
+        [HttpGet("GetVehicleByUserId/{userId}")]
+        public async Task<IActionResult> GetUserVehicles(Guid userId)
+        {
+            try
+            {
+                var userVehicles = await _business.GetUserVehicles(userId);
+
+                if (userVehicles == null)
+                {
+                    return NotFound(); // Kullanıcıya ait araçlar bulunamadıysa 404 dönebilirsiniz.
+                }
+
+                return Ok(userVehicles);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest($"Hata: {ex.Message}");
+            }
+        }
+
+        //[HttpGet]
+        //public IActionResult Get(Guid userId) 
+        //{
+        //    try
+        //    {
+        //        var userIdParameter = new SqlParameter("@UserId", SqlDbType.NVarChar, 60)
+        //        {
+        //            Value = userId.ToString() 
+        //        };
+
+        //        var result = _context.Vehicle //from vehicle table
+        //            .FromSqlRaw("EXEC GetVehiclesByUserID @UserId", userIdParameter)
+        //            .ToList();
+
+        //        return Ok(result);
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        return BadRequest($"Hata: {ex.Message}"); 
+        //    }
+        //}
+
     }
 }
