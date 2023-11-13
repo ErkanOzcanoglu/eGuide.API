@@ -87,9 +87,8 @@ namespace eGuide.Service.AdminAPI.Controllers {
                     return NotFound($"User with ID {id} not found.");
                 }
 
-                var userDto = _mapper.Map<AdminProfileDto>(user);
-
-                return Ok(userDto);
+                
+                return Ok(user);
             }
             catch (DbUpdateException ex)
             {
@@ -256,7 +255,7 @@ namespace eGuide.Service.AdminAPI.Controllers {
             }
             if (entity.Status == 1)
             {
-                return Ok(entity.Id);
+                return Ok(entity);
             }
             else
             {

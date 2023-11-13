@@ -195,35 +195,36 @@ namespace eGuide.Service.ClientAPI.Controllers {
         /// <param name="register">The register.</param>
         /// <returns></returns>
         [HttpPost("register")]
-        public async Task<ActionResult<User>> Register(CreationDtoForUser register)
-        {
-            if (register.Password != register.ConfirmPassword)
-            {
+        public async Task<ActionResult<User>> Register(CreationDtoForUser register) {
+            if (register.Password != register.ConfirmPassword) {
                 return BadRequest("Şifreler eşleşmiyor.");
             }
 
             byte[] passwordHash, passwordSalt;
             CreatePasswordHash(register.Password, out passwordHash, out passwordSalt);
 
-            var user = new User
-            {
+            var user = new User {
                 Surname = register.Surname,
                 Name = register.Name,
                 Email = register.Email,
                 PassWordHash = passwordHash,
                 PassWordSalt = passwordSalt,
                 ConfirmationToken = CreatedToken(register),
-                CreatedDate=DateTime.Now
+                CreatedDate = DateTime.Now
 
             };
-            
+
             user.Status = 1;
 
             await _business.AddAsync(user);
 
-            string confirmationLink = $"http://localhost:4200/verify-email/{user.ConfirmationToken}";
-            string confirmationEmailBody = $"Hesabınızı onaylamak için lütfen şu bağlantıya tıklayın: {confirmationLink}";
-            SendEmail(confirmationEmailBody, user.Email);
+            string htmlTemplate = System.IO.File.ReadAllText(@"C:\Users\ozcan\Downloads\emailTemplate_Register_eGuide.html");
+
+            string confirmationLink = $"http://localhost:4201/verify-email/{user.ConfirmationToken}";
+
+            string emailBody = htmlTemplate.Replace("{CONFIRMATION_LINK}", confirmationLink);
+
+            SendEmail(emailBody, user.Email);
 
             return Ok(user);
         }
@@ -397,12 +398,10 @@ namespace eGuide.Service.ClientAPI.Controllers {
         /// <param name="userEmail">The user email.</param>
         /// <returns></returns>
         [HttpPost("forgot-password/{userEmail}")]
-        public async Task<IActionResult> ForgotPasswordScreen(string userEmail)
-        {
+        public async Task<IActionResult> ForgotPasswordScreen(string userEmail) {
             var user = await _business.FirstOrDefault(u => u.Email == userEmail);
 
-            if (user == null)
-            {
+            if (user == null) {
                 return BadRequest("UserNotFound");
             }
 
@@ -412,11 +411,13 @@ namespace eGuide.Service.ClientAPI.Controllers {
             user.ResetTokenExpires = DateTime.Now.AddDays(1);
             await _business.UpdateAsync(user);
 
-            string confirmationLink = $"http://localhost:4200/forgot-password/{user.PasswordResetToken}";
-            string confirmationEmailBody = $"Hesabınızı şifrenizi sıfırlamak için lütfen şu bağlantıya tıklayın: {confirmationLink}";
+            string htmlTemplate = System.IO.File.ReadAllText(@"C:\Users\ozcan\Downloads\emailTemplate_ForgotPassword_eGuide.html");
+
+            string confirmationLink = $"http://localhost:4201/forgot-password/{user.PasswordResetToken}";
+            string emailBody = htmlTemplate.Replace("{CONFIRMATION_LINK}", confirmationLink);
             string recipientEmail = user.Email;
 
-            SendEmail(confirmationEmailBody, recipientEmail);
+            SendEmail(emailBody, recipientEmail);
 
             return Ok("You may now reset your password");
 

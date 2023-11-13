@@ -128,7 +128,7 @@ namespace eGuide.Data.Context.Context {
         /// <value>
         /// The socket.
         /// </value>
-        public DbSet<Socket> Socket { get; set; }
+        public DbSet<CharginUnit> CharginUnit { get; set; }
 
         /// <summary>
         /// Gets or sets the social media.
@@ -192,7 +192,7 @@ namespace eGuide.Data.Context.Context {
         /// <value>
         /// The station socket.
         /// </value>
-        public DbSet<StationSockets> StationSockets { get; set; }
+        public DbSet<StationsChargingUnits> StationsChargingUnits { get; set; }
 
         /// <summary>
         /// Gets or sets the station information dto.

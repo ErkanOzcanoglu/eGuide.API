@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace eGuide.Data.Context.Migrations
 {
     /// <inheritdoc />
-    public partial class updateStationInformationModelForm : Migration
+    public partial class chargingUnit : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -19,9 +19,12 @@ namespace eGuide.Data.Context.Migrations
                     Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Surname = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Email = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Username = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     PassWordHash = table.Column<byte[]>(type: "varbinary(max)", nullable: false),
                     PassWordSalt = table.Column<byte[]>(type: "varbinary(max)", nullable: false),
+                    VerifiedAt = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    PasswordResetToken = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    ResetTokenExpires = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    ConfirmationToken = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Status = table.Column<int>(type: "int", nullable: false),
                     CreatedDate = table.Column<DateTime>(type: "datetime2", nullable: false),
                     UpdatedDate = table.Column<DateTime>(type: "datetime2", nullable: true),
@@ -223,23 +226,6 @@ namespace eGuide.Data.Context.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Vehicle",
-                columns: table => new
-                {
-                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    Brand = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Model = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Status = table.Column<int>(type: "int", nullable: false),
-                    CreatedDate = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    UpdatedDate = table.Column<DateTime>(type: "datetime2", nullable: true),
-                    DeletedDate = table.Column<DateTime>(type: "datetime2", nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Vehicle", x => x.Id);
-                });
-
-            migrationBuilder.CreateTable(
                 name: "Website",
                 columns: table => new
                 {
@@ -257,7 +243,7 @@ namespace eGuide.Data.Context.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Socket",
+                name: "CharginUnit",
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
@@ -274,9 +260,33 @@ namespace eGuide.Data.Context.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Socket", x => x.Id);
+                    table.PrimaryKey("PK_CharginUnit", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Socket_Connector_ConnectorId",
+                        name: "FK_CharginUnit_Connector_ConnectorId",
+                        column: x => x.ConnectorId,
+                        principalTable: "Connector",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Vehicle",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    Brand = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Model = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    ConnectorId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    Status = table.Column<int>(type: "int", nullable: false),
+                    CreatedDate = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    UpdatedDate = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    DeletedDate = table.Column<DateTime>(type: "datetime2", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Vehicle", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Vehicle_Connector_ConnectorId",
                         column: x => x.ConnectorId,
                         principalTable: "Connector",
                         principalColumn: "Id",
@@ -310,6 +320,36 @@ namespace eGuide.Data.Context.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "StationsChargingUnits",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    SocketId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    CharginUnitId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    StationModelId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    Status = table.Column<int>(type: "int", nullable: false),
+                    CreatedDate = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    UpdatedDate = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    DeletedDate = table.Column<DateTime>(type: "datetime2", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_StationsChargingUnits", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_StationsChargingUnits_CharginUnit_CharginUnitId",
+                        column: x => x.CharginUnitId,
+                        principalTable: "CharginUnit",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_StationsChargingUnits_StationModels_StationModelId",
+                        column: x => x.StationModelId,
+                        principalTable: "StationModels",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "UserVehicle",
                 columns: table => new
                 {
@@ -334,35 +374,6 @@ namespace eGuide.Data.Context.Migrations
                         name: "FK_UserVehicle_Vehicle_VehicleId",
                         column: x => x.VehicleId,
                         principalTable: "Vehicle",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "StationSockets",
-                columns: table => new
-                {
-                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    SocketId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    StationModelId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    Status = table.Column<int>(type: "int", nullable: false),
-                    CreatedDate = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    UpdatedDate = table.Column<DateTime>(type: "datetime2", nullable: true),
-                    DeletedDate = table.Column<DateTime>(type: "datetime2", nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_StationSockets", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_StationSockets_Socket_SocketId",
-                        column: x => x.SocketId,
-                        principalTable: "Socket",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_StationSockets_StationModels_StationModelId",
-                        column: x => x.StationModelId,
-                        principalTable: "StationModels",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
@@ -451,6 +462,11 @@ namespace eGuide.Data.Context.Migrations
                 });
 
             migrationBuilder.CreateIndex(
+                name: "IX_CharginUnit_ConnectorId",
+                table: "CharginUnit",
+                column: "ConnectorId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_Comment_OwnerId",
                 table: "Comment",
                 column: "OwnerId");
@@ -459,11 +475,6 @@ namespace eGuide.Data.Context.Migrations
                 name: "IX_Comment_StationId",
                 table: "Comment",
                 column: "StationId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Socket_ConnectorId",
-                table: "Socket",
-                column: "ConnectorId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Station_StationModelId",
@@ -486,13 +497,13 @@ namespace eGuide.Data.Context.Migrations
                 column: "UsersId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_StationSockets_SocketId",
-                table: "StationSockets",
-                column: "SocketId");
+                name: "IX_StationsChargingUnits_CharginUnitId",
+                table: "StationsChargingUnits",
+                column: "CharginUnitId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_StationSockets_StationModelId",
-                table: "StationSockets",
+                name: "IX_StationsChargingUnits_StationModelId",
+                table: "StationsChargingUnits",
                 column: "StationModelId");
 
             migrationBuilder.CreateIndex(
@@ -504,6 +515,11 @@ namespace eGuide.Data.Context.Migrations
                 name: "IX_UserVehicle_VehicleId",
                 table: "UserVehicle",
                 column: "VehicleId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Vehicle_ConnectorId",
+                table: "Vehicle",
+                column: "ConnectorId");
         }
 
         /// <inheritdoc />
@@ -540,7 +556,7 @@ namespace eGuide.Data.Context.Migrations
                 name: "StationProfileUser");
 
             migrationBuilder.DropTable(
-                name: "StationSockets");
+                name: "StationsChargingUnits");
 
             migrationBuilder.DropTable(
                 name: "UserVehicle");
@@ -555,7 +571,7 @@ namespace eGuide.Data.Context.Migrations
                 name: "Station");
 
             migrationBuilder.DropTable(
-                name: "Socket");
+                name: "CharginUnit");
 
             migrationBuilder.DropTable(
                 name: "User");

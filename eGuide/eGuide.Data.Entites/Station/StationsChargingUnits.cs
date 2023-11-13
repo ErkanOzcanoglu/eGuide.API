@@ -7,7 +7,7 @@ using System.Text;
 using System.Threading.Tasks;
 
 namespace eGuide.Data.Entites.Station {
-    public class StationSockets : BaseModel {
+    public class StationsChargingUnits : BaseModel {
 
         /// <summary>
         /// Gets or sets the socket identifier.
@@ -23,7 +23,7 @@ namespace eGuide.Data.Entites.Station {
         /// <value>
         /// The socket.
         /// </value>
-        public Socket Socket { get; set; }
+        public CharginUnit CharginUnit { get; set; }
 
         /// <summary>
         /// Gets or sets the station model identifier.

@@ -25,7 +25,7 @@ namespace eGuide.Infrastructure.Conctrete {
             _context = context;
         }
         public async Task<List<Connector>> GetCons() {
-            var res = _connectors.Include(s => s.Sockets).ToList();
+            var res = _context.Connector.Include(s => s.Sockets).ToList();
             if(res != null)
             return res;
 

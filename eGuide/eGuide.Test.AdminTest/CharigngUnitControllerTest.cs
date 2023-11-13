@@ -8,16 +8,16 @@ using Moq;
 using Xunit;
 
 namespace eGuide.Test.AdminTest {
-    public class SocketControllerTest {
+    public class CharigngUnitControllerTest {
         /// <summary>
         /// Gets the returns list of sockets.
         /// </summary>
         [Fact]
         public async void Get_ReturnsListOfSockets() {
             // Arrange
-            var mockBusiness = new Mock<ISocketBusiness>();
+            var mockBusiness = new Mock<IChargingUnitBusiness>();
             var mockMapper = new Mock<IMapper>();
-            var controller = new SocketController(mockBusiness.Object, mockMapper.Object);
+            var controller = new ChargingUnitController(mockBusiness.Object, mockMapper.Object);
 
             // Act
             var result = await controller.GetAll();
@@ -32,11 +32,11 @@ namespace eGuide.Test.AdminTest {
         [Fact]
         public async void Post_AddNewSocket() {
             // Arrange
-            var mockBusiness = new Mock<ISocketBusiness>();
+            var mockBusiness = new Mock<IChargingUnitBusiness>();
             var mockMapper = new Mock<IMapper>();
-            var controller = new SocketController(mockBusiness.Object, mockMapper.Object);
+            var controller = new ChargingUnitController(mockBusiness.Object, mockMapper.Object);
 
-            var createDto = new CreationDtoForSocket {
+            var createDto = new CreationDtoForChargingUnit {
                 ConnectorId = Guid.NewGuid(),
                 Name = "New Name",
                 Current = "200",
@@ -47,7 +47,7 @@ namespace eGuide.Test.AdminTest {
 
             // Act
             var result = await controller.AddSocket(createDto);
-            var model = result.Value as Socket;
+            var model = result.Value as CharginUnit;
 
             // Assert
             Assert.NotNull(result);
@@ -64,12 +64,12 @@ namespace eGuide.Test.AdminTest {
         [Fact]
         public async void Put_UpdatesSocket() {
             // Arrange
-            var mockBusiness = new Mock<ISocketBusiness>();
+            var mockBusiness = new Mock<IChargingUnitBusiness>();
             var mockMapper = new Mock<IMapper>();
-            var controller = new SocketController(mockBusiness.Object, mockMapper.Object);
+            var controller = new ChargingUnitController(mockBusiness.Object, mockMapper.Object);
 
             var id = Guid.NewGuid();
-            var updateDto = new UpdateDtoForSocket {
+            var updateDto = new UpdateDtoForChargingUnit {
                 Current = "300",
                 Voltage = "220",
                 Power = "100",
@@ -86,15 +86,15 @@ namespace eGuide.Test.AdminTest {
         [Fact]
         public async void Delete_RemoveSocket() {
             // Arrange
-            var mockBusiness = new Mock<ISocketBusiness>();
+            var mockBusiness = new Mock<IChargingUnitBusiness>();
             var mockMapper = new Mock<IMapper>();
-            var controller = new SocketController(mockBusiness.Object, mockMapper.Object);
+            var controller = new ChargingUnitController(mockBusiness.Object, mockMapper.Object);
 
             var id = Guid.NewGuid();
 
             // Act
             var result = await controller.Delete(id);
-            var model = result.Value as Socket;
+            var model = result.Value as CharginUnit;
 
             // Assert
             Assert.NotNull(result);

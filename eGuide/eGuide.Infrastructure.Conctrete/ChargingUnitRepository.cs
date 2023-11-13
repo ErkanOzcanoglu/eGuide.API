@@ -14,9 +14,9 @@ namespace eGuide.Infrastructure.Conctrete {
     /// <summary>
     /// 
     /// </summary>
-    /// <seealso cref="eGuide.Infrastructure.Concrete.GenericRepository&lt;eGuide.Data.Entities.Station.Socket&gt;" />
-    /// <seealso cref="eGuide.Infrastructure.Interface.ISocketRepository" />
-    public class SocketRepository : GenericRepository<Socket>, ISocketRepository {
+    /// <seealso cref="eGuide.Infrastructure.Concrete.GenericRepository&lt;eGuide.Data.Entities.Station.CharginUnit&gt;" />
+    /// <seealso cref="eGuide.Infrastructure.Interface.IChargingUnitRepository" />
+    public class ChargingUnitRepository : GenericRepository<CharginUnit>, IChargingUnitRepository {
 
         /// <summary>
         /// The context
@@ -24,10 +24,10 @@ namespace eGuide.Infrastructure.Conctrete {
         private readonly eGuideContext _context;
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="SocketRepository"/> class.
+        /// Initializes a new instance of the <see cref="ChargingUnitRepository"/> class.
         /// </summary>
         /// <param name="context">The context.</param>
-        public SocketRepository(eGuideContext context) : base(context) {
+        public ChargingUnitRepository(eGuideContext context) : base(context) {
             _context = context;
         }
     }

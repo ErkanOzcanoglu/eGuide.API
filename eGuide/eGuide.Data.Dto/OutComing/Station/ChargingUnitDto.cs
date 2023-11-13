@@ -11,7 +11,7 @@ namespace eGuide.Data.Dto.OutComing.Station
     /// 
     /// </summary>
     /// <seealso cref="eGuide.Data.Dto.OutComing.BaseDto" />
-    public class SocketDto : BaseDto
+    public class ChargingUnitDto : BaseDto
     {
 
         /// <summary>

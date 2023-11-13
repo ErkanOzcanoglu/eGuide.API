@@ -5,14 +5,14 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace eGuide.Data.Dto.InComing.UpdateDto.Station 
+namespace eGuide.Data.Dto.InComing.CreationDto.Station
 {
 
     /// <summary>
     /// 
     /// </summary>
     /// <seealso cref="eGuide.Data.Dto.OutComing.BaseDto" />
-    public class UpdateDtoForSocket 
+    public class CreationDtoForChargingUnit : BaseDto
     {
 
         /// <summary>
@@ -54,5 +54,13 @@ namespace eGuide.Data.Dto.InComing.UpdateDto.Station
         /// The name.
         /// </value>
         public string Name { get; set; }
+
+        /// <summary>
+        /// Gets or sets the connector identifier.
+        /// </summary>
+        /// <value>
+        /// The connector identifier.
+        /// </value>
+        public Guid ConnectorId { get; set; }
     }
 }

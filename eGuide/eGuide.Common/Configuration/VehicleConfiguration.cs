@@ -1,4 +1,5 @@
 ﻿using eGuide.Data.Entities.Client;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using System;
 using System.Collections.Generic;
@@ -20,6 +21,11 @@ namespace eGuide.Common.Configuration {
         public void Configure(EntityTypeBuilder<Vehicle> builder) {
 
             builder.HasKey(builder => builder.Id);
+
+            builder.HasOne(builder => builder.Connector)
+                .WithMany(builder => builder.Vehicles)
+                .HasForeignKey(builder => builder.ConnectorId)
+                .OnDelete(DeleteBehavior.Cascade);
         }
     }
 }

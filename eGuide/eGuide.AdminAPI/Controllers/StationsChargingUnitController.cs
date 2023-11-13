@@ -15,12 +15,12 @@ using Microsoft.EntityFrameworkCore;
 namespace eGuide.Service.AdminAPI.Controllers {
     [Route("api/[controller]")]
     [ApiController]
-    public class StationSocketController : ControllerBase {
+    public class StationsChargingUnitController : ControllerBase {
 
         /// <summary>
         /// The station socket business
         /// </summary>
-        private readonly IStationSocketBusiness _stationSocketBusiness;
+        private readonly IStationChargingUnitBusiness _business;
 
         /// <summary>
         /// The mapper
@@ -28,12 +28,12 @@ namespace eGuide.Service.AdminAPI.Controllers {
         private readonly IMapper _mapper;
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="StationSocketController"/> class.
+        /// Initializes a new instance of the <see cref="StationsChargingUnitController" /> class.
         /// </summary>
-        /// <param name="stationSocketBusiness">The station socket business.</param>
+        /// <param name="business">The business.</param>
         /// <param name="mapper">The mapper.</param>
-        public StationSocketController(IStationSocketBusiness stationSocketBusiness, IMapper mapper) {
-            _stationSocketBusiness = stationSocketBusiness;
+        public StationsChargingUnitController(IStationChargingUnitBusiness business, IMapper mapper) {
+            _business = business;
             _mapper = mapper;
         }
 
@@ -43,19 +43,19 @@ namespace eGuide.Service.AdminAPI.Controllers {
         /// <returns></returns>
         [HttpGet]
         public async Task<IActionResult> GetAll() {
-            var stationSockets = await _stationSocketBusiness.GetAllAsync();
-            return Ok(stationSockets);
+            var stationChargingUnit = await _business.GetAllAsync();
+            return Ok(stationChargingUnit);
         }
 
         /// <summary>
         /// Adds the station socket.
         /// </summary>
-        /// <param name="stationSocket">The station socket.</param>
+        /// <param name="stationChargingUnit">The station charging unit.</param>
         /// <returns></returns>
         [HttpPost]
-        public async Task<IActionResult> AddStationSocket(CreationDtoForStationSockets stationSocket) {
-            var stationSocketEntity = _mapper.Map<StationSockets>(stationSocket);
-            await _stationSocketBusiness.AddAsync(stationSocketEntity);
+        public async Task<IActionResult> AddStationChargingUnit(CreationDtoForStationChargingUnit stationChargingUnit) {
+            var stationChargingUnitEntity = _mapper.Map<StationsChargingUnits>(stationChargingUnit);
+            await _business.AddAsync(stationChargingUnitEntity);
             return Ok();
         }
 
@@ -63,20 +63,20 @@ namespace eGuide.Service.AdminAPI.Controllers {
         /// Puts the specified identifier.
         /// </summary>
         /// <param name="id">The identifier.</param>
-        /// <param name="stationSocket">The station socket.</param>
+        /// <param name="stationChargingUnit">The station charging unit.</param>
         /// <returns></returns>
         [HttpPut]
-        public async Task<ActionResult> Put(Guid id, UpdateDtoForStationSocket stationSocket) {
-            var entity = await _stationSocketBusiness.GetbyIdAsync(id);
+        public async Task<ActionResult> Put(Guid id, UpdateDtoForStationChargingUnit stationChargingUnit) {
+            var entity = await _business.GetbyIdAsync(id);
             if (entity == null) {
                 return NotFound();
             }
-            entity.StationModelId = stationSocket.StationModelId;
-            entity.SocketId = stationSocket.SocketId;
+            entity.StationModelId = stationChargingUnit.StationModelId;
+            entity.SocketId = stationChargingUnit.SocketId;
 
-            var mappedEntity = _mapper.Map<StationSockets>(entity);
+            var mappedEntity = _mapper.Map<StationsChargingUnits>(entity);
 
-            await _stationSocketBusiness.UpdateAsync(mappedEntity);
+            await _business.UpdateAsync(mappedEntity);
             return Ok();
         }
 
@@ -87,7 +87,7 @@ namespace eGuide.Service.AdminAPI.Controllers {
         /// <returns></returns>
         [HttpDelete]
         public async Task<ActionResult> Delete(Guid id) {
-            await _stationSocketBusiness.RemoveAsync(id);
+            await _business.RemoveAsync(id);
             return Ok();
         }
     }

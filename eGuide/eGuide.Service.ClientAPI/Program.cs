@@ -23,8 +23,15 @@ builder.Services.AddControllers()
     .AddJsonOptions(options => options.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.IgnoreCycles);
 
 
-builder.Services.AddCors(options => options.AddPolicy(name: "eGuideOrigins",
-    policy => { policy.WithOrigins("http://localhost:4200").AllowAnyMethod().AllowAnyHeader(); }));
+builder.Services.AddCors(options => {
+    options.AddPolicy("eGuideOrigins",
+        builder => {
+            builder.WithOrigins("http://localhost:4201") // Replace with your frontend application's URL
+                    .AllowAnyHeader()
+                    .AllowAnyMethod()
+                    .AllowCredentials(); // You might need this if your WebSocket server requires credentials
+        });
+});
 
 builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
 

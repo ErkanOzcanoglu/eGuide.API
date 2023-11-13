@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 
 namespace eGuide.Data.Dto.OutComing.Station {
-    public class StationSocketDto {
+    public class StationChargingUnitDto {
 
         /// <summary>
         /// Gets or sets the station model identifier.

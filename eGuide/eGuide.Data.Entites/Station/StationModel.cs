@@ -37,7 +37,7 @@ namespace eGuide.Data.Entities.Station
         /// <value>
         /// The station sockets.
         /// </value>
-        public ICollection<StationSockets> StationSockets { get; set; }
+        public ICollection<StationsChargingUnits> StationsChargingUnits { get; set; }
 
     }
 }

@@ -8,16 +8,16 @@ using System.Threading.Tasks;
 
 namespace eGuide.Common.Configuration {
     public class StationSocketsConfiguration {
-        public void Configure(EntityTypeBuilder<StationSockets> builder) {
+        public void Configure(EntityTypeBuilder<StationsChargingUnits> builder) {
             builder.HasKey(builder => builder.Id);
 
 
-            builder.HasOne(builder => builder.Socket)
-                .WithMany(builder => builder.StationSockets)
+            builder.HasOne(builder => builder.CharginUnit)
+                .WithMany(builder => builder.StationsChargingUnits)
                 .HasForeignKey(builder => builder.SocketId);
 
             builder.HasOne(builder => builder.StationModel)
-                .WithMany(builder => builder.StationSockets)
+                .WithMany(builder => builder.StationsChargingUnits)
                 .HasForeignKey(builder => builder.StationModelId);
         }
     }

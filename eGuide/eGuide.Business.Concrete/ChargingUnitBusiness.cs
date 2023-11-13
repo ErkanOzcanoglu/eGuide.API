@@ -8,12 +8,12 @@ using System.Text;
 using System.Threading.Tasks;
 
 namespace eGuide.Business.Concrete {
-    public class SocketBusiness : Business<Socket>, ISocketBusiness {
-        private readonly ISocketRepository _socketRepository;
+    public class ChargingUnitBusiness : Business<CharginUnit>, IChargingUnitBusiness {
+        private readonly IChargingUnitRepository _repository;
         private readonly IUnitOfWork _unitOfWork;
 
-        public SocketBusiness(ISocketRepository socketRepository, IUnitOfWork unitOfWork) : base(socketRepository, unitOfWork) {
-            _socketRepository = socketRepository;
+        public ChargingUnitBusiness(IChargingUnitRepository repository, IUnitOfWork unitOfWork) : base(repository, unitOfWork) {
+            _repository = repository;
             _unitOfWork = unitOfWork;
         }
     }

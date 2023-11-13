@@ -18,9 +18,9 @@ namespace eGuide.Infrastructure.Conctrete {
     /// <summary>
     /// 
     /// </summary>
-    /// <seealso cref="eGuide.Infrastructure.Concrete.GenericRepository&lt;eGuide.Data.Entites.Station.StationSockets&gt;" />
-    /// <seealso cref="eGuide.Infrastructure.Interface.IStationSocketRepository" />
-    public class StationSocketRepository : GenericRepository<StationSockets>, IStationSocketRepository {
+    /// <seealso cref="eGuide.Infrastructure.Concrete.GenericRepository&lt;eGuide.Data.Entites.Station.StationsChargingUnits&gt;" />
+    /// <seealso cref="eGuide.Infrastructure.Interface.IStationChargingUnitRepository" />
+    public class StationChargingUnitRepository : GenericRepository<StationsChargingUnits>, IStationChargingUnitRepository {
 
         /// <summary>
         /// The context
@@ -28,10 +28,10 @@ namespace eGuide.Infrastructure.Conctrete {
         private readonly eGuideContext _context;
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="StationSocketRepository"/> class.
+        /// Initializes a new instance of the <see cref="StationChargingUnitRepository"/> class.
         /// </summary>
         /// <param name="context">The context.</param>
-        public StationSocketRepository(eGuideContext context) : base(context) {
+        public StationChargingUnitRepository(eGuideContext context) : base(context) {
             _context = context;
         }
 
@@ -40,8 +40,8 @@ namespace eGuide.Infrastructure.Conctrete {
         /// </summary>
         /// <param name="id">The identifier.</param>
         /// <returns></returns>
-        public async Task<StationSockets> GetSocketsByStationId(Guid id) {
-            var sockets = await _context.StationSockets.Where(x => x.SocketId == id).FirstOrDefaultAsync();
+        public async Task<StationsChargingUnits> GetChargingUnitByStationId(Guid id) {
+            var sockets = await _context.StationsChargingUnits.Where(x => x.SocketId == id).FirstOrDefaultAsync();
             if (sockets == null) {
                 return null;
             }

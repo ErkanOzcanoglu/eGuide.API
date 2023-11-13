@@ -1,4 +1,5 @@
-﻿using System;
+﻿using eGuide.Data.Entities.Client;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -36,7 +37,15 @@ namespace eGuide.Data.Entities.Station
         /// <value>
         /// The sockets.
         /// </value>
-        public ICollection<Socket> Sockets { get; set; }
+        public ICollection<CharginUnit> Sockets { get; set; }
+
+        /// <summary>
+        /// Gets or sets the vehicles.
+        /// </summary>
+        /// <value>
+        /// The vehicles.
+        /// </value>
+        public ICollection<Vehicle> Vehicles { get; set; }
 
     }
 }

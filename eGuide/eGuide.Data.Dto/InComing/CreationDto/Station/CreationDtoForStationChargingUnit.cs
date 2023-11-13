@@ -1,11 +1,12 @@
-﻿using System;
+﻿using eGuide.Data.Dto.OutComing;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace eGuide.Data.Dto.InComing.UpdateDto.Station {
-    public class UpdateDtoForStationSocket {
+namespace eGuide.Data.Dto.InComing.CreationDto.Station {
+    public class CreationDtoForStationChargingUnit : BaseDto {
 
         /// <summary>
         /// Gets or sets the socket identifier.
@@ -16,10 +17,10 @@ namespace eGuide.Data.Dto.InComing.UpdateDto.Station {
         public Guid SocketId { get; set; }
 
         /// <summary>
-        /// Gets or sets the station model identifier.
+        /// Gets or sets the station profile identifier.
         /// </summary>
         /// <value>
-        /// The station model identifier.
+        /// The station profile identifier.
         /// </value>
         public Guid StationModelId { get; set; }
     }

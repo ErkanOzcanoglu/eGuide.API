@@ -84,6 +84,5 @@ namespace eGuide.Data.Entities.Admin
         /// The confirmation token.
         /// </value>
         public string? ConfirmationToken { get; set; }
-
     }
 }

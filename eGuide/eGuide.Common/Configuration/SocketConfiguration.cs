@@ -18,7 +18,7 @@ namespace eGuide.Common.Configuration {
         /// Configures the specified builder.
         /// </summary>
         /// <param name="builder">The builder.</param>
-        public void Configure(EntityTypeBuilder<Socket> builder) {
+        public void Configure(EntityTypeBuilder<CharginUnit> builder) {
             builder.HasKey(builder => builder.Id);
 
           builder.HasOne(builder=> builder.Connector)

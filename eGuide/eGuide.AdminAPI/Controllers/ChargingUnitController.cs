@@ -10,12 +10,12 @@ using Microsoft.AspNetCore.Mvc;
 namespace eGuide.Service.AdminAPI.Controllers {
     [Route("api/[controller]")]
     [ApiController]
-    public class SocketController : ControllerBase {
+    public class ChargingUnitController : ControllerBase {
 
         /// <summary>
         /// The socket business
         /// </summary>
-        private readonly ISocketBusiness _socketBusiness;
+        private readonly IChargingUnitBusiness _socketBusiness;
 
         /// <summary>
         /// The mapper
@@ -23,11 +23,11 @@ namespace eGuide.Service.AdminAPI.Controllers {
         private readonly IMapper _mapper;
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="SocketController"/> class.
+        /// Initializes a new instance of the <see cref="ChargingUnitController"/> class.
         /// </summary>
         /// <param name="socketBusiness">The socket business.</param>
         /// <param name="mapper">The mapper.</param>
-        public SocketController(ISocketBusiness socketBusiness, IMapper mapper) {
+        public ChargingUnitController(IChargingUnitBusiness socketBusiness, IMapper mapper) {
             _socketBusiness = socketBusiness;
             _mapper = mapper;
         }
@@ -59,8 +59,8 @@ namespace eGuide.Service.AdminAPI.Controllers {
         /// <param name="socket">The socket.</param>
         /// <returns></returns>
         [HttpPost]
-        public async Task<ActionResult<Socket>> AddSocket(CreationDtoForSocket socket) {
-            var socketEntity = _mapper.Map<Socket>(socket);
+        public async Task<ActionResult<CharginUnit>> AddSocket(CreationDtoForChargingUnit socket) {
+            var socketEntity = _mapper.Map<CharginUnit>(socket);
             var result = await _socketBusiness.AddAsync(socketEntity);
             return Ok(result);
         }
@@ -72,7 +72,7 @@ namespace eGuide.Service.AdminAPI.Controllers {
         /// <param name="connector">The connector.</param>
         /// <returns></returns>
         [HttpPut]
-        public async Task<ActionResult> Put(Guid id, UpdateDtoForSocket connector) {
+        public async Task<ActionResult> Put(Guid id, UpdateDtoForChargingUnit connector) {
             var entity = await _socketBusiness.GetbyIdAsync(id);
             if (entity == null) {
                 return NotFound();
@@ -84,7 +84,7 @@ namespace eGuide.Service.AdminAPI.Controllers {
             entity.Power = connector.Power;
             entity.Type = connector.Type;
 
-            var mappedEntity = _mapper.Map<Socket>(entity);
+            var mappedEntity = _mapper.Map<CharginUnit>(entity);
 
             await _socketBusiness.UpdateAsync(mappedEntity);
             return Ok();
@@ -96,7 +96,7 @@ namespace eGuide.Service.AdminAPI.Controllers {
         /// <param name="id">The identifier.</param>
         /// <returns></returns>
         [HttpDelete]
-        public async Task<ActionResult<Socket>> Delete(Guid id) {
+        public async Task<ActionResult<CharginUnit>> Delete(Guid id) {
             var result = _socketBusiness.RemoveAsync(id);
             return Ok(result);
         }
@@ -107,7 +107,7 @@ namespace eGuide.Service.AdminAPI.Controllers {
         /// <param name="id">The identifier.</param>
         /// <returns></returns>
         [HttpDelete("{id}")]
-        public async Task<ActionResult<Socket>> HardDelete(Guid id) {
+        public async Task<ActionResult<CharginUnit>> HardDelete(Guid id) {
             await _socketBusiness.HardRemoveAsync(id);
             return Ok();
         }

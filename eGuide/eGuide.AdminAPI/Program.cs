@@ -10,6 +10,7 @@ using Microsoft.AspNetCore.Mvc.Formatters;
 using Microsoft.EntityFrameworkCore;
 using MongoDB.Driver;
 using System.Text.Json;
+using System.Text.Json.Serialization;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -50,11 +51,11 @@ builder.Services.AddScoped(typeof(IConnectorRepository), typeof(ConnectorReposit
 builder.Services.AddScoped(typeof(IStationFacilityBusiness), typeof(StationFacilityBusiness));
 builder.Services.AddScoped(typeof(IStationFacilityRepository), typeof(StationFacilityRepository));
 
-builder.Services.AddScoped(typeof(ISocketBusiness), typeof(SocketBusiness));
-builder.Services.AddScoped(typeof(ISocketRepository), typeof(SocketRepository));
+builder.Services.AddScoped(typeof(IChargingUnitBusiness), typeof(ChargingUnitBusiness));
+builder.Services.AddScoped(typeof(IChargingUnitRepository), typeof(ChargingUnitRepository));
 
-builder.Services.AddScoped(typeof(IStationSocketBusiness), typeof(StationSocketBusiness));
-builder.Services.AddScoped(typeof(IStationSocketRepository), typeof(StationSocketRepository));
+builder.Services.AddScoped(typeof(IStationChargingUnitBusiness), typeof(StationChargingUnitBusiness));
+builder.Services.AddScoped(typeof(IStationChargingUnitRepository), typeof(StationChargingUnitRepository));
 
 builder.Services.AddScoped(typeof(IStationBusiness), typeof(StationBusiness));
 builder.Services.AddScoped(typeof(IStationRepository), typeof(StationRepository));
