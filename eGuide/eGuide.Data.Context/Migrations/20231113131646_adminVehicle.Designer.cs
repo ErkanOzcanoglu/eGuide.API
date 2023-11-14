@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using eGuide.Data.Context.Context;
 
@@ -11,9 +12,11 @@ using eGuide.Data.Context.Context;
 namespace eGuide.Data.Context.Migrations
 {
     [DbContext(typeof(eGuideContext))]
-    partial class eGuideContextModelSnapshot : ModelSnapshot
+    [Migration("20231113131646_adminVehicle")]
+    partial class adminVehicle
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -428,6 +431,9 @@ namespace eGuide.Data.Context.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<Guid>("ConnectorId")
+                        .HasColumnType("uniqueidentifier");
+
                     b.Property<DateTime>("CreatedDate")
                         .HasColumnType("datetime2");
 
@@ -445,6 +451,8 @@ namespace eGuide.Data.Context.Migrations
                         .HasColumnType("datetime2");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("ConnectorId");
 
                     b.ToTable("Vehicle");
                 });
@@ -841,6 +849,17 @@ namespace eGuide.Data.Context.Migrations
                     b.Navigation("StationModel");
                 });
 
+            modelBuilder.Entity("eGuide.Data.Entities.Client.Vehicle", b =>
+                {
+                    b.HasOne("eGuide.Data.Entities.Station.Connector", "Connector")
+                        .WithMany("Vehicles")
+                        .HasForeignKey("ConnectorId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Connector");
+                });
+
             modelBuilder.Entity("eGuide.Data.Entities.Station.CharginUnit", b =>
                 {
                     b.HasOne("eGuide.Data.Entities.Station.Connector", "Connector")
@@ -902,6 +921,8 @@ namespace eGuide.Data.Context.Migrations
             modelBuilder.Entity("eGuide.Data.Entities.Station.Connector", b =>
                 {
                     b.Navigation("Sockets");
+
+                    b.Navigation("Vehicles");
                 });
 
             modelBuilder.Entity("eGuide.Data.Entities.Station.Facility", b =>

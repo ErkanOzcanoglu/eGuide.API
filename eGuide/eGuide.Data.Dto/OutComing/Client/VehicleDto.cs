@@ -27,5 +27,6 @@ namespace eGuide.Data.Dto.OutComing.Client
         /// The model.
         /// </value>
         public string Model { get; set; }
+
     }
 }

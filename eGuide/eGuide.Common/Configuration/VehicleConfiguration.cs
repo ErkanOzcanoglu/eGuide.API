@@ -21,11 +21,6 @@ namespace eGuide.Common.Configuration {
         public void Configure(EntityTypeBuilder<Vehicle> builder) {
 
             builder.HasKey(builder => builder.Id);
-
-            builder.HasOne(builder => builder.Connector)
-                .WithMany(builder => builder.Vehicles)
-                .HasForeignKey(builder => builder.ConnectorId)
-                .OnDelete(DeleteBehavior.Cascade);
         }
     }
 }

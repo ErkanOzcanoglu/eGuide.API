@@ -14,13 +14,7 @@ namespace eGuide.Data.Dto.InComing.UpdateDto.Client
     /// <seealso cref="eGuide.Data.Entities.BaseDto" />
     public class UpdateDtoForVehicle 
     {
-        /// <summary>
-        /// Gets or sets the brand.
-        /// </summary>
-        /// <value>
-        /// The brand.
-        /// </value>
-        public string Brand { get; set; }
+   
         /// <summary>
         /// Gets or sets the model.
         /// </summary>

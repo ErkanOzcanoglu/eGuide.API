@@ -12,8 +12,8 @@ using eGuide.Data.Context.Context;
 namespace eGuide.Data.Context.Migrations
 {
     [DbContext(typeof(eGuideContext))]
-    [Migration("20231113124045_chargingUnit")]
-    partial class chargingUnit
+    [Migration("20231114074634_vehicleFK")]
+    partial class vehicleFK
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -431,7 +431,7 @@ namespace eGuide.Data.Context.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<Guid>("ConnectorId")
+                    b.Property<Guid?>("ConnectorId")
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<DateTime>("CreatedDate")
@@ -853,9 +853,7 @@ namespace eGuide.Data.Context.Migrations
                 {
                     b.HasOne("eGuide.Data.Entities.Station.Connector", "Connector")
                         .WithMany("Vehicles")
-                        .HasForeignKey("ConnectorId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("ConnectorId");
 
                     b.Navigation("Connector");
                 });

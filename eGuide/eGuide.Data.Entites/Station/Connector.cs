@@ -39,13 +39,5 @@ namespace eGuide.Data.Entities.Station
         /// </value>
         public ICollection<CharginUnit> Sockets { get; set; }
 
-        /// <summary>
-        /// Gets or sets the vehicles.
-        /// </summary>
-        /// <value>
-        /// The vehicles.
-        /// </value>
-        public ICollection<Vehicle> Vehicles { get; set; }
-
     }
 }
