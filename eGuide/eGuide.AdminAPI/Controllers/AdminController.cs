@@ -255,7 +255,7 @@ namespace eGuide.Service.AdminAPI.Controllers {
             }
             if (entity.Status == 1)
             {
-                return Ok(entity);
+                return Ok(entity.Id);
             }
             else
             {
