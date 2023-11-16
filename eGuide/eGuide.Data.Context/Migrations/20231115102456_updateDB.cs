@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace eGuide.Data.Context.Migrations
 {
     /// <inheritdoc />
-    public partial class chargingUnit : Migration
+    public partial class updateDB : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -66,7 +66,8 @@ namespace eGuide.Data.Context.Migrations
                 {
                     Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     Type = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Icon = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    ImageName = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    ImageData = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Status = table.Column<int>(type: "int", nullable: false),
                     CreatedDate = table.Column<DateTime>(type: "datetime2", nullable: false),
                     UpdatedDate = table.Column<DateTime>(type: "datetime2", nullable: true),

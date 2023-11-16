@@ -12,8 +12,8 @@ using eGuide.Data.Context.Context;
 namespace eGuide.Data.Context.Migrations
 {
     [DbContext(typeof(eGuideContext))]
-    [Migration("20231113124045_chargingUnit")]
-    partial class chargingUnit
+    [Migration("20231115102456_updateDB")]
+    partial class updateDB
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -611,7 +611,11 @@ namespace eGuide.Data.Context.Migrations
                     b.Property<DateTime?>("DeletedDate")
                         .HasColumnType("datetime2");
 
-                    b.Property<string>("Icon")
+                    b.Property<string>("ImageData")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("ImageName")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
