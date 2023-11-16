@@ -128,7 +128,7 @@ namespace eGuide.Data.Context.Context {
         /// <value>
         /// The socket.
         /// </value>
-        public DbSet<CharginUnit> CharginUnit { get; set; }
+        public DbSet<ChargingUnit> CharginUnit { get; set; }
 
         /// <summary>
         /// Gets or sets the social media.

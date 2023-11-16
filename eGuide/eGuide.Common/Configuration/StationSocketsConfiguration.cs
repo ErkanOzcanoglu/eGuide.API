@@ -12,9 +12,9 @@ namespace eGuide.Common.Configuration {
             builder.HasKey(builder => builder.Id);
 
 
-            builder.HasOne(builder => builder.CharginUnit)
+            builder.HasOne(builder => builder.ChargingUnit)
                 .WithMany(builder => builder.StationsChargingUnits)
-                .HasForeignKey(builder => builder.SocketId);
+                .HasForeignKey(builder => builder.ChargingUnitId);
 
             builder.HasOne(builder => builder.StationModel)
                 .WithMany(builder => builder.StationsChargingUnits)

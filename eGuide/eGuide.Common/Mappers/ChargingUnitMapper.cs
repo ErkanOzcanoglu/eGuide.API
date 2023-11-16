@@ -9,6 +9,6 @@ using System.Text;
 using System.Threading.Tasks;
 
 namespace eGuide.Common.Mappers {
-    public class ChargingUnitMapper : BaseMapper<CharginUnit, ChargingUnitDto, UpdateDtoForChargingUnit, CreationDtoForChargingUnit> {
+    public class ChargingUnitMapper : BaseMapper<ChargingUnit, ChargingUnitDto, UpdateDtoForChargingUnit, CreationDtoForChargingUnit> {
     }
 }

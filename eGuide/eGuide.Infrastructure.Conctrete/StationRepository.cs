@@ -40,7 +40,7 @@ namespace eGuide.Infrastructure.Conctrete {
             var stationInformation = await _context.Station.Where(res => res.Status == 1)
                 .Include(sm => sm.StationModel)
                 .ThenInclude(ss => ss.StationsChargingUnits)
-                .ThenInclude(s => s.CharginUnit)
+                .ThenInclude(s => s.ChargingUnit)
                 .ThenInclude(c => c.Connector)
                 .ToListAsync();
 
@@ -55,7 +55,7 @@ namespace eGuide.Infrastructure.Conctrete {
             var res = _context.Station.Where(x => x.Status == 1)
                 .Include(x => x.StationModel)
                 .ThenInclude(y => y.StationsChargingUnits)
-                .ThenInclude(z => z.CharginUnit)
+                .ThenInclude(z => z.ChargingUnit)
                 .ThenInclude(k => k.Connector)
                 .ToList();
 

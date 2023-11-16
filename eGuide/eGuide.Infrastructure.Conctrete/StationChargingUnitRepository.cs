@@ -41,7 +41,7 @@ namespace eGuide.Infrastructure.Conctrete {
         /// <param name="id">The identifier.</param>
         /// <returns></returns>
         public async Task<StationsChargingUnits> GetChargingUnitByStationId(Guid id) {
-            var sockets = await _context.StationsChargingUnits.Where(x => x.SocketId == id).FirstOrDefaultAsync();
+            var sockets = await _context.StationsChargingUnits.Where(x => x.ChargingUnitId == id).FirstOrDefaultAsync();
             if (sockets == null) {
                 return null;
             }

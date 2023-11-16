@@ -46,7 +46,8 @@ namespace eGuide.Test.AdminTest {
 
             var createDto = new CreationDtoForConnector {
                 Type = "New Type",
-                Icon = "New Icon"
+                ImageData = "New Image Data",
+                ImageName = "New Image Name"
             };
 
             // Act
@@ -77,7 +78,8 @@ namespace eGuide.Test.AdminTest {
             var id = Guid.NewGuid();
             var updateDto = new UpdateDtoForConnector {
                 Type = "Updated Type",
-                Icon = "Updated Icon"
+                ImageData = "Updated Image Data",
+                ImageName = "Updated Image Name"
             };
 
             // Act
@@ -121,7 +123,8 @@ namespace eGuide.Test.AdminTest {
 
             var creationDto = new CreationDtoForConnector {
                 Type = "NewType",
-                Icon = "Icon"
+                ImageData = "NewImageData",
+                ImageName = "NewImageName"
             };
 
             // Act
