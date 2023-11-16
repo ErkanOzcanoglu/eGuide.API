@@ -12,8 +12,8 @@ using eGuide.Data.Context.Context;
 namespace eGuide.Data.Context.Migrations
 {
     [DbContext(typeof(eGuideContext))]
-    [Migration("20231113124045_chargingUnit")]
-    partial class chargingUnit
+    [Migration("20231116075058_initial")]
+    partial class initial
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -112,7 +112,7 @@ namespace eGuide.Data.Context.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<Guid>("CharginUnitId")
+                    b.Property<Guid>("ChargingUnitId")
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<DateTime>("CreatedDate")
@@ -120,9 +120,6 @@ namespace eGuide.Data.Context.Migrations
 
                     b.Property<DateTime?>("DeletedDate")
                         .HasColumnType("datetime2");
-
-                    b.Property<Guid>("SocketId")
-                        .HasColumnType("uniqueidentifier");
 
                     b.Property<Guid>("StationModelId")
                         .HasColumnType("uniqueidentifier");
@@ -135,7 +132,7 @@ namespace eGuide.Data.Context.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("CharginUnitId");
+                    b.HasIndex("ChargingUnitId");
 
                     b.HasIndex("StationModelId");
 
@@ -511,7 +508,7 @@ namespace eGuide.Data.Context.Migrations
                     b.ToTable("Route");
                 });
 
-            modelBuilder.Entity("eGuide.Data.Entities.Station.CharginUnit", b =>
+            modelBuilder.Entity("eGuide.Data.Entities.Station.ChargingUnit", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
@@ -611,7 +608,11 @@ namespace eGuide.Data.Context.Migrations
                     b.Property<DateTime?>("DeletedDate")
                         .HasColumnType("datetime2");
 
-                    b.Property<string>("Icon")
+                    b.Property<string>("ImageData")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("ImageName")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
@@ -832,9 +833,9 @@ namespace eGuide.Data.Context.Migrations
 
             modelBuilder.Entity("eGuide.Data.Entites.Station.StationsChargingUnits", b =>
                 {
-                    b.HasOne("eGuide.Data.Entities.Station.CharginUnit", "CharginUnit")
+                    b.HasOne("eGuide.Data.Entities.Station.ChargingUnit", "ChargingUnit")
                         .WithMany("StationsChargingUnits")
-                        .HasForeignKey("CharginUnitId")
+                        .HasForeignKey("ChargingUnitId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
@@ -844,7 +845,7 @@ namespace eGuide.Data.Context.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("CharginUnit");
+                    b.Navigation("ChargingUnit");
 
                     b.Navigation("StationModel");
                 });
@@ -860,7 +861,7 @@ namespace eGuide.Data.Context.Migrations
                     b.Navigation("Connector");
                 });
 
-            modelBuilder.Entity("eGuide.Data.Entities.Station.CharginUnit", b =>
+            modelBuilder.Entity("eGuide.Data.Entities.Station.ChargingUnit", b =>
                 {
                     b.HasOne("eGuide.Data.Entities.Station.Connector", "Connector")
                         .WithMany("Sockets")
@@ -913,7 +914,7 @@ namespace eGuide.Data.Context.Migrations
                     b.Navigation("UserVehicles");
                 });
 
-            modelBuilder.Entity("eGuide.Data.Entities.Station.CharginUnit", b =>
+            modelBuilder.Entity("eGuide.Data.Entities.Station.ChargingUnit", b =>
                 {
                     b.Navigation("StationsChargingUnits");
                 });

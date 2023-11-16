@@ -59,8 +59,8 @@ namespace eGuide.Service.AdminAPI.Controllers {
         /// <param name="socket">The socket.</param>
         /// <returns></returns>
         [HttpPost]
-        public async Task<ActionResult<CharginUnit>> AddSocket(CreationDtoForChargingUnit socket) {
-            var socketEntity = _mapper.Map<CharginUnit>(socket);
+        public async Task<ActionResult<ChargingUnit>> AddSocket(CreationDtoForChargingUnit socket) {
+            var socketEntity = _mapper.Map<ChargingUnit>(socket);
             var result = await _socketBusiness.AddAsync(socketEntity);
             return Ok(result);
         }
@@ -84,7 +84,7 @@ namespace eGuide.Service.AdminAPI.Controllers {
             entity.Power = connector.Power;
             entity.Type = connector.Type;
 
-            var mappedEntity = _mapper.Map<CharginUnit>(entity);
+            var mappedEntity = _mapper.Map<ChargingUnit>(entity);
 
             await _socketBusiness.UpdateAsync(mappedEntity);
             return Ok();
@@ -96,7 +96,7 @@ namespace eGuide.Service.AdminAPI.Controllers {
         /// <param name="id">The identifier.</param>
         /// <returns></returns>
         [HttpDelete]
-        public async Task<ActionResult<CharginUnit>> Delete(Guid id) {
+        public async Task<ActionResult<ChargingUnit>> Delete(Guid id) {
             var result = _socketBusiness.RemoveAsync(id);
             return Ok(result);
         }
@@ -107,7 +107,7 @@ namespace eGuide.Service.AdminAPI.Controllers {
         /// <param name="id">The identifier.</param>
         /// <returns></returns>
         [HttpDelete("{id}")]
-        public async Task<ActionResult<CharginUnit>> HardDelete(Guid id) {
+        public async Task<ActionResult<ChargingUnit>> HardDelete(Guid id) {
             await _socketBusiness.HardRemoveAsync(id);
             return Ok();
         }

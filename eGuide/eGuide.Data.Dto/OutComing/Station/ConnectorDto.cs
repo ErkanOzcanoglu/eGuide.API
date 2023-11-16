@@ -23,11 +23,19 @@ namespace eGuide.Data.Dto.OutComing.Station
         public string Type { get; set; }
 
         /// <summary>
-        /// Gets or sets the icon.
+        /// Gets or sets the name of the image.
         /// </summary>
         /// <value>
-        /// The icon.
+        /// The name of the image.
         /// </value>
-        public string Icon { get; set; }
+        public string ImageName { get; set; }
+
+        /// <summary>
+        /// Gets or sets the image data.
+        /// </summary>
+        /// <value>
+        /// The image data.
+        /// </value>
+        public string ImageData { get; set; }
     }
 }

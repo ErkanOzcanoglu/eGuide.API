@@ -21,6 +21,6 @@ namespace eGuide.Data.Dto.OutComing.Station {
         /// <value>
         /// The socket identifier.
         /// </value>
-        public Guid SocketId { get; set; }
+        public Guid ChargingUnitId { get; set; }
     }
 }

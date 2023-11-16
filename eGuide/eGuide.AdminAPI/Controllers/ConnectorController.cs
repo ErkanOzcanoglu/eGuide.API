@@ -74,8 +74,9 @@ namespace eGuide.Service.AdminAPI.Controllers {
                 return NotFound();
             }
 
-            entity.Icon = connector.Icon;
             entity.Type = connector.Type;
+            entity.ImageData = connector.ImageData;
+            entity.ImageName = connector.ImageName;
 
             var mappedEntity = _mapper.Map<Connector>(entity);
 

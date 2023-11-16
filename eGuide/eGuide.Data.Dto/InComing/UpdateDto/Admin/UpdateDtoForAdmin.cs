@@ -23,14 +23,6 @@ namespace eGuide.Data.Dto.InComing.UpdateDto.Admin
         /// The surname.
         /// </value>
         public string Surname { get; set; }
-
-        /// <summary>
-        /// Gets or sets the email.
-        /// </summary>
-        /// <value>
-        /// The email.
-        /// </value>
-        public string Email { get; set; }
        
     }
 }

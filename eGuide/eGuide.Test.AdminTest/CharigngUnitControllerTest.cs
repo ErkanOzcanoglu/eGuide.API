@@ -47,7 +47,7 @@ namespace eGuide.Test.AdminTest {
 
             // Act
             var result = await controller.AddSocket(createDto);
-            var model = result.Value as CharginUnit;
+            var model = result.Value as ChargingUnit;
 
             // Assert
             Assert.NotNull(result);
@@ -94,7 +94,7 @@ namespace eGuide.Test.AdminTest {
 
             // Act
             var result = await controller.Delete(id);
-            var model = result.Value as CharginUnit;
+            var model = result.Value as ChargingUnit;
 
             // Assert
             Assert.NotNull(result);

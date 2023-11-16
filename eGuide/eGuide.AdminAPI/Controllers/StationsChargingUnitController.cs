@@ -72,7 +72,7 @@ namespace eGuide.Service.AdminAPI.Controllers {
                 return NotFound();
             }
             entity.StationModelId = stationChargingUnit.StationModelId;
-            entity.SocketId = stationChargingUnit.SocketId;
+            entity.ChargingUnitId = stationChargingUnit.ChargingUnitId;
 
             var mappedEntity = _mapper.Map<StationsChargingUnits>(entity);
 

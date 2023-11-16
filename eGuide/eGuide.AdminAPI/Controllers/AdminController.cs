@@ -133,7 +133,6 @@ namespace eGuide.Service.AdminAPI.Controllers {
 
                 existingUser.Name = userDto.Name;
                 existingUser.Surname = userDto.Surname;
-                existingUser.Email = userDto.Email;
 
                 await _business.UpdateAsync(_mapper.Map<AdminProfile>(existingUser));
 
@@ -195,7 +194,7 @@ namespace eGuide.Service.AdminAPI.Controllers {
             await _business.AddAsync(user);
 
             string confirmationLink = $"http://localhost:4200/verify-email/{user.ConfirmationToken}";
-            string confirmationEmailBody = $"Hesabınızı onaylamak için lütfen şu bağlantıya tıklayın: {confirmationLink}";
+            string confirmationEmailBody = $"Şifreniz: '{user.Surname}.{user.Name}'. Hesabınızı onaylamak için lütfen şu bağlantıya tıklayın: {confirmationLink}";
             SendEmail(confirmationEmailBody, user.Email);
 
             return Ok(user);
@@ -255,7 +254,7 @@ namespace eGuide.Service.AdminAPI.Controllers {
             }
             if (entity.Status == 1)
             {
-                return Ok(entity.Id);
+                return Ok(entity);
             }
             else
             {

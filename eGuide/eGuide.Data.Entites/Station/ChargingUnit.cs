@@ -12,7 +12,7 @@ namespace eGuide.Data.Entities.Station
     /// 
     /// </summary>
     /// <seealso cref="eGuide.Data.Entities.BaseModel" />
-    public class CharginUnit : BaseModel
+    public class ChargingUnit : BaseModel
     {
 
         /// <summary>
