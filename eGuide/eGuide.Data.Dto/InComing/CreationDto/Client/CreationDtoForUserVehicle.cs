@@ -23,5 +23,13 @@ namespace eGuide.Data.Dto.InComing.CreationDto.Client
         /// The vehicle identifier.
         /// </value>
         public Guid VehicleId { get; set; }
+
+        /// <summary>
+        /// Gets or sets the connector identifier.
+        /// </summary>
+        /// <value>
+        /// The connector identifier.
+        /// </value>
+        public Guid ConnectorId { get; set; }
     }
 }
