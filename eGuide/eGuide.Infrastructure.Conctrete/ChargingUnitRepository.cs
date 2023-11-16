@@ -14,9 +14,9 @@ namespace eGuide.Infrastructure.Conctrete {
     /// <summary>
     /// 
     /// </summary>
-    /// <seealso cref="eGuide.Infrastructure.Concrete.GenericRepository&lt;eGuide.Data.Entities.Station.CharginUnit&gt;" />
+    /// <seealso cref="eGuide.Infrastructure.Concrete.GenericRepository&lt;eGuide.Data.Entities.Station.ChargingUnit&gt;" />
     /// <seealso cref="eGuide.Infrastructure.Interface.IChargingUnitRepository" />
-    public class ChargingUnitRepository : GenericRepository<CharginUnit>, IChargingUnitRepository {
+    public class ChargingUnitRepository : GenericRepository<ChargingUnit>, IChargingUnitRepository {
 
         /// <summary>
         /// The context

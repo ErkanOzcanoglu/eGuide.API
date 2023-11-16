@@ -10,7 +10,7 @@ namespace eGuide.Infrastructure.Interface {
     /// <summary>
     /// 
     /// </summary>
-    /// <seealso cref="eGuide.Infrastructure.Interface.IGenericRepository&lt;eGuide.Data.Entities.Station.CharginUnit&gt;" />
-    public interface IChargingUnitRepository : IGenericRepository<CharginUnit> {
+    /// <seealso cref="eGuide.Infrastructure.Interface.IGenericRepository&lt;eGuide.Data.Entities.Station.ChargingUnit&gt;" />
+    public interface IChargingUnitRepository : IGenericRepository<ChargingUnit> {
     }
 }

@@ -15,7 +15,7 @@ namespace eGuide.Data.Entites.Station {
         /// <value>
         /// The socket identifier.
         /// </value>
-        public Guid SocketId { get; set; }
+        public Guid ChargingUnitId { get; set; }
 
         /// <summary>
         /// Gets or sets the socket.
@@ -23,7 +23,7 @@ namespace eGuide.Data.Entites.Station {
         /// <value>
         /// The socket.
         /// </value>
-        public CharginUnit CharginUnit { get; set; }
+        public ChargingUnit ChargingUnit { get; set; }
 
         /// <summary>
         /// Gets or sets the station model identifier.

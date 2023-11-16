@@ -8,7 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 
 namespace eGuide.Business.Concrete {
-    public class ChargingUnitBusiness : Business<CharginUnit>, IChargingUnitBusiness {
+    public class ChargingUnitBusiness : Business<ChargingUnit>, IChargingUnitBusiness {
         private readonly IChargingUnitRepository _repository;
         private readonly IUnitOfWork _unitOfWork;
 

@@ -6,6 +6,6 @@ using System.Text;
 using System.Threading.Tasks;
 
 namespace eGuide.Business.Interface {
-    public interface IChargingUnitBusiness : IBusiness<CharginUnit> {
+    public interface IChargingUnitBusiness : IBusiness<ChargingUnit> {
     }
 }

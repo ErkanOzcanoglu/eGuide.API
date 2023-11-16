@@ -14,7 +14,7 @@ namespace eGuide.Data.Dto.InComing.CreationDto.Station {
         /// <value>
         /// The socket identifier.
         /// </value>
-        public Guid SocketId { get; set; }
+        public Guid ChargingUnitId { get; set; }
 
         /// <summary>
         /// Gets or sets the station profile identifier.

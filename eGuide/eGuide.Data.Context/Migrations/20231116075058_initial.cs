@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace eGuide.Data.Context.Migrations
 {
     /// <inheritdoc />
-    public partial class updateDB : Migration
+    public partial class initial : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -325,8 +325,7 @@ namespace eGuide.Data.Context.Migrations
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    SocketId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    CharginUnitId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    ChargingUnitId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     StationModelId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     Status = table.Column<int>(type: "int", nullable: false),
                     CreatedDate = table.Column<DateTime>(type: "datetime2", nullable: false),
@@ -337,8 +336,8 @@ namespace eGuide.Data.Context.Migrations
                 {
                     table.PrimaryKey("PK_StationsChargingUnits", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_StationsChargingUnits_CharginUnit_CharginUnitId",
-                        column: x => x.CharginUnitId,
+                        name: "FK_StationsChargingUnits_CharginUnit_ChargingUnitId",
+                        column: x => x.ChargingUnitId,
                         principalTable: "CharginUnit",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
@@ -498,9 +497,9 @@ namespace eGuide.Data.Context.Migrations
                 column: "UsersId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_StationsChargingUnits_CharginUnitId",
+                name: "IX_StationsChargingUnits_ChargingUnitId",
                 table: "StationsChargingUnits",
-                column: "CharginUnitId");
+                column: "ChargingUnitId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_StationsChargingUnits_StationModelId",
