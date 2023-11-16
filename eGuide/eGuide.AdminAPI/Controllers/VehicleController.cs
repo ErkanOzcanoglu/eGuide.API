@@ -116,7 +116,7 @@ namespace eGuide.Service.AdminAPI.Controllers
         {
             try
             {              
-                await _business.RemoveAsync(id);
+                await _business.HardRemoveAsync(id);
 
                 return Ok();
             }
@@ -138,7 +138,7 @@ namespace eGuide.Service.AdminAPI.Controllers
         /// <param name="vehicleDto">The vehicle dto.</param>
         /// <returns></returns>
         [HttpPut("{vehicleId}")]
-        public async Task<IActionResult> UpdateVehicle(Guid vehicleId, [FromBody] UpdateDtoForVehicle vehicleDto)
+        public async Task<IActionResult> UpdateVehicle(Guid vehicleId, string vehicleDto)
         {
             try
             {             
@@ -149,12 +149,11 @@ namespace eGuide.Service.AdminAPI.Controllers
                     return NotFound($"Vehicle with ID {vehicleId} not found.");
                 }
                 
-                existingVehicle.Brand = vehicleDto.Brand;
-                existingVehicle.Model = vehicleDto.Model;
+                existingVehicle.Model = vehicleDto;
 
                 await _business.UpdateAsync(_mapper.Map<Vehicle>(existingVehicle));
 
-                return Ok(existingVehicle); 
+                return Ok(vehicleId); 
             }
             catch (DbUpdateException ex)
             {

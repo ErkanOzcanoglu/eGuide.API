@@ -28,5 +28,6 @@ namespace eGuide.Data.Dto.InComing.CreationDto.Client
         /// The model.
         /// </value>
         public string Model { get; set; }
+
     }
 }

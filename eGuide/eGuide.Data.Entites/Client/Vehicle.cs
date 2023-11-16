@@ -40,20 +40,5 @@ namespace eGuide.Data.Entities.Client
         /// </value>
         public ICollection<UserVehicle> UserVehicles { get; set; }
 
-        /// <summary>
-        /// Gets or sets the connector identifier.
-        /// </summary>
-        /// <value>
-        /// The connector identifier.
-        /// </value>
-        public Guid ConnectorId { get; set; }
-
-        /// <summary>
-        /// Gets or sets the connector.
-        /// </summary>
-        /// <value>
-        /// The connector.
-        /// </value>
-        public Connector Connector { get; set; }
     }
 }

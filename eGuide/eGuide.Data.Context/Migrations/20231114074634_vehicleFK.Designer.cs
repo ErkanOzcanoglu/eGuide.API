@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using eGuide.Data.Context.Context;
 
@@ -11,9 +12,11 @@ using eGuide.Data.Context.Context;
 namespace eGuide.Data.Context.Migrations
 {
     [DbContext(typeof(eGuideContext))]
-    partial class eGuideContextModelSnapshot : ModelSnapshot
+    [Migration("20231114074634_vehicleFK")]
+    partial class vehicleFK
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -109,7 +112,7 @@ namespace eGuide.Data.Context.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<Guid>("ChargingUnitId")
+                    b.Property<Guid>("CharginUnitId")
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<DateTime>("CreatedDate")
@@ -117,6 +120,9 @@ namespace eGuide.Data.Context.Migrations
 
                     b.Property<DateTime?>("DeletedDate")
                         .HasColumnType("datetime2");
+
+                    b.Property<Guid>("SocketId")
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<Guid>("StationModelId")
                         .HasColumnType("uniqueidentifier");
@@ -129,7 +135,7 @@ namespace eGuide.Data.Context.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("ChargingUnitId");
+                    b.HasIndex("CharginUnitId");
 
                     b.HasIndex("StationModelId");
 
@@ -425,6 +431,9 @@ namespace eGuide.Data.Context.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<Guid?>("ConnectorId")
+                        .HasColumnType("uniqueidentifier");
+
                     b.Property<DateTime>("CreatedDate")
                         .HasColumnType("datetime2");
 
@@ -442,6 +451,8 @@ namespace eGuide.Data.Context.Migrations
                         .HasColumnType("datetime2");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("ConnectorId");
 
                     b.ToTable("Vehicle");
                 });
@@ -500,7 +511,7 @@ namespace eGuide.Data.Context.Migrations
                     b.ToTable("Route");
                 });
 
-            modelBuilder.Entity("eGuide.Data.Entities.Station.ChargingUnit", b =>
+            modelBuilder.Entity("eGuide.Data.Entities.Station.CharginUnit", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
@@ -600,11 +611,7 @@ namespace eGuide.Data.Context.Migrations
                     b.Property<DateTime?>("DeletedDate")
                         .HasColumnType("datetime2");
 
-                    b.Property<string>("ImageData")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("ImageName")
+                    b.Property<string>("Icon")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
@@ -825,9 +832,9 @@ namespace eGuide.Data.Context.Migrations
 
             modelBuilder.Entity("eGuide.Data.Entites.Station.StationsChargingUnits", b =>
                 {
-                    b.HasOne("eGuide.Data.Entities.Station.ChargingUnit", "ChargingUnit")
+                    b.HasOne("eGuide.Data.Entities.Station.CharginUnit", "CharginUnit")
                         .WithMany("StationsChargingUnits")
-                        .HasForeignKey("ChargingUnitId")
+                        .HasForeignKey("CharginUnitId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
@@ -837,10 +844,20 @@ namespace eGuide.Data.Context.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("ChargingUnit");
+                    b.Navigation("CharginUnit");
 
                     b.Navigation("StationModel");
                 });
+
+            modelBuilder.Entity("eGuide.Data.Entities.Client.Vehicle", b =>
+                {
+                    b.HasOne("eGuide.Data.Entities.Station.Connector", "Connector")
+                        .WithMany("Vehicles")
+                        .HasForeignKey("ConnectorId");
+
+                    b.Navigation("Connector");
+                });
+
             modelBuilder.Entity("eGuide.Data.Entities.Station.CharginUnit", b =>
                 {
                     b.HasOne("eGuide.Data.Entities.Station.Connector", "Connector")
@@ -894,7 +911,7 @@ namespace eGuide.Data.Context.Migrations
                     b.Navigation("UserVehicles");
                 });
 
-            modelBuilder.Entity("eGuide.Data.Entities.Station.ChargingUnit", b =>
+            modelBuilder.Entity("eGuide.Data.Entities.Station.CharginUnit", b =>
                 {
                     b.Navigation("StationsChargingUnits");
                 });
@@ -902,6 +919,8 @@ namespace eGuide.Data.Context.Migrations
             modelBuilder.Entity("eGuide.Data.Entities.Station.Connector", b =>
                 {
                     b.Navigation("Sockets");
+
+                    b.Navigation("Vehicles");
                 });
 
             modelBuilder.Entity("eGuide.Data.Entities.Station.Facility", b =>
