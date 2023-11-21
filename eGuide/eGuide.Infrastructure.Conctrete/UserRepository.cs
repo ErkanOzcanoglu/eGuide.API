@@ -1,5 +1,5 @@
 ﻿using eGuide.Data.Context.Context;
-using eGuide.Data.Dto.Logs;
+using eGuide.Data.Dto.Logger;
 using eGuide.Data.Entities.Client;
 using eGuide.Infrastructure.Concrete;
 using eGuide.Infrastructure.Interface;
