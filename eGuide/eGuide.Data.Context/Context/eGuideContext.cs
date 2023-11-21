@@ -120,7 +120,7 @@ namespace eGuide.Data.Context.Context {
         /// <value>
         /// The service.
         /// </value>
-        public DbSet<Service> Service { get; set; }
+        public DbSet<Services> Service { get; set; }
 
         /// <summary>
         /// Gets or sets the socket.

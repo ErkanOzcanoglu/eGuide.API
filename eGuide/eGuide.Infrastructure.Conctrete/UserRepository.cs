@@ -1,8 +1,10 @@
 ﻿using eGuide.Data.Context.Context;
+using eGuide.Data.Dto.Log;
 using eGuide.Data.Entities.Client;
 using eGuide.Infrastructure.Concrete;
 using eGuide.Infrastructure.Interface;
 using Microsoft.EntityFrameworkCore;
+using MongoDB.Driver;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -24,12 +26,30 @@ namespace eGuide.Infrastructure.Conctrete
         protected readonly eGuideContext _context;
 
         /// <summary>
+        /// The collection
+        /// </summary>
+        private readonly IMongoCollection<UserLogs> _collection;
+
+        /// <summary>
         /// Initializes a new instance of the <see cref="UserRepository"/> class.
         /// </summary>
         /// <param name="context">The context.</param>
-        public UserRepository(eGuideContext context) : base(context)
+        public UserRepository(eGuideContext context, IMongoDatabase mongoContext) : base(context)
         {
             _context = context;
+            _collection = mongoContext.GetCollection<UserLogs>("Users");
         }
+
+        public async Task<UserLogs> CreateUsersLog(UserLogs comment) {
+            comment.Id = Guid.NewGuid();
+            comment.CreatedTime = DateTime.Now;
+            await _collection.InsertOneAsync(comment);
+            return comment;
+        }
+
+        public async Task<IEnumerable<UserLogs>> GetAllAsyncLog() {
+            return await _collection.Find(x => x.Level == "info").ToListAsync();
+        }
+
     }
 }
