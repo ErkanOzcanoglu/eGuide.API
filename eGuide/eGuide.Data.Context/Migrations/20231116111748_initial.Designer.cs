@@ -12,7 +12,7 @@ using eGuide.Data.Context.Context;
 namespace eGuide.Data.Context.Migrations
 {
     [DbContext(typeof(eGuideContext))]
-    [Migration("20231116075058_initial")]
+    [Migration("20231116111748_initial")]
     partial class initial
     {
         /// <inheritdoc />
@@ -46,6 +46,9 @@ namespace eGuide.Data.Context.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
+                    b.Property<Guid>("ConnectorId")
+                        .HasColumnType("uniqueidentifier");
+
                     b.Property<DateTime>("CreatedDate")
                         .HasColumnType("datetime2");
 
@@ -65,6 +68,8 @@ namespace eGuide.Data.Context.Migrations
                         .HasColumnType("uniqueidentifier");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("ConnectorId");
 
                     b.HasIndex("UserId");
 
@@ -428,9 +433,6 @@ namespace eGuide.Data.Context.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<Guid>("ConnectorId")
-                        .HasColumnType("uniqueidentifier");
-
                     b.Property<DateTime>("CreatedDate")
                         .HasColumnType("datetime2");
 
@@ -448,8 +450,6 @@ namespace eGuide.Data.Context.Migrations
                         .HasColumnType("datetime2");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("ConnectorId");
 
                     b.ToTable("Vehicle");
                 });
@@ -799,6 +799,12 @@ namespace eGuide.Data.Context.Migrations
 
             modelBuilder.Entity("eGuide.Data.Entites.Client.UserVehicle", b =>
                 {
+                    b.HasOne("eGuide.Data.Entities.Station.Connector", "Connector")
+                        .WithMany("UserVehicles")
+                        .HasForeignKey("ConnectorId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
                     b.HasOne("eGuide.Data.Entities.Client.User", "User")
                         .WithMany("UserVehicles")
                         .HasForeignKey("UserId")
@@ -810,6 +816,8 @@ namespace eGuide.Data.Context.Migrations
                         .HasForeignKey("VehicleId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+
+                    b.Navigation("Connector");
 
                     b.Navigation("User");
 
@@ -848,17 +856,6 @@ namespace eGuide.Data.Context.Migrations
                     b.Navigation("ChargingUnit");
 
                     b.Navigation("StationModel");
-                });
-
-            modelBuilder.Entity("eGuide.Data.Entities.Client.Vehicle", b =>
-                {
-                    b.HasOne("eGuide.Data.Entities.Station.Connector", "Connector")
-                        .WithMany("Vehicles")
-                        .HasForeignKey("ConnectorId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Connector");
                 });
 
             modelBuilder.Entity("eGuide.Data.Entities.Station.ChargingUnit", b =>
@@ -923,7 +920,7 @@ namespace eGuide.Data.Context.Migrations
                 {
                     b.Navigation("Sockets");
 
-                    b.Navigation("Vehicles");
+                    b.Navigation("UserVehicles");
                 });
 
             modelBuilder.Entity("eGuide.Data.Entities.Station.Facility", b =>

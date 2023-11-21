@@ -50,6 +50,9 @@ builder.Services.AddScoped(typeof(IUserVehicleRepository), typeof(UserVehicleRep
 builder.Services.AddScoped(typeof(IStationBusiness), typeof(StationBusiness));
 builder.Services.AddScoped(typeof(IStationRepository), typeof(StationRepository));
 
+builder.Services.AddScoped(typeof(IConnectorBusiness), typeof(ConnectorBusiness));
+builder.Services.AddScoped(typeof(IConnectorRepository), typeof(ConnectorRepository));
+
 builder.Services.AddScoped(typeof(IServiceBusiness), typeof(ServiceBusiness));
 builder.Services.AddScoped(typeof(IServiceRepository), typeof(ServiceRepository));
 

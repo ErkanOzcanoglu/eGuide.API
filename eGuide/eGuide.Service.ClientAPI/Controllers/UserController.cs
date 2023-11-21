@@ -219,7 +219,7 @@ namespace eGuide.Service.ClientAPI.Controllers {
 
             await _business.AddAsync(user);
 
-            string htmlTemplate = System.IO.File.ReadAllText(@"C:\Users\ozcan\Downloads\emailTemplate_Register_eGuide.html");
+            string htmlTemplate = System.IO.File.ReadAllText(@"D:\ATOS-ARAŞTIRMA\emailTemplate_Register_eGuide.html");
 
             string confirmationLink = $"http://localhost:4201/verify-email/{user.ConfirmationToken}";
 
@@ -412,7 +412,7 @@ namespace eGuide.Service.ClientAPI.Controllers {
             user.ResetTokenExpires = DateTime.Now.AddDays(1);
             await _business.UpdateAsync(user);
 
-            string htmlTemplate = System.IO.File.ReadAllText(@"C:\Users\ozcan\Downloads\emailTemplate_ForgotPassword_eGuide.html");
+            string htmlTemplate = System.IO.File.ReadAllText(@"D:\ATOS-ARAŞTIRMA\emailTemplate_ForgotPassword_eGuide.html");
 
             string confirmationLink = $"http://localhost:4201/forgot-password/{user.PasswordResetToken}";
             string emailBody = htmlTemplate.Replace("{CONFIRMATION_LINK}", confirmationLink);

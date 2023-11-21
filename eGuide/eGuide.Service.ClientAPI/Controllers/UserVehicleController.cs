@@ -69,7 +69,7 @@ namespace eGuide.Service.ClientAPI.Controllers
         /// <param name="idNew">The identifier new.</param>
         /// <returns></returns>
         [HttpPut("update-vehicle")]
-        public async Task<IActionResult> UpdateUserVehicle(Guid userid, Guid vehicleId, Guid idNew)
+        public async Task<IActionResult> UpdateUserVehicle(Guid userid, Guid vehicleId, Guid idNew, Guid connectorId )
         {
             try
             {              
@@ -82,6 +82,7 @@ namespace eGuide.Service.ClientAPI.Controllers
                 
                 existingVehicle.VehicleId = idNew;
                 existingVehicle.UpdatedDate = DateTime.Now;
+                existingVehicle.ConnectorId = connectorId;
                               
                 _dbSet.Update(existingVehicle);
                 await _context.SaveChangesAsync();
