@@ -1,4 +1,5 @@
-﻿using eGuide.Data.Entities.Client;
+﻿using eGuide.Data.Dto.Log;
+using eGuide.Data.Entities.Client;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,7 +13,8 @@ namespace eGuide.Infrastructure.Interface
     /// 
     /// </summary>
     /// <seealso cref="eGuide.Infrastructure.Interface.IGenericRepository&lt;eGuide.Data.Entities.Client.User&gt;" />
-    public interface IUserRepository: IGenericRepository<User>
-    {
+    public interface IUserRepository: IGenericRepository<User> {
+        Task<UserLogs> CreateUsersLog(UserLogs comment);
+        Task<IEnumerable<UserLogs>> GetAllAsyncLog();
     }
 }

@@ -1,4 +1,5 @@
 ﻿using eGuide.Business.Interface;
+using eGuide.Data.Dto.Log;
 using eGuide.Data.Entities.Client;
 using eGuide.Infrastructure.Interface;
 using System;
@@ -14,12 +15,12 @@ namespace eGuide.Business.Concrete
     /// </summary>
     /// <seealso cref="eGuide.Business.Concrete.Business&lt;eGuide.Data.Entities.Client.User&gt;" />
     /// <seealso cref="eGuide.Business.Interface.IUserBusiness" />
-    public class UserBusiness : Business<User>, IUserBusiness
-    {
+    public class UserBusiness : Business<User>, IUserBusiness {
         /// <summary>
         /// The user repository
         /// </summary>
         private readonly IUserRepository _userRepository;
+        private readonly IUnitOfWork _unitOfWork;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="UserBusiness"/> class.
@@ -30,6 +31,15 @@ namespace eGuide.Business.Concrete
         public UserBusiness(IGenericRepository<User> repository, IUnitOfWork unitOfWork, IUserRepository userRepository) : base(repository, unitOfWork)
         {
             _userRepository = userRepository;
+            _unitOfWork = unitOfWork;
+        }
+
+        public async void AddUsersLogs(UserLogs user) {
+            await _userRepository.CreateUsersLog(user);
+        }
+
+        public async Task<IEnumerable<UserLogs>> GetAllLogs() {
+            return await _userRepository.GetAllAsyncLog();
         }
     }
 }
