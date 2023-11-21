@@ -1,5 +1,5 @@
 ﻿using eGuide.Business.Interface;
-using eGuide.Data.Dto.Log;
+using eGuide.Data.Dto.Logs;
 using eGuide.Data.Entities.Client;
 using eGuide.Infrastructure.Interface;
 using System;
