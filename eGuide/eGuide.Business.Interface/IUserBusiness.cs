@@ -1,4 +1,4 @@
-﻿using eGuide.Data.Dto.Logs;
+﻿using eGuide.Data.Dto.Logger;
 using eGuide.Data.Entities.Client;
 using System;
 using System.Collections.Generic;
