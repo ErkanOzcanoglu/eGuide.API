@@ -74,20 +74,20 @@ namespace eGuide.Data.Entities.Station
         public ICollection<StationFacility> StationFacilities { get; set; }
 
         /// <summary>
-        /// Gets or sets the users.
-        /// </summary>
-        /// <value>
-        /// The users.
-        /// </value>
-        public ICollection<User> Users { get; set; }
-
-        /// <summary>
         /// Gets or sets the comments.
         /// </summary>
         /// <value>
         /// The comments.
         /// </value>
         public ICollection<Comment> Comments { get; set; }
+
+        /// <summary>
+        /// Gets or sets the user stations.
+        /// </summary>
+        /// <value>
+        /// The user stations.
+        /// </value>
+        public ICollection<UserStation> UserStations { get; set; }
 
     }
 }

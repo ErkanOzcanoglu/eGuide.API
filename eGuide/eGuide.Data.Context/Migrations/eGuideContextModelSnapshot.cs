@@ -22,21 +22,6 @@ namespace eGuide.Data.Context.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
 
-            modelBuilder.Entity("StationProfileUser", b =>
-                {
-                    b.Property<Guid>("StationsId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<Guid>("UsersId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.HasKey("StationsId", "UsersId");
-
-                    b.HasIndex("UsersId");
-
-                    b.ToTable("StationProfileUser");
-                });
-
             modelBuilder.Entity("eGuide.Data.Entites.Client.UserVehicle", b =>
                 {
                     b.Property<Guid>("Id")
@@ -259,7 +244,7 @@ namespace eGuide.Data.Context.Migrations
                     b.ToTable("Color");
                 });
 
-            modelBuilder.Entity("eGuide.Data.Entities.Admin.Service", b =>
+            modelBuilder.Entity("eGuide.Data.Entities.Admin.Services", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
@@ -418,6 +403,39 @@ namespace eGuide.Data.Context.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("User");
+                });
+
+            modelBuilder.Entity("eGuide.Data.Entities.Client.UserStation", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTime>("CreatedDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime?>("DeletedDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<Guid>("StationProfileId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<int>("Status")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime?>("UpdatedDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<Guid>("UserId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("StationProfileId");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("UserStation");
                 });
 
             modelBuilder.Entity("eGuide.Data.Entities.Client.Vehicle", b =>
@@ -779,21 +797,6 @@ namespace eGuide.Data.Context.Migrations
                     b.ToTable("Station");
                 });
 
-            modelBuilder.Entity("StationProfileUser", b =>
-                {
-                    b.HasOne("eGuide.Data.Entities.Station.StationProfile", null)
-                        .WithMany()
-                        .HasForeignKey("StationsId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("eGuide.Data.Entities.Client.User", null)
-                        .WithMany()
-                        .HasForeignKey("UsersId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-                });
-
             modelBuilder.Entity("eGuide.Data.Entites.Client.UserVehicle", b =>
                 {
                     b.HasOne("eGuide.Data.Entities.Station.Connector", "Connector")
@@ -855,6 +858,25 @@ namespace eGuide.Data.Context.Migrations
                     b.Navigation("StationModel");
                 });
 
+            modelBuilder.Entity("eGuide.Data.Entities.Client.UserStation", b =>
+                {
+                    b.HasOne("eGuide.Data.Entities.Station.StationProfile", "StationProfile")
+                        .WithMany("UserStations")
+                        .HasForeignKey("StationProfileId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("eGuide.Data.Entities.Client.User", "User")
+                        .WithMany("UserStations")
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("StationProfile");
+
+                    b.Navigation("User");
+                });
+
             modelBuilder.Entity("eGuide.Data.Entities.Station.ChargingUnit", b =>
                 {
                     b.HasOne("eGuide.Data.Entities.Station.Connector", "Connector")
@@ -900,6 +922,8 @@ namespace eGuide.Data.Context.Migrations
                 {
                     b.Navigation("Comments");
 
+                    b.Navigation("UserStations");
+
                     b.Navigation("UserVehicles");
                 });
 
@@ -937,6 +961,8 @@ namespace eGuide.Data.Context.Migrations
                     b.Navigation("Comments");
 
                     b.Navigation("StationFacilities");
+
+                    b.Navigation("UserStations");
                 });
 #pragma warning restore 612, 618
         }

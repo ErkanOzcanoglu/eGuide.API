@@ -2,7 +2,7 @@
 using eGuide.Business.Interface;
 using eGuide.Data.Dto.InComing.CreationDto.Client;
 using eGuide.Data.Dto.InComing.UpdateDto.Client;
-using eGuide.Data.Dto.Logs;
+using eGuide.Data.Dto.Logger;
 using eGuide.Data.Dto.OutComing.Client;
 using eGuide.Data.Entites.Authorization;
 using eGuide.Data.Entities.Client;

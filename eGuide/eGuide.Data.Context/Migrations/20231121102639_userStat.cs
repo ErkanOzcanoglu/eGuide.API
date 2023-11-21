@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace eGuide.Data.Context.Migrations
 {
     /// <inheritdoc />
-    public partial class initial : Migration
+    public partial class userStat : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -438,24 +438,29 @@ namespace eGuide.Data.Context.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "StationProfileUser",
+                name: "UserStation",
                 columns: table => new
                 {
-                    StationsId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    UsersId = table.Column<Guid>(type: "uniqueidentifier", nullable: false)
+                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    UserId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    StationProfileId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    Status = table.Column<int>(type: "int", nullable: false),
+                    CreatedDate = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    UpdatedDate = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    DeletedDate = table.Column<DateTime>(type: "datetime2", nullable: true)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_StationProfileUser", x => new { x.StationsId, x.UsersId });
+                    table.PrimaryKey("PK_UserStation", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_StationProfileUser_Station_StationsId",
-                        column: x => x.StationsId,
+                        name: "FK_UserStation_Station_StationProfileId",
+                        column: x => x.StationProfileId,
                         principalTable: "Station",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_StationProfileUser_User_UsersId",
-                        column: x => x.UsersId,
+                        name: "FK_UserStation_User_UserId",
+                        column: x => x.UserId,
                         principalTable: "User",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
@@ -492,11 +497,6 @@ namespace eGuide.Data.Context.Migrations
                 column: "StationProfileId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_StationProfileUser_UsersId",
-                table: "StationProfileUser",
-                column: "UsersId");
-
-            migrationBuilder.CreateIndex(
                 name: "IX_StationsChargingUnits_ChargingUnitId",
                 table: "StationsChargingUnits",
                 column: "ChargingUnitId");
@@ -505,6 +505,16 @@ namespace eGuide.Data.Context.Migrations
                 name: "IX_StationsChargingUnits_StationModelId",
                 table: "StationsChargingUnits",
                 column: "StationModelId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_UserStation_StationProfileId",
+                table: "UserStation",
+                column: "StationProfileId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_UserStation_UserId",
+                table: "UserStation",
+                column: "UserId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_UserVehicle_ConnectorId",
@@ -553,10 +563,10 @@ namespace eGuide.Data.Context.Migrations
                 name: "StationInformationModel");
 
             migrationBuilder.DropTable(
-                name: "StationProfileUser");
+                name: "StationsChargingUnits");
 
             migrationBuilder.DropTable(
-                name: "StationsChargingUnits");
+                name: "UserStation");
 
             migrationBuilder.DropTable(
                 name: "UserVehicle");
@@ -568,10 +578,10 @@ namespace eGuide.Data.Context.Migrations
                 name: "Facility");
 
             migrationBuilder.DropTable(
-                name: "Station");
+                name: "CharginUnit");
 
             migrationBuilder.DropTable(
-                name: "CharginUnit");
+                name: "Station");
 
             migrationBuilder.DropTable(
                 name: "User");
@@ -580,10 +590,10 @@ namespace eGuide.Data.Context.Migrations
                 name: "Vehicle");
 
             migrationBuilder.DropTable(
-                name: "StationModels");
+                name: "Connector");
 
             migrationBuilder.DropTable(
-                name: "Connector");
+                name: "StationModels");
         }
     }
 }
