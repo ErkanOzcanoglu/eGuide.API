@@ -4,16 +4,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace eGuide.Data.Entities.Admin
-{
-
-    /// <summary>
-    /// 
-    /// </summary>
-    /// <seealso cref="eGuide.Data.Entities.BaseModel" />
-    public class Service : BaseModel
-    {
-
+namespace eGuide.Data.Entities.Admin {
+    public class Services : BaseModel {
         /// <summary>
         /// Gets or sets the name.
         /// </summary>

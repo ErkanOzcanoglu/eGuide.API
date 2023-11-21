@@ -2,6 +2,7 @@
 using eGuide.Business.Interface;
 using eGuide.Data.Dto.InComing.CreationDto.Client;
 using eGuide.Data.Dto.InComing.UpdateDto.Client;
+using eGuide.Data.Dto.Log;
 using eGuide.Data.Dto.OutComing.Client;
 using eGuide.Data.Entites.Authorization;
 using eGuide.Data.Entities.Client;
@@ -454,6 +455,18 @@ namespace eGuide.Service.ClientAPI.Controllers {
             await _business.UpdateAsync(user);
 
             return Ok("Password successfully changed");
+        }
+
+        [HttpPost("users-log")]
+        public async Task<IActionResult> UsersLog(UserLogs user) {
+            _business.AddUsersLogs(user);
+            return Ok();
+        }
+
+        [HttpGet("get-users-log")]
+        public async Task<IActionResult> GetUsersLog() {
+            var usersLog = await _business.GetAllLogs();
+            return Ok(usersLog);
         }
     }
 }
