@@ -24,12 +24,24 @@ namespace eGuide.Infrastructure.Conctrete
 
         public async Task<List<StationProfile>> GetUserStationsProfilesAsync(Guid userId)
         {
-            var userStation = await _context.UserStation.Include(uv => uv.StationProfile) .Where(uv => uv.UserId == userId && uv.Status == 1).ToListAsync();
+            //var userStation = await _context.UserStation.Include(uv => uv.StationProfile) .Where(uv => uv.UserId == userId && uv.Status == 1).ToListAsync();
+
+            //var stationProfiles = userStation.Select(uv => uv.StationProfile).ToList();
+
+            //return  stationProfiles;
+            ////eagerloading de yap
+
+            var userStation = await _context.UserStation.Where(uv => uv.UserId == userId && uv.Status == 1)
+                .Include(uv => uv.StationProfile)
+                .ThenInclude(sm => sm.StationModel)
+                .ThenInclude(ss => ss.StationsChargingUnits)
+                .ThenInclude(s => s.ChargingUnit)
+                .ThenInclude(c => c.Connector)
+                .ToListAsync();
 
             var stationProfiles = userStation.Select(uv => uv.StationProfile).ToList();
 
-            return  stationProfiles;
-            //eagerloading de yap
+            return stationProfiles;
         }
     }
 }

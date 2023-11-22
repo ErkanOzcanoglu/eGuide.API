@@ -27,6 +27,7 @@ namespace eGuide.Service.ClientAPI.Controllers
 
         protected readonly eGuideContext _context;
 
+        
 
         public UserStationController(IUserStationBusiness business, IMapper mapper)
         {
@@ -42,6 +43,22 @@ namespace eGuide.Service.ClientAPI.Controllers
             
         }
 
+        [HttpDelete("DeleteStationProfile/{id}")]
+        public async Task<ActionResult> Delete(Guid id)
+        {
+            try
+            {
+
+                _business.HardRemoveAsync(id);
+
+                return Ok();
+            }
+            catch (Exception ex)
+            {
+                return BadRequest($"Hata: {ex.Message}");
+            }
+        }
+
         [HttpGet]
         public async Task<ActionResult<UserStationDto>> All()
         {
@@ -54,7 +71,7 @@ namespace eGuide.Service.ClientAPI.Controllers
                     return NotFound("There are no vehicles in the database or the database is empty.");
                 }
 
-                var vehicledto = _mapper.Map<List<VehicleDto>>(stations.ToList());
+                var vehicledto = _mapper.Map<List<UserStationDto>>(stations.ToList());
 
                 return Ok(vehicledto);
             }
@@ -79,9 +96,9 @@ namespace eGuide.Service.ClientAPI.Controllers
                 {
                     return NotFound(); // Kullanıcıya ait araçlar bulunamadıysa 404 dönebilirsiniz.
                 }
-                var stationProfilesDto = _mapper.Map<List<StationProfileDto>>(stationProfiles.ToList());
+    
 
-                return Ok(stationProfilesDto);
+                return Ok(stationProfiles);
 
                
             }
@@ -90,5 +107,7 @@ namespace eGuide.Service.ClientAPI.Controllers
                 return BadRequest($"Hata: {ex.Message}");
             }
         }
+
+
     }
 }

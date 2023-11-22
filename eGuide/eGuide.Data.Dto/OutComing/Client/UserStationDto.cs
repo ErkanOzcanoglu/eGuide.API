@@ -22,6 +22,6 @@ namespace eGuide.Data.Dto.OutComing.Client
         /// <value>
         /// The vehicle identifier.
         /// </value>
-        public Guid StationId { get; set; }
+        public Guid StationProfileId { get; set; }
     }
 }
