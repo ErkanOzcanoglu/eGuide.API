@@ -48,14 +48,7 @@ namespace eGuide.Data.Entities.Client
         /// </value>
         public ICollection<Comment> Comments { get; set; }
 
-        /// <summary>
-        /// Gets or sets the stations.
-        /// </summary>
-        /// <value>
-        /// The stations.
-        /// </value>
-        public ICollection<StationProfile> Stations { get; set; }
-
+       
         /// <summary>
         /// Gets or sets the user vehicles.
         /// </summary>
@@ -63,6 +56,14 @@ namespace eGuide.Data.Entities.Client
         /// The user vehicles.
         /// </value>
         public ICollection<UserVehicle> UserVehicles { get; set; }
+
+        /// <summary>
+        /// Gets or sets the user stations.
+        /// </summary>
+        /// <value>
+        /// The user stations.
+        /// </value>
+        public ICollection<UserStation> UserStations { get; set; }
 
         /// <summary>
         /// Gets or sets the pass word hash.

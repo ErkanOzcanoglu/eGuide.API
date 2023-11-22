@@ -203,6 +203,12 @@ namespace eGuide.Data.Context.Context {
         public DbSet<StationInformationModel> StationInformationModel { get; set; }
 
         /// <summary>
+        /// Gets or sets the user station.
+        /// </summary>
+        /// <value>
+        /// The user station.
+        /// </value>
+        public DbSet<UserStation> UserStation { get; set; }
         /// Gets or sets the station facilities.
         /// </summary>
         /// <value>

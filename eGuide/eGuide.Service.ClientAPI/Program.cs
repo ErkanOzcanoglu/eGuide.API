@@ -8,6 +8,7 @@ using eGuide.Infrastructure.Conctrete;
 using eGuide.Infrastructure.Interface;
 using Microsoft.EntityFrameworkCore;
 using MongoDB.Driver;
+using System.Text.Json;
 using System.Text.Json.Serialization;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -21,6 +22,13 @@ builder.Services.AddSwaggerGen();
 
 builder.Services.AddControllers()
     .AddJsonOptions(options => options.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.IgnoreCycles);
+
+
+JsonSerializerOptions options = new()
+{
+    ReferenceHandler = ReferenceHandler.IgnoreCycles,
+    WriteIndented = true
+};
 
 
 builder.Services.AddCors(options => {
@@ -55,6 +63,9 @@ builder.Services.AddScoped(typeof(IConnectorRepository), typeof(ConnectorReposit
 
 builder.Services.AddScoped(typeof(IServiceBusiness), typeof(ServiceBusiness));
 builder.Services.AddScoped(typeof(IServiceRepository), typeof(ServiceRepository));
+
+builder.Services.AddScoped(typeof(IUserStationBusiness), typeof(UserStationBusiness));
+builder.Services.AddScoped(typeof(IUserStationRepository), typeof(UserStationRepository));
 
 builder.Services.AddScoped(typeof(ILastVisitedStationsBusiness), typeof(LastVisitedStationsBusiness));
 builder.Services.AddScoped(typeof(ILastVisitedStationsRepository), typeof(LastVisitedStationsRepository));
