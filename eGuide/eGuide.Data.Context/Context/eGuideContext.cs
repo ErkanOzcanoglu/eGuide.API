@@ -201,5 +201,13 @@ namespace eGuide.Data.Context.Context {
         /// The station information dto.
         /// </value>
         public DbSet<StationInformationModel> StationInformationModel { get; set; }
+
+        /// <summary>
+        /// Gets or sets the station facilities.
+        /// </summary>
+        /// <value>
+        /// The station facilities.
+        /// </value>
+        public DbSet<StationFacility> StationFacilities { get; set; }
     }
 }

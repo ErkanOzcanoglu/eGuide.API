@@ -37,7 +37,7 @@ namespace eGuide.Service.AdminAPI.Controllers {
         /// <returns></returns>
         [HttpGet]
         public async Task<ActionResult> Get() {
-            var result = await _business.GetAllAsync();
+            var result = await _business.GetAllfac();
             return Ok(result);
         }
 
@@ -62,6 +62,12 @@ namespace eGuide.Service.AdminAPI.Controllers {
         public async Task<ActionResult<StationFacility>> HardDelete(Guid id) {
             await _business.HardRemoveAsync(id);
             return Ok();
+        }
+
+        [HttpGet("station-facility-by-station-id/{stationId}")]
+        public async Task<ActionResult> GetFacByStationId(Guid stationId) {
+            var result = await _business.GetFacByStationId(stationId);
+            return Ok(result);
         }
     }
 }

@@ -29,5 +29,21 @@ namespace eGuide.Data.Entites.Station {
         /// The facility.
         /// </value>
         public Facility Facility { get; set; }
+
+        /// <summary>
+        /// Gets or sets the station identifier.
+        /// </summary>
+        /// <value>
+        /// The station identifier.
+        /// </value>
+        public Guid StationId { get; set; }
+
+        /// <summary>
+        /// Gets or sets the stations.
+        /// </summary>
+        /// <value>
+        /// The stations.
+        /// </value>
+        public StationProfile Station { get; set; }
     }
 }
