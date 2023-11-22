@@ -85,8 +85,6 @@ namespace eGuide.Data.Context.Migrations
                     Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     Type = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Description = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    PhoneNumber = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Icon = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Status = table.Column<int>(type: "int", nullable: false),
                     CreatedDate = table.Column<DateTime>(type: "datetime2", nullable: false),
@@ -410,12 +408,12 @@ namespace eGuide.Data.Context.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "StationFacility",
+                name: "StationFacilities",
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     FacilityId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    StationProfileId = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
+                    StationId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     Status = table.Column<int>(type: "int", nullable: false),
                     CreatedDate = table.Column<DateTime>(type: "datetime2", nullable: false),
                     UpdatedDate = table.Column<DateTime>(type: "datetime2", nullable: true),
@@ -423,18 +421,19 @@ namespace eGuide.Data.Context.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_StationFacility", x => x.Id);
+                    table.PrimaryKey("PK_StationFacilities", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_StationFacility_Facility_FacilityId",
+                        name: "FK_StationFacilities_Facility_FacilityId",
                         column: x => x.FacilityId,
                         principalTable: "Facility",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_StationFacility_Station_StationProfileId",
-                        column: x => x.StationProfileId,
+                        name: "FK_StationFacilities_Station_StationId",
+                        column: x => x.StationId,
                         principalTable: "Station",
-                        principalColumn: "Id");
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -482,14 +481,14 @@ namespace eGuide.Data.Context.Migrations
                 column: "StationModelId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_StationFacility_FacilityId",
-                table: "StationFacility",
+                name: "IX_StationFacilities_FacilityId",
+                table: "StationFacilities",
                 column: "FacilityId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_StationFacility_StationProfileId",
-                table: "StationFacility",
-                column: "StationProfileId");
+                name: "IX_StationFacilities_StationId",
+                table: "StationFacilities",
+                column: "StationId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_StationProfileUser_UsersId",
@@ -547,7 +546,7 @@ namespace eGuide.Data.Context.Migrations
                 name: "SocialMedia");
 
             migrationBuilder.DropTable(
-                name: "StationFacility");
+                name: "StationFacilities");
 
             migrationBuilder.DropTable(
                 name: "StationInformationModel");

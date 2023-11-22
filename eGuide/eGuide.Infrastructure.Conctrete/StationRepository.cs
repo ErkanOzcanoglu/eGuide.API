@@ -38,6 +38,8 @@ namespace eGuide.Infrastructure.Conctrete {
         /// <returns></returns>
         public async Task<List<StationProfile>> GetAllStationInformation() {
             var stationInformation = await _context.Station.Where(res => res.Status == 1)
+                .Include(sf => sf.StationFacilities)
+                .ThenInclude(f => f.Facility)
                 .Include(sm => sm.StationModel)
                 .ThenInclude(ss => ss.StationsChargingUnits)
                 .ThenInclude(s => s.ChargingUnit)
@@ -53,6 +55,8 @@ namespace eGuide.Infrastructure.Conctrete {
 
         public async Task<List<StationProfile>> GetStationProf() {
             var res = _context.Station.Where(x => x.Status == 1)
+                .Include(sf => sf.StationFacilities)
+                .ThenInclude(f => f.Facility)
                 .Include(x => x.StationModel)
                 .ThenInclude(y => y.StationsChargingUnits)
                 .ThenInclude(z => z.ChargingUnit)
