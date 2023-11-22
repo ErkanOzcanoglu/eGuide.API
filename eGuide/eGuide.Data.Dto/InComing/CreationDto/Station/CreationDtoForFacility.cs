@@ -32,22 +32,6 @@ namespace eGuide.Data.Dto.InComing.CreationDto.Station
         public string Name { get; set; }
 
         /// <summary>
-        /// Gets or sets the description.
-        /// </summary>
-        /// <value>
-        /// The description.
-        /// </value>
-        public string Description { get; set; }
-
-        /// <summary>
-        /// Gets or sets the phone number.
-        /// </summary>
-        /// <value>
-        /// The phone number.
-        /// </value>
-        public string PhoneNumber { get; set; }
-
-        /// <summary>
         /// Gets or sets the icon.
         /// </summary>
         /// <value>

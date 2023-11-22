@@ -14,5 +14,13 @@ namespace eGuide.Business.Concrete {
         public StationFacilityBusiness(IStationFacilityRepository stationFacilityRepository, IUnitOfWork unitOfWork) : base(stationFacilityRepository, unitOfWork) {
             _stationFacilityRepository = stationFacilityRepository;
         }
+
+        public async Task<List<StationFacility>> GetAllfac() {
+            return await _stationFacilityRepository.GetAllFacility();
+        }
+
+        public async Task<List<StationFacility>> GetFacByStationId(Guid stationId) {
+            return await _stationFacilityRepository.GetFacilityByStationId(stationId);
+        }
     }
 }
