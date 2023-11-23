@@ -46,5 +46,7 @@ namespace eGuide.Data.Dto.InComing.UpdateDto.Station
         /// The name.
         /// </value>
         public string Name { get; set; }
+
+        public int StationStatus { get; set; }
     }
 }

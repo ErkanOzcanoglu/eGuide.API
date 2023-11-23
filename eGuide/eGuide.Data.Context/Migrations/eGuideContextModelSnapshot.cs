@@ -776,6 +776,9 @@ namespace eGuide.Data.Context.Migrations
                     b.Property<Guid>("StationModelId")
                         .HasColumnType("uniqueidentifier");
 
+                    b.Property<int>("StationStatus")
+                        .HasColumnType("int");
+
                     b.Property<int>("Status")
                         .HasColumnType("int");
 

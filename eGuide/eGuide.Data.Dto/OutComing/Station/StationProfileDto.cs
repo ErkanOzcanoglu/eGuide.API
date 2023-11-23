@@ -38,5 +38,7 @@ namespace eGuide.Data.Dto.OutComing.Station
         /// The longtitude.
         /// </value>
         public string Longtitude { get; set; }
+
+        public int StationStatus { get; set; }
     }
 }
