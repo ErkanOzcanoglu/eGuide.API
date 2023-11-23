@@ -1,6 +1,9 @@
 ﻿using AutoMapper;
 using eGuide.Business.Interface;
+using eGuide.Data.Dto.InComing.CreationDto.Admin;
+using eGuide.Data.Dto.InComing.UpdateDto.Admin;
 using eGuide.Data.Dto.OutComing.Admin;
+using eGuide.Data.Entities.Admin;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -18,21 +21,34 @@ namespace eGuide.Service.AdminAPI.Controllers {
         }
 
         [HttpGet]
-        public async Task<ActionResult<WebsiteDto>> All() {
-            try {
-                var websites = await _business.GetAllAsync();
+        public async Task<ActionResult<Website>> All() {
+            var websites = await _business.GetAllAsync();
+            return Ok(websites); 
+        }
 
-                if (websites == null || !websites.Any()) {
-                    return NotFound("There are no websites in the database or the database is empty.");
-                }
+        [HttpPost]
+        public async Task<ActionResult<Website>> Create(CreationDtoForWebsite website) {
+            var entity = _mapper.Map<Website>(website);
+            var result = await _business.AddAsync(entity);
+            return Ok(result);
+        }
 
-                var websitedto = _mapper.Map<List<WebsiteDto>>(websites.ToList());
+        [HttpPut("{id}")]
+        public async Task<ActionResult<Website>> Update(Guid id, UpdateDtoForWebsite website) {
+            var entity = await _business.GetbyIdAsync(id);
 
-                return Ok(websitedto);
+            if (entity == null) {
+                return NotFound();
             }
-            catch (DbUpdateException ex) {
-                return BadRequest("An error occurred while accessing the database. Please try again later.");
-            }
+
+            entity.Footer = website.Footer;
+            entity.Navbar = website.Navbar;
+            entity.UpdatedDate = DateTime.Now;
+
+
+            var mappedEntity = _mapper.Map<Website>(entity);
+            await _business.UpdateAsync(mappedEntity);
+            return Ok(mappedEntity);
         }
     }
 }
