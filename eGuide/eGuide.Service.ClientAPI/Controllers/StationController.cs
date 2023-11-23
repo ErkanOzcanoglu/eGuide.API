@@ -36,11 +36,11 @@ namespace eGuide.Service.ClientAPI.Controllers {
         /// </summary>
         /// <returns></returns>
         [HttpGet]
-        public async Task<ActionResult> Get() {
-            var result = await _business.GetAllAsync();
+        public async Task<ActionResult> Get()
+        {
+            var result = await _business.GetAllS();
             return Ok(result);
         }
-
         [HttpGet("{id}")]
         public async Task<ActionResult> Get(Guid id) {
             var result = await _business.GetbyIdAsync(id);

@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using eGuide.Data.Context.Context;
 
@@ -11,9 +12,11 @@ using eGuide.Data.Context.Context;
 namespace eGuide.Data.Context.Migrations
 {
     [DbContext(typeof(eGuideContext))]
-    partial class eGuideContextModelSnapshot : ModelSnapshot
+    [Migration("20231121102639_userStat")]
+    partial class userStat
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -75,7 +78,7 @@ namespace eGuide.Data.Context.Migrations
                     b.Property<Guid>("FacilityId")
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<Guid>("StationId")
+                    b.Property<Guid?>("StationProfileId")
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<int>("Status")
@@ -88,9 +91,9 @@ namespace eGuide.Data.Context.Migrations
 
                     b.HasIndex("FacilityId");
 
-                    b.HasIndex("StationId");
+                    b.HasIndex("StationProfileId");
 
-                    b.ToTable("StationFacilities");
+                    b.ToTable("StationFacility");
                 });
 
             modelBuilder.Entity("eGuide.Data.Entites.Station.StationsChargingUnits", b =>
@@ -658,11 +661,19 @@ namespace eGuide.Data.Context.Migrations
                     b.Property<DateTime?>("DeletedDate")
                         .HasColumnType("datetime2");
 
+                    b.Property<string>("Description")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("Icon")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("PhoneNumber")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
@@ -824,15 +835,11 @@ namespace eGuide.Data.Context.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("eGuide.Data.Entities.Station.StationProfile", "Station")
+                    b.HasOne("eGuide.Data.Entities.Station.StationProfile", null)
                         .WithMany("StationFacilities")
-                        .HasForeignKey("StationId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("StationProfileId");
 
                     b.Navigation("Facility");
-
-                    b.Navigation("Station");
                 });
 
             modelBuilder.Entity("eGuide.Data.Entites.Station.StationsChargingUnits", b =>
