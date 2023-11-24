@@ -39,7 +39,11 @@ namespace eGuide.Service.ClientAPI.Controllers {
         public async Task<ActionResult> Get()
         {
             var result = await _business.GetAllS();
-            return Ok(result);
+
+            // Yalnızca stationStatus'u 1 olanları filtrele
+            var filteredResult = result.Where(item => item.StationStatus == 1).ToList();
+
+            return Ok(filteredResult);
         }
         [HttpGet("{id}")]
         public async Task<ActionResult> Get(Guid id) {
