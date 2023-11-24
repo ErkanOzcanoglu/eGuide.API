@@ -12,8 +12,8 @@ using eGuide.Data.Context.Context;
 namespace eGuide.Data.Context.Migrations
 {
     [DbContext(typeof(eGuideContext))]
-    [Migration("20231121102639_userStat")]
-    partial class userStat
+    [Migration("20231123113920_initial")]
+    partial class initial
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -78,7 +78,7 @@ namespace eGuide.Data.Context.Migrations
                     b.Property<Guid>("FacilityId")
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<Guid?>("StationProfileId")
+                    b.Property<Guid>("StationId")
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<int>("Status")
@@ -91,9 +91,9 @@ namespace eGuide.Data.Context.Migrations
 
                     b.HasIndex("FacilityId");
 
-                    b.HasIndex("StationProfileId");
+                    b.HasIndex("StationId");
 
-                    b.ToTable("StationFacility");
+                    b.ToTable("StationFacilities");
                 });
 
             modelBuilder.Entity("eGuide.Data.Entites.Station.StationsChargingUnits", b =>
@@ -661,19 +661,11 @@ namespace eGuide.Data.Context.Migrations
                     b.Property<DateTime?>("DeletedDate")
                         .HasColumnType("datetime2");
 
-                    b.Property<string>("Description")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<string>("Icon")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Name")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("PhoneNumber")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
@@ -787,6 +779,9 @@ namespace eGuide.Data.Context.Migrations
                     b.Property<Guid>("StationModelId")
                         .HasColumnType("uniqueidentifier");
 
+                    b.Property<int>("StationStatus")
+                        .HasColumnType("int");
+
                     b.Property<int>("Status")
                         .HasColumnType("int");
 
@@ -835,11 +830,15 @@ namespace eGuide.Data.Context.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("eGuide.Data.Entities.Station.StationProfile", null)
+                    b.HasOne("eGuide.Data.Entities.Station.StationProfile", "Station")
                         .WithMany("StationFacilities")
-                        .HasForeignKey("StationProfileId");
+                        .HasForeignKey("StationId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.Navigation("Facility");
+
+                    b.Navigation("Station");
                 });
 
             modelBuilder.Entity("eGuide.Data.Entites.Station.StationsChargingUnits", b =>

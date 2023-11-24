@@ -66,6 +66,7 @@ namespace eGuide.Service.AdminAPI.Controllers {
         /// <returns></returns>
         [HttpPost]
         public async Task<ActionResult<StationProfile>> Post(CreationDtoForStationProfile station) {
+
             var entity = _mapper.Map<StationProfile>(station);
             var result = await _business.AddAsync(entity);
             return Ok(result);
@@ -88,6 +89,7 @@ namespace eGuide.Service.AdminAPI.Controllers {
             entity.Latitude = station.Latitude;
             entity.Longitude = station.Longtitude;
             entity.Name = station.Name;
+            entity.StationStatus = station.StationStatus;
 
             var mappedEntity = _mapper.Map<StationProfile>(entity);
 

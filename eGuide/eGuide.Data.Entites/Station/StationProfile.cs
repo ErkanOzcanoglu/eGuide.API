@@ -49,6 +49,8 @@ namespace eGuide.Data.Entities.Station
         /// </value>
         public string Longitude { get; set; }
 
+        public int StationStatus { get; set; }
+
         /// <summary>
         /// Gets or sets the station model identifier.
         /// </summary>
