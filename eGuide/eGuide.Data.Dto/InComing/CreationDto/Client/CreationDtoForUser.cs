@@ -1,6 +1,7 @@
 ﻿using eGuide.Data.Dto.OutComing;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -37,6 +38,8 @@ namespace eGuide.Data.Dto.InComing.CreationDto.Client
         /// <value>
         /// The email.
         /// </value>
+
+        [Required, EmailAddress] 
         public string Email { get; set; }
 
         /// <summary>
@@ -45,6 +48,7 @@ namespace eGuide.Data.Dto.InComing.CreationDto.Client
         /// <value>
         /// The password.
         /// </value>
+        [Required, MinLength(8)]
         public string Password { get; set; }
 
         /// <summary>
@@ -53,6 +57,7 @@ namespace eGuide.Data.Dto.InComing.CreationDto.Client
         /// <value>
         /// The confirm password.
         /// </value>
+        [Required, MinLength(8)]
         public string ConfirmPassword { get; set; }
     }
 }

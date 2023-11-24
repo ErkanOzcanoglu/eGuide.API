@@ -12,7 +12,7 @@ namespace eGuide.Data.Dto.InComing.UpdateDto.Station
     /// 
     /// </summary>
     /// <seealso cref="eGuide.Data.Entities.BaseDto" />
-    public class UpdateDtoForConnector : BaseDto
+    public class UpdateDtoForConnector
     {
 
         /// <summary>
@@ -24,11 +24,18 @@ namespace eGuide.Data.Dto.InComing.UpdateDto.Station
         public string Type { get; set; }
 
         /// <summary>
-        /// Gets or sets the icon.
+        /// Gets or sets the name of the image.
         /// </summary>
         /// <value>
-        /// The icon.
+        /// The name of the image.
         /// </value>
-        public string Icon { get; set; }
+        public string ImageName { get; set; }
+        /// <summary>
+        /// Gets or sets the image data.
+        /// </summary>
+        /// <value>
+        /// The image data.
+        /// </value>
+        public string ImageData { get; set; }
     }
 }

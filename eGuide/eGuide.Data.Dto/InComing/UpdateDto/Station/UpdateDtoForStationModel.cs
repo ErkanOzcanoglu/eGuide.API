@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace eGuide.Data.Dto.InComing.UpdateDto.Station
 {
-    public class UpdateDtoForStationModel : BaseDto
+    public class UpdateDtoForStationModel 
     {
         public string Name { get; set; }
     }

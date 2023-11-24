@@ -1,4 +1,5 @@
-﻿using eGuide.Data.Entities.Station;
+﻿using eGuide.Data.Entites.Client;
+using eGuide.Data.Entities.Station;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,7 +13,7 @@ namespace eGuide.Data.Entities.Client
     /// 
     /// </summary>
     /// <seealso cref="eGuide.Data.Entities.BaseModel" />
-    public class User : BaseModel 
+    public class User : BaseModel
     {
 
         /// <summary>
@@ -40,22 +41,6 @@ namespace eGuide.Data.Entities.Client
         public string Email { get; set; }
 
         /// <summary>
-        /// Gets or sets the password.
-        /// </summary>
-        /// <value>
-        /// The password.
-        /// </value>
-        public string Password { get; set; }
-
-        /// <summary>
-        /// Gets or sets the confirm password.
-        /// </summary>
-        /// <value>
-        /// The confirm password.
-        /// </value>
-        public string ConfirmPassword { get; set; }
-
-        /// <summary>
         /// Gets or sets the comments.
         /// </summary>
         /// <value>
@@ -63,12 +48,70 @@ namespace eGuide.Data.Entities.Client
         /// </value>
         public ICollection<Comment> Comments { get; set; }
 
+       
         /// <summary>
-        /// Gets or sets the stations.
+        /// Gets or sets the user vehicles.
         /// </summary>
         /// <value>
-        /// The stations.
+        /// The user vehicles.
         /// </value>
-        public ICollection<StationProfile> Stations { get; set; }
+        public ICollection<UserVehicle> UserVehicles { get; set; }
+
+        /// <summary>
+        /// Gets or sets the user stations.
+        /// </summary>
+        /// <value>
+        /// The user stations.
+        /// </value>
+        public ICollection<UserStation> UserStations { get; set; }
+
+        /// <summary>
+        /// Gets or sets the pass word hash.
+        /// </summary>
+        /// <value>
+        /// The pass word hash.
+        /// </value>
+        public byte[] PassWordHash { get; set; }
+
+        /// <summary>
+        /// Gets or sets the pass word salt.
+        /// </summary>
+        /// <value>
+        /// The pass word salt.
+        /// </value>
+        public byte[] PassWordSalt { get; set; }
+
+        /// <summary>
+        /// Gets or sets the verified at.
+        /// </summary>
+        /// <value>
+        /// The verified at.
+        /// </value>
+        public DateTime? VerifiedAt { get; set; }
+
+        /// <summary>
+        /// Gets or sets the password reset token.
+        /// </summary>
+        /// <value>
+        /// The password reset token.
+        /// </value>
+        public string? PasswordResetToken { get; set; }
+
+        /// <summary>
+        /// Gets or sets the reset token expires.
+        /// </summary>
+        /// <value>
+        /// The reset token expires.
+        /// </value>
+        public DateTime? ResetTokenExpires { set; get; }
+
+        /// <summary>
+        /// Gets or sets the confirmation token.
+        /// </summary>
+        /// <value>
+        /// The confirmation token.
+        /// </value>
+        public string? ConfirmationToken { get; set; }
     }
+        
 }

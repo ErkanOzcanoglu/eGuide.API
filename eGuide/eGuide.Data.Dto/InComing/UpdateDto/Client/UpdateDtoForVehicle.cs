@@ -12,9 +12,15 @@ namespace eGuide.Data.Dto.InComing.UpdateDto.Client
     /// 
     /// </summary>
     /// <seealso cref="eGuide.Data.Entities.BaseDto" />
-    public class UpdateDtoForVehicle : BaseDto
+    public class UpdateDtoForVehicle 
     {
-        public string Brand { get; set; }
+   
+        /// <summary>
+        /// Gets or sets the model.
+        /// </summary>
+        /// <value>
+        /// The model.
+        /// </value>
         public string Model { get; set; }
     }
 }

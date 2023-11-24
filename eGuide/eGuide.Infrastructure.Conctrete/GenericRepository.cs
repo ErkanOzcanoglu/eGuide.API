@@ -1,6 +1,8 @@
 ﻿
 
+using AutoMapper;
 using eGuide.Data.Context.Context;
+using eGuide.Data.Entities;
 using eGuide.Infrastructure.Interface;
 using Microsoft.EntityFrameworkCore;
 using System.Linq.Expressions;
@@ -13,7 +15,7 @@ namespace eGuide.Infrastructure.Concrete
     /// </summary>
     /// <typeparam name="T"></typeparam>
     /// <seealso cref="eGuide.Infrastructure.Interface.IGenericRepository&lt;T&gt;" />
-    public class GenericRepository<T> : IGenericRepository<T> where T : class
+    public class GenericRepository<T> : IGenericRepository<T> where T : BaseModel
     {
         /// <summary>The context</summary>
         protected readonly eGuideContext _context;
@@ -31,6 +33,7 @@ namespace eGuide.Infrastructure.Concrete
         {
             _context = context;
             _dbSet = _context.Set<T>();
+           
         }
 
         /// <summary>
@@ -42,13 +45,18 @@ namespace eGuide.Infrastructure.Concrete
             await _dbSet.AddAsync(entity);
         }
 
+        public Task<T> FirstOrDefault(Expression<Func<T, bool>> predicate)
+        {
+            return _dbSet.FirstAsync(predicate);
+        }
+
         /// <summary>
         /// Gets all.
         /// </summary>
         /// <returns></returns>
         public IQueryable<T> GetAll()
         {
-            return _dbSet.AsNoTracking().AsQueryable();
+            return _dbSet.Where(x => x.Status == 1);
         }
 
         /// <summary>
@@ -58,16 +66,20 @@ namespace eGuide.Infrastructure.Concrete
         /// <returns></returns>
         public async Task<T> GetbyId(Guid id)
         {
-            return await _dbSet.FindAsync();
+            var entity = await _dbSet.FindAsync(id);
+                return entity;
+            
         }
 
         /// <summary>
         /// Removes the specified entity.
         /// </summary>
         /// <param name="entity">The entity.</param>
-        public void Remove(T entity)
+        public async void Remove(Guid id)
         {
-             _dbSet.Remove(entity);
+            var entity = _dbSet.Find(id);
+            entity.DeletedDate= DateTime.Now;
+            entity.Status = 0;
         }
 
         /// <summary>
@@ -76,7 +88,8 @@ namespace eGuide.Infrastructure.Concrete
         /// <param name="entity">The entity.</param>
         public void Update(T entity)
         {
-             _dbSet.Update(entity);
+            entity.UpdatedDate = DateTime.Now;
+            _dbSet.Update(entity);
         }
 
         /// <summary>
@@ -87,6 +100,17 @@ namespace eGuide.Infrastructure.Concrete
         public IQueryable<T> Where(Expression<Func<T, bool>> expression)
         {
             return _dbSet.Where(expression);
+        }
+
+        /// <summary>
+        /// Hards the remove.
+        /// </summary>
+        /// <param name="id">The identifier.</param>
+        public void HardRemove(Guid id) {
+            var entity = _dbSet.Find(id);
+            if(entity != null) {
+                _dbSet.Remove(entity);
+            }
         }
     }
 }

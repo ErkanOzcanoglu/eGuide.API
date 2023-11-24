@@ -52,6 +52,11 @@ namespace eGuide.Business.Concrete
             return entity;
         }
 
+        public Task<T> FirstOrDefault(Expression<Func<T, bool>> predicate)
+        {
+            return _repository.FirstOrDefault(predicate);
+        }
+
         /// <summary>
         /// Gets all asynchronous.
         /// </summary>
@@ -75,9 +80,9 @@ namespace eGuide.Business.Concrete
         /// Removes the asynchronous.
         /// </summary>
         /// <param name="entity">The entity.</param>
-        public async Task RemoveAsync(T entity)
+        public async Task RemoveAsync(Guid id)
         {
-            _repository.Remove(entity);
+            _repository.Remove(id);
             await _unitOfWork.CommitAsync();
         }
 
@@ -99,6 +104,15 @@ namespace eGuide.Business.Concrete
         public IQueryable<T> Where(Expression<Func<T, bool>> expression)
         {
             return _repository.Where(expression);
+        }
+
+        /// <summary>
+        /// Hards the remove asynchronous.
+        /// </summary>
+        /// <param name="id">The identifier.</param>
+        public async Task HardRemoveAsync(Guid id) {
+            _repository.HardRemove(id);
+            await _unitOfWork.CommitAsync();
         }
     }
 }

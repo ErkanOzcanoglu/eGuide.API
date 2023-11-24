@@ -12,7 +12,7 @@ namespace eGuide.Data.Dto.InComing.UpdateDto.Station
     /// 
     /// </summary>
     /// <seealso cref="eGuide.Data.Dto.OutComing.BaseDto" />
-    public class UpdateDtoForFacility : BaseDto
+    public class UpdateDtoForFacility 
     {
 
         /// <summary>
@@ -30,22 +30,6 @@ namespace eGuide.Data.Dto.InComing.UpdateDto.Station
         /// The name.
         /// </value>
         public string Name { get; set; }
-
-        /// <summary>
-        /// Gets or sets the description.
-        /// </summary>
-        /// <value>
-        /// The description.
-        /// </value>
-        public string Description { get; set; }
-
-        /// <summary>
-        /// Gets or sets the phone number.
-        /// </summary>
-        /// <value>
-        /// The phone number.
-        /// </value>
-        public string PhoneNumber { get; set; }
 
         /// <summary>
         /// Gets or sets the icon.

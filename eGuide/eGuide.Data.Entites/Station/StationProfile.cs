@@ -1,4 +1,5 @@
-﻿using eGuide.Data.Entities.Client;
+﻿using eGuide.Data.Entites.Station;
+using eGuide.Data.Entities.Client;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -15,6 +16,14 @@ namespace eGuide.Data.Entities.Station
     /// <seealso cref="eGuide.Data.Entities.BaseModel" />
     public class StationProfile : BaseModel
     {
+
+        /// <summary>
+        /// Gets or sets the name.
+        /// </summary>
+        /// <value>
+        /// The name.
+        /// </value>
+        public string Name { get; set; }
 
         /// <summary>
         /// Gets or sets the address.
@@ -38,7 +47,9 @@ namespace eGuide.Data.Entities.Station
         /// <value>
         /// The longtitude.
         /// </value>
-        public string Longtitude { get; set; }
+        public string Longitude { get; set; }
+
+        public int StationStatus { get; set; }
 
         /// <summary>
         /// Gets or sets the station model identifier.
@@ -62,15 +73,7 @@ namespace eGuide.Data.Entities.Station
         /// <value>
         /// The facilities.
         /// </value>
-        public ICollection<Facility> Facilities { get; set; }
-
-        /// <summary>
-        /// Gets or sets the users.
-        /// </summary>
-        /// <value>
-        /// The users.
-        /// </value>
-        public ICollection<User> Users { get; set; }
+        public ICollection<StationFacility> StationFacilities { get; set; }
 
         /// <summary>
         /// Gets or sets the comments.
@@ -79,5 +82,14 @@ namespace eGuide.Data.Entities.Station
         /// The comments.
         /// </value>
         public ICollection<Comment> Comments { get; set; }
+
+        /// <summary>
+        /// Gets or sets the user stations.
+        /// </summary>
+        /// <value>
+        /// The user stations.
+        /// </value>
+        public ICollection<UserStation> UserStations { get; set; }
+
     }
 }

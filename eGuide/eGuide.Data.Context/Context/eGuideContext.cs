@@ -1,14 +1,13 @@
-﻿using eGuide.Common.Configuration;
+﻿
+using eGuide.Data.Dto.OutComing.Station;
+using eGuide.Data.Entites.Client;
+using eGuide.Data.Entites.Station;
 using eGuide.Data.Entities.Admin;
 using eGuide.Data.Entities.Client;
 using eGuide.Data.Entities.Map;
 using eGuide.Data.Entities.Station;
 using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System.Reflection;
 
 namespace eGuide.Data.Context.Context {
     public class eGuideContext : DbContext {
@@ -29,7 +28,6 @@ namespace eGuide.Data.Context.Context {
         /// </remarks>
         public eGuideContext() { }
 
-
         /// <summary>
         /// Override this method to further configure the model that was discovered by convention from the entity types
         /// exposed in <see cref="T:Microsoft.EntityFrameworkCore.DbSet`1" /> properties on your derived context. The resulting model may be cached
@@ -48,53 +46,16 @@ namespace eGuide.Data.Context.Context {
         /// examples.
         /// </para>
         /// </remarks>
-        protected override void OnModelCreating(ModelBuilder modelBuilder) {
+        //protected override void OnModelCreating(ModelBuilder modelBuilder) {
+        //    modelBuilder.ApplyConfigurationsFromAssembly(Assembly.GetExecutingAssembly());
+
+        //    base.OnModelCreating(modelBuilder);
+        //}
+        protected override void OnModelCreating(ModelBuilder modelBuilder)//PROTECTED 
+        {
+            modelBuilder.ApplyConfigurationsFromAssembly(Assembly.GetExecutingAssembly());
+
             base.OnModelCreating(modelBuilder);
-
-            var adminProfileConfiguration = new AdminProfileConfiguration();
-            adminProfileConfiguration.Configure(modelBuilder.Entity<AdminProfile>());
-
-            var colorConfiguration = new ColorConfiguartion();
-            colorConfiguration.Configure(modelBuilder.Entity<Color>());
-
-            var commentConfiguration = new CommentConfiguration();
-            commentConfiguration.Configure(modelBuilder.Entity<Comment>());
-
-            var connectorConfiguration = new ConnectorConfiguration();
-            connectorConfiguration.Configure(modelBuilder.Entity<Connector>());
-
-            var facilityConfiguration = new FacilityConfiguration();
-            facilityConfiguration.Configure(modelBuilder.Entity<Facility>());
-
-            var pointConfiguration = new PointConfiguration();
-            pointConfiguration.Configure(modelBuilder.Entity<Point>());
-
-            var routeConfiguration = new RouteConfiguration();
-            routeConfiguration.Configure(modelBuilder.Entity<Route>());
-
-            var serviceConfiguration = new ServiceConfiguration();
-            serviceConfiguration.Configure(modelBuilder.Entity<Service>()); 
-
-            var socketConfiguration = new SocketConfiguration();
-            socketConfiguration.Configure(modelBuilder.Entity<Socket>());
-
-            var socialMediaConfiguration = new SocialMediaConfiguration();
-            socialMediaConfiguration.Configure(modelBuilder.Entity<SocialMedia>());
-
-            var stationConfiguration = new StationConfiguration();
-            stationConfiguration.Configure(modelBuilder.Entity<StationProfile>());
-
-            var stationModelConfiguration = new StationModelConfiguration();
-            stationModelConfiguration.Configure(modelBuilder.Entity<StationModel>());
-
-            var userConfiguration = new UserConfiguration();
-            userConfiguration.Configure(modelBuilder.Entity<User>());
-
-            var vehicleConfiguration = new VehicleConfiguration();
-            vehicleConfiguration.Configure(modelBuilder.Entity<Vehicle>());
-
-            var websiteConfiguration = new WebSiteConfiguration();
-            websiteConfiguration.Configure(modelBuilder.Entity<Website>());
         }
 
         /// <summary>
@@ -159,7 +120,7 @@ namespace eGuide.Data.Context.Context {
         /// <value>
         /// The service.
         /// </value>
-        public DbSet<Service> Service { get; set; }
+        public DbSet<Services> Service { get; set; }
 
         /// <summary>
         /// Gets or sets the socket.
@@ -167,7 +128,7 @@ namespace eGuide.Data.Context.Context {
         /// <value>
         /// The socket.
         /// </value>
-        public DbSet<Socket> Socket { get; set; }
+        public DbSet<ChargingUnit> CharginUnit { get; set; }
 
         /// <summary>
         /// Gets or sets the social media.
@@ -184,14 +145,6 @@ namespace eGuide.Data.Context.Context {
         /// The station.
         /// </value>
         public DbSet<StationProfile> Station { get; set; }
-
-        /// <summary>
-        /// Gets or sets the station model.
-        /// </summary>
-        /// <value>
-        /// The station model.
-        /// </value>
-        public DbSet<StationModel> StationModel { get; set; }
 
         /// <summary>
         /// Gets or sets the user.
@@ -216,5 +169,51 @@ namespace eGuide.Data.Context.Context {
         /// The website.
         /// </value>
         public DbSet<Website> Website { get; set; }
+
+        /// <summary>
+        /// Gets or sets the user vehicle.
+        /// </summary>
+        /// <value>
+        /// The user vehicle.
+        /// </value>
+        public DbSet<UserVehicle> UserVehicle { get; set; }
+
+        /// <summary>
+        /// Gets or sets the station model.
+        /// </summary>
+        /// <value>
+        /// The station model.
+        /// </value>
+        public DbSet<StationModel> StationModels { get; set; }
+
+        /// <summary>
+        /// Gets or sets the station socket.
+        /// </summary>
+        /// <value>
+        /// The station socket.
+        /// </value>
+        public DbSet<StationsChargingUnits> StationsChargingUnits { get; set; }
+
+        /// <summary>
+        /// Gets or sets the station information dto.
+        /// </summary>
+        /// <value>
+        /// The station information dto.
+        /// </value>
+        public DbSet<StationInformationModel> StationInformationModel { get; set; }
+
+        /// <summary>
+        /// Gets or sets the user station.
+        /// </summary>
+        /// <value>
+        /// The user station.
+        /// </value>
+        public DbSet<UserStation> UserStation { get; set; }
+        /// Gets or sets the station facilities.
+        /// </summary>
+        /// <value>
+        /// The station facilities.
+        /// </value>
+        public DbSet<StationFacility> StationFacilities { get; set; }
     }
 }

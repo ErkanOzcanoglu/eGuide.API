@@ -1,4 +1,5 @@
 ﻿using eGuide.Data.Entities.Client;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using System;
 using System.Collections.Generic;

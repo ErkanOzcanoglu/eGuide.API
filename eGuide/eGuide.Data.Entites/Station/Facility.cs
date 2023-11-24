@@ -1,4 +1,5 @@
-﻿using System;
+﻿using eGuide.Data.Entites.Station;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -31,22 +32,6 @@ namespace eGuide.Data.Entities.Station
         public string Name { get; set; }
 
         /// <summary>
-        /// Gets or sets the description.
-        /// </summary>
-        /// <value>
-        /// The description.
-        /// </value>
-        public string Description { get; set; }
-
-        /// <summary>
-        /// Gets or sets the phone number.
-        /// </summary>
-        /// <value>
-        /// The phone number.
-        /// </value>
-        public string PhoneNumber { get; set; }
-
-        /// <summary>
         /// Gets or sets the icon.
         /// </summary>
         /// <value>
@@ -60,6 +45,6 @@ namespace eGuide.Data.Entities.Station
         /// <value>
         /// The stations.
         /// </value>
-        public ICollection<StationProfile> Stations { get; set; }
+        public ICollection<StationFacility> StationFacilities { get; set; }
     }
 }

@@ -12,7 +12,7 @@ namespace eGuide.Data.Dto.InComing.UpdateDto.Station
     /// 
     /// </summary>
     /// <seealso cref="eGuide.Data.Dto.OutComing.BaseDto" />
-    public class UpdateDtoForStationProfile : BaseDto
+    public class UpdateDtoForStationProfile 
     {
 
         /// <summary>
@@ -38,5 +38,15 @@ namespace eGuide.Data.Dto.InComing.UpdateDto.Station
         /// The longtitude.
         /// </value>
         public string Longtitude { get; set; }
+
+        /// <summary>
+        /// Gets or sets the name.
+        /// </summary>
+        /// <value>
+        /// The name.
+        /// </value>
+        public string Name { get; set; }
+
+        public int StationStatus { get; set; }
     }
 }

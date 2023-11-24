@@ -1,0 +1,14 @@
+﻿using eGuide.Data.Dto.InComing.CreationDto.Station;
+using eGuide.Data.Dto.InComing.UpdateDto.Station;
+using eGuide.Data.Dto.OutComing.Station;
+using eGuide.Data.Entites.Station;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace eGuide.Common.Mappers {
+    public class StationChargingUnitMapper : BaseMapper<StationsChargingUnits, StationChargingUnitDto, UpdateDtoForStationChargingUnit, CreationDtoForStationChargingUnit> {
+    }
+}
