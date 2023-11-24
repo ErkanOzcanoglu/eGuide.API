@@ -12,7 +12,7 @@ namespace eGuide.Data.Dto.InComing.CreationDto.Admin
     /// 
     /// </summary>
     /// <seealso cref="eGuide.Data.Entities.BaseDto" />
-    public class UpdateDtoForSocialMedia : BaseDto
+    public class CreationDtoForSocialMedia : BaseDto
     {
 
         /// <summary>
