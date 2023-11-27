@@ -73,6 +73,10 @@ builder.Services.AddScoped(typeof(ILastVisitedStationsRepository), typeof(LastVi
 builder.Services.AddScoped(typeof(ISocialMediaBusiness), typeof(SocialMediaBusiness));
 builder.Services.AddScoped(typeof(ISocialMediaRepository), typeof(SocialMediaRepository));
 
+builder.Services.AddScoped(typeof(IWebsiteBusiness), typeof(WebsiteBusiness));
+builder.Services.AddScoped(typeof(IWebsiteRepository), typeof(WebsiteRepository));
+
+
 builder.Services.AddSingleton<IMongoClient>(new MongoClient("mongodb://localhost:27017"));
 builder.Services.AddSingleton<IMongoDatabase>(provider =>
 {
