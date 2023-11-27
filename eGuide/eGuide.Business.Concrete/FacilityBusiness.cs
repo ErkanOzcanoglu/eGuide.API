@@ -17,5 +17,9 @@ namespace eGuide.Business.Concrete {
             _unitOfWork = unitOfWork;
         }
 
+        public async Task<Facility> GetByFacilityId(Guid facilityId)
+        {
+           return await _repository.GetByFacilityId(facilityId);
+        }
     }
 }

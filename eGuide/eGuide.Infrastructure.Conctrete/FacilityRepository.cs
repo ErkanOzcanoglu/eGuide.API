@@ -2,6 +2,7 @@
 using eGuide.Data.Entities.Station;
 using eGuide.Infrastructure.Concrete;
 using eGuide.Infrastructure.Interface;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -28,6 +29,17 @@ namespace eGuide.Infrastructure.Conctrete {
         /// <param name="context">The context.</param>
         public FacilityRepository(eGuideContext context) : base(context) {
             _context = context;
+        }
+
+        public async Task<Facility> GetByFacilityId(Guid facilityId)
+        {
+            var facilityInfo = await _context.Facility.Where(res => res.Status == 1 && res.Id == facilityId).Include(sf => sf.StationFacilities).ThenInclude(stFac => stFac.Station).FirstOrDefaultAsync();
+
+            if (facilityInfo == null)
+            {
+                return null;
+            }
+            return facilityInfo;
         }
     }
 }

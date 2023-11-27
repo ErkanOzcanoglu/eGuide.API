@@ -1,5 +1,6 @@
 ﻿using eGuide.Data.Context.Context;
 using eGuide.Data.Entites.Station;
+using eGuide.Data.Entities.Station;
 using eGuide.Infrastructure.Concrete;
 using eGuide.Infrastructure.Interface;
 using Microsoft.EntityFrameworkCore;
