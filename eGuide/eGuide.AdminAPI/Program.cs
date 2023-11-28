@@ -66,6 +66,11 @@ builder.Services.AddScoped(typeof(IVehicleRepository), typeof(VehicleRepository)
 builder.Services.AddScoped(typeof(IStationModelBusiness), typeof(StationModelBusiness));
 builder.Services.AddScoped(typeof(IStationModelRepository), typeof(StationModelRepository));
 
+
+builder.Services.AddScoped(typeof(IUserStationBusiness), typeof(UserStationBusiness));
+builder.Services.AddScoped(typeof(IUserStationRepository), typeof(UserStationRepository));
+
+
 builder.Services.AddScoped(typeof(IWebsiteBusiness), typeof(WebsiteBusiness));
 builder.Services.AddScoped(typeof(IWebsiteRepository), typeof(WebsiteRepository));
 

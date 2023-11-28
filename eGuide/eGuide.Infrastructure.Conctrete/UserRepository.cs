@@ -44,7 +44,7 @@ namespace eGuide.Infrastructure.Conctrete
         {
             comment.Id = Guid.NewGuid();
             comment.CreatedTime = DateTime.Now;
-            await _collection.InsertOneAsync(comment);
+            //await _collection.InsertOneAsync(comment);
             return comment;
         }
 
