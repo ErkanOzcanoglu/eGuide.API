@@ -61,6 +61,7 @@ namespace eGuide.Service.AdminAPI.Controllers {
             entity.Address = website.Address;
             entity.Description = website.Description;
             entity.Email = website.Email;
+            entity.PhoneNumber = website.PhoneNumber;
             entity.UpdatedDate = DateTime.Now;
 
 
