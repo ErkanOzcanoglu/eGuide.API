@@ -35,8 +35,7 @@ namespace eGuide.Service.AdminAPI.Controllers
         {
             try
             {
-                var totalUserCount = await _business.Where(us => us.StationProfileId == stationId).CountAsync();
-                 
+                var totalUserCount = await _business.Where(us => us.StationProfileId == stationId).CountAsync(); 
                 return Ok(totalUserCount);
             }
             catch (Exception ex)
