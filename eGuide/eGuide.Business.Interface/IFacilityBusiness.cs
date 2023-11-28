@@ -12,6 +12,8 @@ namespace eGuide.Business.Interface {
     /// 
     /// </summary>
     /// <seealso cref="eGuide.Business.Interface.IBusiness&lt;eGuide.Data.Entities.Station.Facility&gt;" />
-    public interface IFacilityBusiness : IBusiness<Facility> {  
+    public interface IFacilityBusiness : IBusiness<Facility> {
+
+        Task<Facility> GetByFacilityId(Guid facilityId);
     }
 }

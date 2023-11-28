@@ -40,10 +40,11 @@ namespace eGuide.Infrastructure.Conctrete
             _collection = mongoContext.GetCollection<UserLogs>("Users");
         }
 
-        public async Task<UserLogs> CreateUsersLog(UserLogs comment) {
+        public async Task<UserLogs> CreateUsersLog(UserLogs comment)
+        {
             comment.Id = Guid.NewGuid();
             comment.CreatedTime = DateTime.Now;
-            await _collection.InsertOneAsync(comment);
+            //await _collection.InsertOneAsync(comment);
             return comment;
         }
 

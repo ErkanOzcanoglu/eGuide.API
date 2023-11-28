@@ -1,4 +1,5 @@
 ﻿using eGuide.Data.Entites.Station;
+using eGuide.Data.Entities.Station;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,5 +10,6 @@ namespace eGuide.Business.Interface {
     public interface IStationFacilityBusiness : IBusiness<StationFacility> {
         Task<List<StationFacility>> GetAllfac();
         Task<List<StationFacility>> GetFacByStationId(Guid stationId);
+        
     }
 }
