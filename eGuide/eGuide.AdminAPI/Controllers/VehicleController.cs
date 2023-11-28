@@ -42,27 +42,11 @@ namespace eGuide.Service.AdminAPI.Controllers
         [HttpGet]
         public async Task<ActionResult<VehicleDto>> All()
         {
-            try
-            {
                 var vehicles = await _business.GetAllAsync();
-
-                if (vehicles == null || !vehicles.Any())
-                {
-                    return NotFound("There are no vehicles in the database or the database is empty.");
-                }
 
                 var vehicledto = _mapper.Map<List<VehicleDto>>(vehicles.ToList());
 
                 return Ok(vehicledto);
-            }
-            catch (DbUpdateException ex)
-            {
-                return BadRequest("An error occurred while accessing the database. Please try again later.");
-            }
-            catch (Exception ex)
-            {
-                return BadRequest($"Hata: {ex.Message}");
-            }
         }
 
         /// <summary>
