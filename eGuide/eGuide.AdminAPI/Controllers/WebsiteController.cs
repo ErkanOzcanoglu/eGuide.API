@@ -21,9 +21,23 @@ namespace eGuide.Service.AdminAPI.Controllers {
         }
 
         [HttpGet]
-        public async Task<ActionResult<Website>> All() {
-            var websites = await _business.GetAllAsync();
-            return Ok(websites); 
+        public async Task<ActionResult<Website>> Get() {
+            var website = await _business.GetAllAsync();
+            if (website == null) {
+                return NotFound();
+            }
+
+            return Ok(website);
+        }
+
+        [HttpGet("{id}")]
+        public async Task<ActionResult<Website>> Get(Guid id) {
+            var website = await _business.GetbyIdAsync(id);
+            if (website == null) {
+                return NotFound();
+            }
+
+            return Ok(website);
         }
 
         [HttpPost]
@@ -43,6 +57,10 @@ namespace eGuide.Service.AdminAPI.Controllers {
 
             entity.Footer = website.Footer;
             entity.Navbar = website.Navbar;
+            entity.Name = website.Name;
+            entity.Address = website.Address;
+            entity.Description = website.Description;
+            entity.Email = website.Email;
             entity.UpdatedDate = DateTime.Now;
 
 
