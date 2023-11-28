@@ -61,13 +61,14 @@ namespace eGuide.Service.AdminAPI.Controllers {
         /// <param name="stationModel">The station model.</param>
         /// <returns></returns>
         [HttpPut]
-        public async Task<ActionResult> Put(Guid id, UpdateDtoForStationModel stationModel) {
+        public async Task<ActionResult<StationModel>> Put(Guid id, UpdateDtoForStationModel stationModel) {
             var entity = await _business.GetbyIdAsync(id);
             if (entity == null) {
                 return NotFound();
             }
 
             entity.Name = stationModel.Name;
+            entity.UpdatedDate = DateTime.Now;
 
             var mappedEntity = _mapper.Map<StationModel>(entity);
 
