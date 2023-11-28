@@ -77,9 +77,8 @@ builder.Services.AddScoped(typeof(IWebsiteBusiness), typeof(WebsiteBusiness));
 builder.Services.AddScoped(typeof(IWebsiteRepository), typeof(WebsiteRepository));
 
 
-builder.Services.AddSingleton<IMongoClient>(new MongoClient("mongodb://localhost:27017"));
-builder.Services.AddSingleton<IMongoDatabase>(provider =>
-{
+builder.Services.AddSingleton<IMongoClient>(new MongoClient("mongodb://localhost:27017/test"));
+builder.Services.AddSingleton<IMongoDatabase>(provider => {
     var client = provider.GetRequiredService<IMongoClient>();
     return client.GetDatabase("eGuideDb");
 });
