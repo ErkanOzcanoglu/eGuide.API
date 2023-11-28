@@ -7,5 +7,6 @@ using System.Threading.Tasks;
 
 namespace eGuide.Business.Interface {
     public interface IChargingUnitBusiness : IBusiness<ChargingUnit> {
+        Task<List<ChargingUnit>> GetChargingUnits();
     }
 }

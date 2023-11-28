@@ -111,5 +111,11 @@ namespace eGuide.Service.AdminAPI.Controllers {
             await _socketBusiness.HardRemoveAsync(id);
             return Ok();
         }
+
+        [HttpGet("AllChargingUnits")]
+        public async Task<IActionResult> GetCon() {
+            var sockets = await _socketBusiness.GetChargingUnits();
+            return Ok(sockets);
+        }
     }
 }
