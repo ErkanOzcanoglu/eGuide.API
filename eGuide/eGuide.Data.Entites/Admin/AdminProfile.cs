@@ -84,5 +84,13 @@ namespace eGuide.Data.Entities.Admin
         /// The confirmation token.
         /// </value>
         public string? ConfirmationToken { get; set; }
+
+        /// <summary>
+        /// Gets or sets a value indicating whether this instance is master admin.
+        /// </summary>
+        /// <value>
+        ///   <c>true</c> if this instance is master admin; otherwise, <c>false</c>.
+        /// </value>
+        public bool isMasterAdmin { get; set; }
     }
 }
