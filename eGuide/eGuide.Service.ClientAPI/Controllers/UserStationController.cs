@@ -36,26 +36,39 @@ namespace eGuide.Service.ClientAPI.Controllers
         }
 
         [HttpPost]
-        public async Task Save(CreationDtoForUserStation vehicledto)
+        public async Task Save(CreationDtoForUserStation userstation)
         {
-                   
-           await _business.AddAsync(_mapper.Map<UserStation>(vehicledto));
+            var userStation = await _business.Where(us => us.StationProfileId == userstation.StationProfileId).FirstOrDefaultAsync();// after where mention the number of return values
+
+            if (userStation == null)
+            {
+                
+               await _business.AddAsync(_mapper.Map<UserStation>(userstation));
+                     
+            }   
             
         }
 
         [HttpDelete("DeleteStationProfile/{id}")]
         public async Task<ActionResult> Delete(Guid id)
         {
-            try
+            var userStation = await _business.Where(us => us.StationProfileId == id).FirstOrDefaultAsync();
+
+            if (userStation != null)
             {
-
-                _business.HardRemoveAsync(id);
-
-                return Ok();
+                try
+                {
+                    await _business.HardRemoveAsync(userStation.Id);// dont forget async
+                    return Ok();
+                }
+                catch (Exception ex)
+                {
+                    return BadRequest($"Hata: {ex.Message}");
+                }
             }
-            catch (Exception ex)
+            else
             {
-                return BadRequest($"Hata: {ex.Message}");
+                return NotFound($"ID {id} ile eşleşen istasyon profili bulunamadı.");
             }
         }
 
