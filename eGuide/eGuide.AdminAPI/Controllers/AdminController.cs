@@ -17,6 +17,7 @@ using System.Security.Cryptography;
 using System.Text;
 using MailKit.Net.Smtp;
 using MailKit.Security;
+using Microsoft.Win32;
 
 namespace eGuide.Service.AdminAPI.Controllers {
     /// <summary>
@@ -185,6 +186,7 @@ namespace eGuide.Service.AdminAPI.Controllers {
                 PassWordHash = passwordHash,
                 PassWordSalt = passwordSalt,
                 ConfirmationToken = CreatedToken(register),
+                isMasterAdmin = register.isMasterAdmin,
                 CreatedDate = DateTime.Now
 
             };
@@ -398,16 +400,37 @@ namespace eGuide.Service.AdminAPI.Controllers {
                 return BadRequest("Token Expired");
             }
 
-            CreatePasswordHash(request.Password, out byte[] passwordHash, out byte[] passwordSalt);
+            byte[] passwordHash, passwordSalt;
+            CreatePasswordHash(request.Password, out passwordHash, out passwordSalt);
+
+            //CreatePasswordHash(request.Password, out byte[] passwordHash, out byte[] passwordSalt);
+
+            //user.PassWordHash = passwordHash;
+            //user.PassWordSalt = passwordSalt;
+            //user.PasswordResetToken = null;
+            //user.ResetTokenExpires = null;
+
+            //await _business.UpdateAsync(user);
+
+            return Ok("Password successfully changed");
+        }
+
+        [HttpPost("pass-change")]
+        public async Task<IActionResult> ChangePassword(Guid id, ResetPassword changePasswordDto) {
+            var user = await _business.FirstOrDefault(u => u.Id == id);
+
+            if (user == null) {
+                return BadRequest("UserNotFound");
+            }
+
+            CreatePasswordHash(changePasswordDto.Password, out byte[] passwordHash, out byte[] passwordSalt);
 
             user.PassWordHash = passwordHash;
             user.PassWordSalt = passwordSalt;
-            user.PasswordResetToken = null;
-            user.ResetTokenExpires = null;
 
             await _business.UpdateAsync(user);
 
-            return Ok("Password successfully changed");
+            return Ok(user);
         }
     }
 }
