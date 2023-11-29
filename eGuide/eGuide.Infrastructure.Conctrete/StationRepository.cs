@@ -56,19 +56,29 @@ namespace eGuide.Infrastructure.Conctrete {
 
         public async Task<List<StationProfile>> GetStationProf() {
             var res = _context.Station.Where(x => x.Status == 1)
-                .Include(us => us.UserStations)
-                .Include(sf => sf.StationFacilities)
-                .ThenInclude(f => f.Facility)
-                .Include(x => x.StationModel)
-                .ThenInclude(y => y.StationsChargingUnits)
-                .ThenInclude(z => z.ChargingUnit)
-                .ThenInclude(k => k.Connector)
-                .ToList();
+                //.Include(us => us.UserStations)
+                //.Include(sf => sf.StationFacilities)
+                ////.ThenInclude(f => f.Facility)
+                //.Include(x => x.StationModel)
+                //.ThenInclude(y => y.StationsChargingUnits)
+                //.ThenInclude(z => z.ChargingUnit)
+                //.ThenInclude(k => k.Connector)
+                //.ToList();
+                .AsNoTracking()
+                .AsQueryable()
+                 .Include(us => us.UserStations)
+                 .Include(sf => sf.StationFacilities)
+                 .ThenInclude(f => f.Facility)
+                 .Include(x => x.StationModel)
+                 .ThenInclude(y => y.StationsChargingUnits)
+                 .ThenInclude(z => z.ChargingUnit)
+                 .ThenInclude(k => k.Connector);
+
 
             if (res != null)
-                return res;
-
-            return null;
+                return await res.ToListAsync();
+            else
+                return null;
         }
     }
 }

@@ -25,5 +25,24 @@ namespace eGuide.Infrastructure.Conctrete {
             _context = context;
         }
 
+        public async Task<Website> UpdateFooter(Website website) {
+            var res = await _context.Website.Where(x => x.Status == 1).FirstOrDefaultAsync();
+            if( res == null) {
+                return null;
+            }
+            res.Footer = website.Footer;
+            await _context.SaveChangesAsync();
+            return res;
+        }
+
+        public async Task<Website> UpdateNavbar(Website website) {
+            var res = await _context.Website.Where(x => x.Status == 1).FirstOrDefaultAsync();
+            if( res == null) {
+                return null;
+            }
+            res.Navbar = website.Navbar;
+            await _context.SaveChangesAsync();
+            return res;
+        }
     }
 }
