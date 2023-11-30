@@ -12,7 +12,7 @@ using eGuide.Data.Context.Context;
 namespace eGuide.Data.Context.Migrations
 {
     [DbContext(typeof(eGuideContext))]
-    [Migration("20231128072649_initial")]
+    [Migration("20231129085219_initial")]
     partial class initial
     {
         /// <inheritdoc />
@@ -178,6 +178,9 @@ namespace eGuide.Data.Context.Migrations
 
                     b.Property<DateTime?>("VerifiedAt")
                         .HasColumnType("datetime2");
+
+                    b.Property<bool>("isMasterAdmin")
+                        .HasColumnType("bit");
 
                     b.HasKey("Id");
 

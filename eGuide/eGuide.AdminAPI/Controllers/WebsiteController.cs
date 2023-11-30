@@ -69,5 +69,39 @@ namespace eGuide.Service.AdminAPI.Controllers {
             await _business.UpdateAsync(mappedEntity);
             return Ok(mappedEntity);
         }
+
+        [HttpPut("updateNavbar/{id}")]
+        public async Task<ActionResult<Website>> UpdateNavbar(Guid id, int num) {
+            var entity = await _business.GetbyIdAsync(id);
+
+            if (entity == null) {
+                return NotFound();
+            }
+
+            entity.Navbar = num;
+            entity.UpdatedDate = DateTime.Now;
+
+            var mappedEntity = _mapper.Map<Website>(entity);
+
+            await _business.UpdateAsync(mappedEntity);
+            return Ok(mappedEntity);
+        }
+
+        [HttpPut("updateFooter/{id}")]
+        public async Task<ActionResult<Website>> UpdateFooter(Guid id, int num) {
+            var entity = await _business.GetbyIdAsync(id);
+
+            if (entity == null) {
+                return NotFound();
+            }
+
+            entity.Footer = num;
+            entity.UpdatedDate = DateTime.Now;
+
+            var mappedEntity = _mapper.Map<Website>(entity);
+
+            await _business.UpdateAsync(mappedEntity);
+            return Ok(mappedEntity);
+        }
     }
 }

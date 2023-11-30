@@ -7,5 +7,8 @@ using System.Threading.Tasks;
 
 namespace eGuide.Infrastructure.Interface {
     public interface IWebsiteRepository : IGenericRepository<Website> {
+        Task<Website> UpdateNavbar(Website website);
+        Task<Website> UpdateFooter(Website website);
+
     }
 }

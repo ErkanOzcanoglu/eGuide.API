@@ -7,5 +7,7 @@ using System.Threading.Tasks;
 
 namespace eGuide.Business.Interface {
     public interface IWebsiteBusiness : IBusiness<Website> {
+        Task<Website> UpdateNavbar(Website website);
+        Task<Website> UpdateFooter(Website website);
     }
 }
