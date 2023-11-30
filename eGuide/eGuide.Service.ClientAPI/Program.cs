@@ -3,6 +3,7 @@ using eGuide.Business.Interface;
 using eGuide.Common.Mappers;
 using eGuide.Data.Context.Context;
 using eGuide.Data.Entities.Admin;
+using eGuide.Data.Entities.Station;
 using eGuide.Infrastructure.Concrete;
 using eGuide.Infrastructure.Conctrete;
 using eGuide.Infrastructure.Interface;
@@ -78,6 +79,10 @@ builder.Services.AddScoped(typeof(ISocialMediaRepository), typeof(SocialMediaRep
 
 builder.Services.AddScoped(typeof(IWebsiteBusiness), typeof(WebsiteBusiness));
 builder.Services.AddScoped(typeof(IWebsiteRepository), typeof(WebsiteRepository));
+
+builder.Services.AddScoped(typeof(ICommentBusiness), typeof(CommentBusiness));
+builder.Services.AddScoped(typeof(ICommentRepository), typeof(CommentRepository));
+
 
 
 builder.Services.AddSingleton<IMongoClient>(new MongoClient("mongodb://localhost:27017/test"));

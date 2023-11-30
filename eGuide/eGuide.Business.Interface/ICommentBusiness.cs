@@ -6,8 +6,9 @@ using System.Text;
 using System.Threading.Tasks;
 
 namespace eGuide.Business.Interface {
-    public interface ICommentBusiness<T> where T: class {
-        void AddComment(T comment);
-        Task<IEnumerable<T>> GetAllComments();
+    public interface ICommentBusiness {
+        void AddComment(Comment comment);
+        Task<IEnumerable<Comment>> GetAllComments();
+        Task<IEnumerable<Comment>> GetAllCommentsByStationId(Guid stationId);
     }
 }

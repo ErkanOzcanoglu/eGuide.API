@@ -215,7 +215,7 @@ namespace eGuide.Service.ClientAPI.Controllers {
 
             };
 
-            user.Status = 1;
+            user.Status = 0;
 
             await _business.AddAsync(user);
 
@@ -245,6 +245,7 @@ namespace eGuide.Service.ClientAPI.Controllers {
                 return BadRequest("Invalid confirmation code.");
             }
 
+            user.Status = 1;
             user.VerifiedAt = DateTime.Now;
             await _business.UpdateAsync(user);
 
@@ -288,7 +289,7 @@ namespace eGuide.Service.ClientAPI.Controllers {
             }
             if(entity.Status==1)
             {
-                return Ok(entity.Id);
+                return Ok(entity);
             }
             else
             {
