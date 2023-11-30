@@ -5,11 +5,10 @@ using eGuide.Data.Entities.Station;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
-namespace eGuide.Service.AdminAPI.Controllers {
+namespace eGuide.Service.ClientAPI.Controllers {
     [Route("api/[controller]")]
     [ApiController]
     public class CommentController : ControllerBase {
-
         /// <summary>
         /// The business
         /// </summary>
@@ -50,6 +49,13 @@ namespace eGuide.Service.AdminAPI.Controllers {
         [HttpGet]
         public async Task<IActionResult> GetAllComments() {
             var comments = await _business.GetAllComments();
+            var commentsDto = _mapper.Map<CommentDto[]>(comments);
+            return Ok(commentsDto);
+        }
+
+        [HttpGet("{stationId}")]
+        public async Task<IActionResult> GetCommentsByStationId(Guid stationId) {
+            var comments = await _business.GetAllCommentsByStationId(stationId);
             var commentsDto = _mapper.Map<CommentDto[]>(comments);
             return Ok(commentsDto);
         }

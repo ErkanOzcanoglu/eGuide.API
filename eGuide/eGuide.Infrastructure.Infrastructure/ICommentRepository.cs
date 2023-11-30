@@ -11,19 +11,26 @@ namespace eGuide.Infrastructure.Interface {
     /// 
     /// </summary>
     /// <typeparam name="T"></typeparam>
-    public interface ICommentRepository<T> where T: class {
+    public interface ICommentRepository {
 
         /// <summary>
         /// Adds the asynchronous.
         /// </summary>
         /// <param name="comment">The comment.</param>
         /// <returns></returns>
-        Task<T> AddAsync(T comment);
+        Task<Comment> AddAsync(Comment comment);
 
         /// <summary>
         /// Gets all asynchronous.
         /// </summary>
         /// <returns></returns>
-        Task<IEnumerable<T>> GetAllAsync();
+        Task<IEnumerable<Comment>> GetAllAsync();
+
+        /// <summary>
+        /// Gets all by station identifier asynchronous.
+        /// </summary>
+        /// <param name="stationId">The station identifier.</param>
+        /// <returns></returns>
+        Task<IEnumerable<Comment>> GetAllByStationIdAsync(Guid stationId);
     }
 }

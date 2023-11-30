@@ -191,7 +191,7 @@ namespace eGuide.Service.AdminAPI.Controllers {
 
             };
 
-            user.Status = 1;
+            user.Status = 0;
 
             await _business.AddAsync(user);
 
@@ -212,7 +212,7 @@ namespace eGuide.Service.AdminAPI.Controllers {
             {
                 return BadRequest("Invalid confirmation code.");
             }
-
+            user.Status = 1;
             user.VerifiedAt = DateTime.Now;
             await _business.UpdateAsync(user);
 
