@@ -86,6 +86,13 @@ builder.Services.AddScoped(typeof(IFacilityRepository), typeof(FacilityRepositor
 builder.Services.AddScoped(typeof(ISocialMediaBusiness), typeof(SocialMediaBusiness));
 builder.Services.AddScoped(typeof(ISocialMediaRepository), typeof(SocialMediaRepository));
 
+builder.Services.AddScoped<IUserBusiness, UserBusiness>();
+builder.Services.AddScoped<IUserRepository, UserRepository>();
+
+builder.Services.AddScoped(typeof(IUserVehicleBusiness), typeof(UserVehicleBusiness));
+builder.Services.AddScoped(typeof(IUserVehicleRepository), typeof(UserVehicleRepository));
+
+
 
 builder.Services.AddSingleton<IMongoClient>(new MongoClient("mongodb://localhost:27017/test"));
 builder.Services.AddSingleton<IMongoDatabase>(provider => {

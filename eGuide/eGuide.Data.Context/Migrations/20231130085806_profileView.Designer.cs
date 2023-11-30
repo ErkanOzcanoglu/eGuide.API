@@ -12,8 +12,8 @@ using eGuide.Data.Context.Context;
 namespace eGuide.Data.Context.Migrations
 {
     [DbContext(typeof(eGuideContext))]
-    [Migration("20231129085219_initial")]
-    partial class initial
+    [Migration("20231130085806_profileView")]
+    partial class profileView
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
