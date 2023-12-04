@@ -59,5 +59,26 @@ namespace eGuide.Service.AdminAPI.Controllers
                 return BadRequest($"Hata: {ex.Message}");
             }
         }
+
+        [HttpGet("GetStationProfile/{userId}")]
+        public async Task<IActionResult> GetStationProfiles(Guid userId)
+        {
+            try
+            {
+                var stationProfiles = await _business.GetUserStationsProfilesAsync(userId);
+
+                if (stationProfiles == null)
+                {
+                    return NotFound(); // Kullanıcıya ait araçlar bulunamadıysa 404 dönebilirsiniz.
+                }
+
+                return Ok(stationProfiles);
+
+            }
+            catch (Exception ex)
+            {
+                return BadRequest($"Hata: {ex.Message}");
+            }
+        }
     }
 }
