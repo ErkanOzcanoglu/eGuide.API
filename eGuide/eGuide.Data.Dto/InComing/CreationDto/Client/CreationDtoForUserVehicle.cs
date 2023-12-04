@@ -31,5 +31,7 @@ namespace eGuide.Data.Dto.InComing.CreationDto.Client
         /// The connector identifier.
         /// </value>
         public Guid ConnectorId { get; set; }
+
+        public int ActiveStatus { get; set; }
     }
 }

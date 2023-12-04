@@ -24,5 +24,7 @@ namespace eGuide.Business.Interface
         /// <returns></returns>
         public Task<List<Vehicle>> GetUserVehicles(Guid id);
 
+        Task<UserVehicle> GetActiveUserVehicleConnector(Guid userId);
+
     }
 }

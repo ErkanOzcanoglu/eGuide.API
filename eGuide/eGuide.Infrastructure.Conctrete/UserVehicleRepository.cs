@@ -33,6 +33,13 @@ namespace eGuide.Infrastructure.Conctrete
             _dbSet = _context.Set<UserVehicle>();
         }
 
+        public async Task<UserVehicle> GetActiveUserVehicleConnector(Guid userId)
+        {
+            var userVehicle = await _dbSet.FirstOrDefaultAsync(v => v.UserId == userId && v.ActiveStatus == 1);
+            return userVehicle;
+
+        }
+
         /// <summary>
         /// Gets the by vehicle identifier asynchronous.
         /// </summary>

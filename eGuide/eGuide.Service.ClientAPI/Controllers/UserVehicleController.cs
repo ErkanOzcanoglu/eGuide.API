@@ -4,6 +4,7 @@ using eGuide.Data.Context.Context;
 using eGuide.Data.Dto.InComing.CreationDto.Client;
 using eGuide.Data.Dto.InComing.UpdateDto.Client;
 using eGuide.Data.Entites.Client;
+using eGuide.Data.Entities.Client;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Data.SqlClient;
@@ -58,6 +59,18 @@ namespace eGuide.Service.ClientAPI.Controllers
         [HttpPost]
         public async Task Save(CreationDtoForUserVehicle vehicledto)
         {
+            var existingVehicle = await _dbSet.FirstOrDefaultAsync(v => v.UserId == vehicledto.UserId);
+
+            if (existingVehicle == null)
+            {
+                vehicledto.ActiveStatus = 1;
+            }
+        
+            else
+            {
+                vehicledto.ActiveStatus = 0;
+            }
+
             await _business.AddAsync(_mapper.Map<UserVehicle>(vehicledto));
         }
 
@@ -88,6 +101,43 @@ namespace eGuide.Service.ClientAPI.Controllers
                 await _context.SaveChangesAsync();
 
                 return Ok(existingVehicle); 
+            }
+            catch (Exception ex)
+            {
+                return BadRequest($"Hata: {ex.Message}");
+            }
+        }
+
+        [HttpPut("update-active-vehicle/{userId}/{vehicleId}")]
+        public async Task<IActionResult> UpdateActiveVehicle(Guid userId, Guid vehicleId)
+        {
+            try
+            {
+                
+                var existingVehicle = await _dbSet.FirstOrDefaultAsync(v => v.UserId == userId && v.VehicleId == vehicleId && v.Status == 1);
+
+                if (existingVehicle == null)
+                {
+                    return NotFound($"UserId {userId} ve VehicleId {vehicleId} olan araç kaydı bulunamadı.");
+                }
+   
+                var otherActiveVehicle = await _dbSet.FirstOrDefaultAsync(v => v.UserId == userId && v.ActiveStatus == 1 && v.VehicleId != vehicleId);
+
+                if (otherActiveVehicle != null)
+                {
+                    otherActiveVehicle.ActiveStatus = 0;
+                    _dbSet.Update(otherActiveVehicle);
+                }
+
+               
+                existingVehicle.UpdatedDate = DateTime.Now;
+                existingVehicle.ActiveStatus = 1;
+
+              
+                _dbSet.Update(existingVehicle);
+                await _context.SaveChangesAsync();
+
+                return Ok(existingVehicle);
             }
             catch (Exception ex)
             {
@@ -150,6 +200,53 @@ namespace eGuide.Service.ClientAPI.Controllers
                 return BadRequest($"Hata: {ex.Message}");
             }
         }
+
+        [HttpGet("GetUserVehicleWithActiveStatus/{userId}")]
+        public async Task<IActionResult> GetUserVehicleWithActiveStatus(Guid userId)
+        {
+            try
+            {
+                // Check if there's already an active user vehicle for the given UserId
+                var activeUserVehicle = await _dbSet.FirstOrDefaultAsync(v => v.UserId == userId && v.ActiveStatus == 1);
+
+                if (activeUserVehicle != null)
+                {
+                    // Return the active user vehicle
+                    return Ok(activeUserVehicle);
+                }
+
+                // If no active user vehicle found, return empty result
+                return Ok(null);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest($"Hata: {ex.Message}");
+            }
+        }
+
+        [HttpGet("GetUserVehicleActiveStatusWithConnector/{userId}")]
+        public async Task<IActionResult> GetUserVehicleActiveStatusWithConnector(Guid userId)
+        {
+             
+            try
+            {
+                var userVehicle = await _business.GetActiveUserVehicleConnector(userId);
+
+                if (userVehicle == null)
+                {
+                    return NotFound(); // Kullanıcıya ait araçlar bulunamadıysa 404 dönebilirsiniz.
+                }
+
+                return Ok(userVehicle.ConnectorId);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest($"Hata: {ex.Message}");
+            }
+
+        }
+
+
 
         //[HttpGet]
         //public IActionResult Get(Guid userId) 

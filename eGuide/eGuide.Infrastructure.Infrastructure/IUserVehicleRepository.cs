@@ -27,5 +27,9 @@ namespace eGuide.Infrastructure.Interface
         /// <param name="userId">The user identifier.</param>
         /// <returns></returns>
         Task<List<Vehicle>> GetUserVehicles(Guid userId);
+
+        Task<UserVehicle> GetActiveUserVehicleConnector(Guid userId);
+
+
     }
 }
