@@ -65,7 +65,6 @@ namespace eGuide.Infrastructure.Conctrete {
                 //.ThenInclude(k => k.Connector)
                 //.ToList();
                 .AsNoTracking()
-                .AsQueryable()
                  .Include(us => us.UserStations)
                  .Include(sf => sf.StationFacilities)
                  .ThenInclude(f => f.Facility)
