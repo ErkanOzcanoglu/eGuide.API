@@ -247,6 +247,30 @@ namespace eGuide.Service.ClientAPI.Controllers
         }
 
 
+        [HttpGet("GetActiveVehicle/{userId}")]
+        public async Task<IActionResult> GetActiveVehicle(Guid userId)
+        {
+
+            try
+            {
+                var vehicle = await _business.GetActiveVehicle(userId);
+
+                if (vehicle == null)
+                {
+                    return NotFound(); // Kullanıcıya ait araçlar bulunamadıysa 404 dönebilirsiniz.
+                }
+
+                return Ok(vehicle);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest($"Hata: {ex.Message}");
+            }
+
+        }
+
+
+
 
         //[HttpGet]
         //public IActionResult Get(Guid userId) 
