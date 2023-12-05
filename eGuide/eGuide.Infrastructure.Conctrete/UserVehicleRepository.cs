@@ -40,6 +40,15 @@ namespace eGuide.Infrastructure.Conctrete
 
         }
 
+
+        public async Task<Vehicle> GetActiveVehicle(Guid userId)
+        {
+            var activeVehicle = await _dbSet.Include(uv => uv.Vehicle)  .Where(uv => uv.UserId == userId && uv.ActiveStatus == 1).Select(uv => uv.Vehicle)  .SingleOrDefaultAsync();
+
+            return activeVehicle;
+        }
+
+
         /// <summary>
         /// Gets the by vehicle identifier asynchronous.
         /// </summary>

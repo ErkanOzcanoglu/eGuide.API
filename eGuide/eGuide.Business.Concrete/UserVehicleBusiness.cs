@@ -33,6 +33,11 @@ namespace eGuide.Business.Concrete
             return await _vehicleRepository.GetActiveUserVehicleConnector(userId);
         }
 
+        public async Task<Vehicle> GetActiveVehicle(Guid userId)
+        {
+           return await _vehicleRepository.GetActiveVehicle(userId);
+        }
+
         /// <summary>
         /// Gets the by vehicle identifier asynchronous.
         /// </summary>

@@ -30,6 +30,8 @@ namespace eGuide.Infrastructure.Interface
 
         Task<UserVehicle> GetActiveUserVehicleConnector(Guid userId);
 
+        Task<Vehicle> GetActiveVehicle(Guid userId);
+
 
     }
 }
