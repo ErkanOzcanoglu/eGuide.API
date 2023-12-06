@@ -111,38 +111,23 @@ namespace eGuide.Service.ClientAPI.Controllers
         [HttpPut("update-active-vehicle/{userId}/{vehicleId}")]
         public async Task<IActionResult> UpdateActiveVehicle(Guid userId, Guid vehicleId)
         {
+            
             try
             {
-                
-                var existingVehicle = await _dbSet.FirstOrDefaultAsync(v => v.UserId == userId && v.VehicleId == vehicleId && v.Status == 1);
+                var vehicle = await _business.GetUpdatedActiveVehicle( userId,vehicleId);
 
-                if (existingVehicle == null)
+                if (vehicle == null)
                 {
-                    return NotFound($"UserId {userId} ve VehicleId {vehicleId} olan araç kaydı bulunamadı.");
-                }
-   
-                var otherActiveVehicle = await _dbSet.FirstOrDefaultAsync(v => v.UserId == userId && v.ActiveStatus == 1 && v.VehicleId != vehicleId);
-
-                if (otherActiveVehicle != null)
-                {
-                    otherActiveVehicle.ActiveStatus = 0;
-                    _dbSet.Update(otherActiveVehicle);
+                    return NotFound(); // Kullanıcıya ait araçlar bulunamadıysa 404 dönebilirsiniz.
                 }
 
-               
-                existingVehicle.UpdatedDate = DateTime.Now;
-                existingVehicle.ActiveStatus = 1;
-
-              
-                _dbSet.Update(existingVehicle);
-                await _context.SaveChangesAsync();
-
-                return Ok(existingVehicle);
+                return Ok(vehicle);
             }
             catch (Exception ex)
             {
                 return BadRequest($"Hata: {ex.Message}");
             }
+
         }
 
         /// <summary>
@@ -190,7 +175,7 @@ namespace eGuide.Service.ClientAPI.Controllers
 
                 if (userVehicles == null)
                 {
-                    return NotFound(); // Kullanıcıya ait araçlar bulunamadıysa 404 dönebilirsiniz.
+                    return NotFound();
                 }
 
                 return Ok(userVehicles);
@@ -206,16 +191,13 @@ namespace eGuide.Service.ClientAPI.Controllers
         {
             try
             {
-                // Check if there's already an active user vehicle for the given UserId
                 var activeUserVehicle = await _dbSet.FirstOrDefaultAsync(v => v.UserId == userId && v.ActiveStatus == 1);
 
                 if (activeUserVehicle != null)
                 {
-                    // Return the active user vehicle
                     return Ok(activeUserVehicle);
                 }
 
-                // If no active user vehicle found, return empty result
                 return Ok(null);
             }
             catch (Exception ex)
@@ -234,7 +216,7 @@ namespace eGuide.Service.ClientAPI.Controllers
 
                 if (userVehicle == null)
                 {
-                    return NotFound(); // Kullanıcıya ait araçlar bulunamadıysa 404 dönebilirsiniz.
+                    return NotFound();
                 }
 
                 return Ok(userVehicle.ConnectorId);
@@ -257,7 +239,7 @@ namespace eGuide.Service.ClientAPI.Controllers
 
                 if (vehicle == null)
                 {
-                    return NotFound(); // Kullanıcıya ait araçlar bulunamadıysa 404 dönebilirsiniz.
+                    return NotFound();
                 }
 
                 return Ok(vehicle);

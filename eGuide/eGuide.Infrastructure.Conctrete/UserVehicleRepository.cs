@@ -59,6 +59,31 @@ namespace eGuide.Infrastructure.Conctrete
             return await _context.Set<UserVehicle>().FirstOrDefaultAsync(uv => uv.VehicleId == vehicleId);
         }
 
+        public async Task<Vehicle> GetUpdatedActiveVehicle(Guid userId, Guid vehicleId)
+        {
+            var existingVehicle = await _dbSet.FirstOrDefaultAsync(v => v.UserId == userId && v.VehicleId == vehicleId && v.Status == 1);
+
+            var otherActiveVehicle = await _dbSet.FirstOrDefaultAsync(v => v.UserId == userId && v.ActiveStatus == 1 && v.VehicleId != vehicleId);
+
+            if (otherActiveVehicle != null)
+            {
+                otherActiveVehicle.ActiveStatus = 0;
+                _dbSet.Update(otherActiveVehicle);
+            }
+
+
+            existingVehicle.UpdatedDate = DateTime.Now;
+            existingVehicle.ActiveStatus = 1;
+
+
+            _dbSet.Update(existingVehicle);
+            await _context.SaveChangesAsync();
+
+            var vehicle = _context.Vehicle.Where(v => v.Id == vehicleId).FirstOrDefault(); //FIND VEHICLEL ON USERVEHICLE MAKE ACTIVE THEN GO VEHICLE TABLE GET VEHICLE INFORMATIONS
+
+            return vehicle;
+        }
+
         /// <summary>
         /// Gets the user vehicles.
         /// </summary>
