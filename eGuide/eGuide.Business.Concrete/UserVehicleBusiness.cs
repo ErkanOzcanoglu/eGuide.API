@@ -48,6 +48,11 @@ namespace eGuide.Business.Concrete
             return await _vehicleRepository.GetByVehicleIdAsync(vehicleId);
         }
 
+        public async Task<Vehicle> GetUpdatedActiveVehicle(Guid userId, Guid vehicleId)
+        {
+           return await _vehicleRepository.GetUpdatedActiveVehicle(userId, vehicleId);
+        }
+
         /// <summary>
         /// Gets the user vehicles.
         /// </summary>
