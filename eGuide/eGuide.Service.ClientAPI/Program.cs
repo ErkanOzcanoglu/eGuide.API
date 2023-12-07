@@ -3,6 +3,7 @@ using eGuide.Business.Interface;
 using eGuide.Common.Mappers;
 using eGuide.Data.Context.Context;
 using eGuide.Data.Entities.Admin;
+using eGuide.Data.Entities.Hubs;
 using eGuide.Data.Entities.Station;
 using eGuide.Infrastructure.Concrete;
 using eGuide.Infrastructure.Conctrete;
@@ -40,8 +41,11 @@ builder.Services.AddCors(options => {
                     .AllowAnyMethod()
                     .AllowCredentials(); // You might need this if your WebSocket server requires credentials
         });
+
+   
 });
 
+builder.Services.AddSignalR();
 builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
 
 builder.Services.AddScoped(typeof(IGenericRepository<>), typeof(GenericRepository<>));
@@ -111,12 +115,19 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 
+
 app.UseCors("eGuideOrigins");
 
 app.UseHttpsRedirection();
 
+app.UseRouting();
+
 app.UseAuthorization();
 
-app.MapControllers();
+app.UseEndpoints(endpoints =>
+{
+    endpoints.MapHub<BroadCastHub>("/notify");
+    endpoints.MapControllers();
+});
 
 app.Run();
