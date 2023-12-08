@@ -126,7 +126,7 @@ app.UseAuthorization();
 
 app.UseEndpoints(endpoints =>
 {
-    endpoints.MapHub<BroadCastHub>("/notify");
+    endpoints.MapHub<BroadCastHub>("/Message/broadcast");
     endpoints.MapControllers();
 });
 
