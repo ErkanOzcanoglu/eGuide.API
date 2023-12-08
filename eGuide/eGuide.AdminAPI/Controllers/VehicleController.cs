@@ -49,6 +49,32 @@ namespace eGuide.Service.AdminAPI.Controllers
                 return Ok(vehicledto);
         }
 
+        [HttpGet("getVehiclebyId/{vehicleId}")]
+        public async Task<ActionResult<VehicleDto>> GetVehicleById(Guid vehicleId)
+        {
+            try
+            {
+                var vehicle = await _business.GetbyIdAsync(vehicleId);
+
+                if (vehicle == null)
+                {
+                    return NotFound($"Vehicle with ID {vehicleId} not found.");
+                }
+
+                var vehicleDto = _mapper.Map<VehicleDto>(vehicle);
+
+                return Ok(vehicleDto);
+            }
+            catch (DbUpdateException ex)
+            {
+                return BadRequest("An error occurred while accessing the database. Please try again later.");
+            }
+            catch (Exception ex)
+            {
+                return BadRequest($"Error: {ex.Message}");
+            }
+        }
+
         /// <summary>
         /// Gets all brands.
         /// </summary>

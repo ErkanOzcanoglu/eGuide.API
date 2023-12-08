@@ -12,8 +12,8 @@ using eGuide.Data.Context.Context;
 namespace eGuide.Data.Context.Migrations
 {
     [DbContext(typeof(eGuideContext))]
-    [Migration("20231129085219_initial")]
-    partial class initial
+    [Migration("20231204090059_userVehicleActiveStatus")]
+    partial class userVehicleActiveStatus
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -30,6 +30,9 @@ namespace eGuide.Data.Context.Migrations
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
+
+                    b.Property<int>("ActiveStatus")
+                        .HasColumnType("int");
 
                     b.Property<Guid>("ConnectorId")
                         .HasColumnType("uniqueidentifier");
@@ -618,6 +621,9 @@ namespace eGuide.Data.Context.Migrations
                     b.Property<Guid>("StationId")
                         .HasColumnType("uniqueidentifier");
 
+                    b.Property<Guid?>("StationProfileId")
+                        .HasColumnType("uniqueidentifier");
+
                     b.Property<int>("Status")
                         .HasColumnType("int");
 
@@ -632,7 +638,7 @@ namespace eGuide.Data.Context.Migrations
 
                     b.HasIndex("OwnerId");
 
-                    b.HasIndex("StationId");
+                    b.HasIndex("StationProfileId");
 
                     b.ToTable("Comment");
                 });
@@ -921,15 +927,11 @@ namespace eGuide.Data.Context.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("eGuide.Data.Entities.Station.StationProfile", "Station")
+                    b.HasOne("eGuide.Data.Entities.Station.StationProfile", null)
                         .WithMany("Comments")
-                        .HasForeignKey("StationId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("StationProfileId");
 
                     b.Navigation("Owner");
-
-                    b.Navigation("Station");
                 });
 
             modelBuilder.Entity("eGuide.Data.Entities.Station.StationProfile", b =>

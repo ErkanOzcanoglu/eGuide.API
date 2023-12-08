@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using eGuide.Data.Context.Context;
 
@@ -11,9 +12,11 @@ using eGuide.Data.Context.Context;
 namespace eGuide.Data.Context.Migrations
 {
     [DbContext(typeof(eGuideContext))]
-    partial class eGuideContextModelSnapshot : ModelSnapshot
+    [Migration("20231130085806_profileView")]
+    partial class profileView
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -27,9 +30,6 @@ namespace eGuide.Data.Context.Migrations
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
-
-                    b.Property<int>("ActiveStatus")
-                        .HasColumnType("int");
 
                     b.Property<Guid>("ConnectorId")
                         .HasColumnType("uniqueidentifier");
@@ -618,9 +618,6 @@ namespace eGuide.Data.Context.Migrations
                     b.Property<Guid>("StationId")
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<Guid?>("StationProfileId")
-                        .HasColumnType("uniqueidentifier");
-
                     b.Property<int>("Status")
                         .HasColumnType("int");
 
@@ -635,7 +632,7 @@ namespace eGuide.Data.Context.Migrations
 
                     b.HasIndex("OwnerId");
 
-                    b.HasIndex("StationProfileId");
+                    b.HasIndex("StationId");
 
                     b.ToTable("Comment");
                 });
@@ -924,11 +921,15 @@ namespace eGuide.Data.Context.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("eGuide.Data.Entities.Station.StationProfile", null)
+                    b.HasOne("eGuide.Data.Entities.Station.StationProfile", "Station")
                         .WithMany("Comments")
-                        .HasForeignKey("StationProfileId");
+                        .HasForeignKey("StationId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.Navigation("Owner");
+
+                    b.Navigation("Station");
                 });
 
             modelBuilder.Entity("eGuide.Data.Entities.Station.StationProfile", b =>

@@ -56,6 +56,7 @@ namespace eGuide.Infrastructure.Conctrete {
 
         public async Task<List<StationProfile>> GetStationProf() {
             var res = await _context.Station.Where(x => x.Status == 1)
+
                  .Include(us => us.UserStations)
                  .Include(sf => sf.StationFacilities)
                  .ThenInclude(f => f.Facility)

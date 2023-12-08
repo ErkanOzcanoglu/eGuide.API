@@ -2,16 +2,12 @@
 using eGuide.Business.Interface;
 using eGuide.Data.Context.Context;
 using eGuide.Data.Dto.InComing.CreationDto.Client;
-using eGuide.Data.Dto.InComing.UpdateDto.Client;
 using eGuide.Data.Entites.Client;
-using eGuide.Data.Entities.Client;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
-using System.Data;
 
-namespace eGuide.Service.ClientAPI.Controllers
+namespace eGuide.Service.AdminAPI.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
@@ -59,18 +55,6 @@ namespace eGuide.Service.ClientAPI.Controllers
         [HttpPost]
         public async Task Save(CreationDtoForUserVehicle vehicledto)
         {
-            var existingVehicle = await _dbSet.FirstOrDefaultAsync(v => v.UserId == vehicledto.UserId);
-
-            if (existingVehicle == null)
-            {
-                vehicledto.ActiveStatus = 1;
-            }
-        
-            else
-            {
-                vehicledto.ActiveStatus = 0;
-            }
-
             await _business.AddAsync(_mapper.Map<UserVehicle>(vehicledto));
         }
 
@@ -82,52 +66,30 @@ namespace eGuide.Service.ClientAPI.Controllers
         /// <param name="idNew">The identifier new.</param>
         /// <returns></returns>
         [HttpPut("update-vehicle")]
-        public async Task<IActionResult> UpdateUserVehicle(Guid userid, Guid vehicleId, Guid idNew, Guid connectorId )
+        public async Task<IActionResult> UpdateUserVehicle(Guid userid, Guid vehicleId, Guid idNew, Guid connectorId)
         {
             try
-            {              
+            {
                 var existingVehicle = await _dbSet.FirstOrDefaultAsync(v => v.UserId == userid && v.VehicleId == vehicleId && v.Status == 1);//kontrol et
 
                 if (existingVehicle == null)
                 {
                     return NotFound($"UserId {userid} ve VehicleId {vehicleId} olan araç kaydı bulunamadı.");
                 }
-                
+
                 existingVehicle.VehicleId = idNew;
                 existingVehicle.UpdatedDate = DateTime.Now;
                 existingVehicle.ConnectorId = connectorId;
-                              
+
                 _dbSet.Update(existingVehicle);
                 await _context.SaveChangesAsync();
 
-                return Ok(existingVehicle); 
+                return Ok(existingVehicle);
             }
             catch (Exception ex)
             {
                 return BadRequest($"Hata: {ex.Message}");
             }
-        }
-
-        [HttpPut("update-active-vehicle/{userId}/{vehicleId}")]
-        public async Task<IActionResult> UpdateActiveVehicle(Guid userId, Guid vehicleId)
-        {
-            
-            try
-            {
-                var vehicle = await _business.GetUpdatedActiveVehicle( userId,vehicleId);
-
-                if (vehicle == null)
-                {
-                    return NotFound(); // Kullanıcıya ait araçlar bulunamadıysa 404 dönebilirsiniz.
-                }
-
-                return Ok(vehicle);
-            }
-            catch (Exception ex)
-            {
-                return BadRequest($"Hata: {ex.Message}");
-            }
-
         }
 
         /// <summary>
@@ -137,7 +99,7 @@ namespace eGuide.Service.ClientAPI.Controllers
         /// <param name="vehicleId">The vehicle identifier.</param>
         /// <returns></returns>
         [HttpDelete("DeleteByVehicleId/{vehicleId}")]
-        public async Task<IActionResult> DeleteByVehicleId(Guid userid,Guid vehicleId)
+        public async Task<IActionResult> DeleteByVehicleId(Guid userid, Guid vehicleId)
         {
             try
             {
@@ -148,7 +110,7 @@ namespace eGuide.Service.ClientAPI.Controllers
                     return NotFound($"UserId {userid} ve VehicleId {vehicleId} olan araç kaydı bulunamadı.");
                 }
 
-                await _business.RemoveAsync(existingVehicle.Id); 
+                await _business.RemoveAsync(existingVehicle.Id);
                 return Ok();
             }
             catch (DbUpdateException ex)
@@ -175,7 +137,7 @@ namespace eGuide.Service.ClientAPI.Controllers
 
                 if (userVehicles == null)
                 {
-                    return NotFound();
+                    return NotFound(); // Kullanıcıya ait araçlar bulunamadıysa 404 dönebilirsiniz.
                 }
 
                 return Ok(userVehicles);
@@ -185,74 +147,6 @@ namespace eGuide.Service.ClientAPI.Controllers
                 return BadRequest($"Hata: {ex.Message}");
             }
         }
-
-        [HttpGet("GetUserVehicleWithActiveStatus/{userId}")]
-        public async Task<IActionResult> GetUserVehicleWithActiveStatus(Guid userId)
-        {
-            try
-            {
-                var activeUserVehicle = await _dbSet.FirstOrDefaultAsync(v => v.UserId == userId && v.ActiveStatus == 1);
-
-                if (activeUserVehicle != null)
-                {
-                    return Ok(activeUserVehicle);
-                }
-
-                return Ok(null);
-            }
-            catch (Exception ex)
-            {
-                return BadRequest($"Hata: {ex.Message}");
-            }
-        }
-
-        [HttpGet("GetUserVehicleActiveStatusWithConnector/{userId}")]
-        public async Task<IActionResult> GetUserVehicleActiveStatusWithConnector(Guid userId)
-        {
-             
-            try
-            {
-                var userVehicle = await _business.GetActiveUserVehicleConnector(userId);
-
-                if (userVehicle == null)
-                {
-                    return NotFound();
-                }
-
-                return Ok(userVehicle.ConnectorId);
-            }
-            catch (Exception ex)
-            {
-                return BadRequest($"Hata: {ex.Message}");
-            }
-
-        }
-
-
-        [HttpGet("GetActiveVehicle/{userId}")]
-        public async Task<IActionResult> GetActiveVehicle(Guid userId)
-        {
-
-            try
-            {
-                var vehicle = await _business.GetActiveVehicle(userId);
-
-                if (vehicle == null)
-                {
-                    return NotFound();
-                }
-
-                return Ok(vehicle);
-            }
-            catch (Exception ex)
-            {
-                return BadRequest($"Hata: {ex.Message}");
-            }
-
-        }
-
-
-
 
         //[HttpGet]
         //public IActionResult Get(Guid userId) 
@@ -277,4 +171,5 @@ namespace eGuide.Service.ClientAPI.Controllers
         //}
 
     }
+
 }
