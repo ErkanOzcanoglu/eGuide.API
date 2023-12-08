@@ -1,15 +1,21 @@
 ﻿using AutoMapper;
 using eGuide.Business.Interface;
+using eGuide.Data.Context.Context;
 using eGuide.Data.Dto.InComing.CreationDto.Client;
+using eGuide.Data.Dto.InComing.CreationDto.Message;
 using eGuide.Data.Dto.InComing.UpdateDto.Client;
 using eGuide.Data.Dto.Logger;
 using eGuide.Data.Dto.OutComing.Client;
 using eGuide.Data.Entites.Authorization;
+using eGuide.Data.Entites.Client;
 using eGuide.Data.Entities.Client;
+using eGuide.Data.Entities.Hubs;
+using eGuide.Data.Entities.Message;
 using MailKit.Net.Smtp;
 using MailKit.Security;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.SignalR;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using MimeKit;
@@ -32,20 +38,26 @@ namespace eGuide.Service.ClientAPI.Controllers {
         /// </summary>
         private readonly IUserBusiness _business;
 
+        protected readonly eGuideContext _context;
+
         /// <summary>
         /// The mapper
         /// </summary>
         private readonly IMapper _mapper;
+
+        private readonly IHubContext<BroadCastHub, IHubClient> _hubContext;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="UserController"/> class.
         /// </summary>
         /// <param name="business">The business.</param>
         /// <param name="mapper">The mapper.</param>
-        public UserController(IUserBusiness business, IMapper mapper)
+        public UserController(IUserBusiness business, IMapper mapper, IHubContext<BroadCastHub, IHubClient> hubContext, eGuideContext context)
         {
             _business = business;
             _mapper = mapper;
+            _hubContext=hubContext;
+            _context=context;
         }
 
         /// <summary>
@@ -219,7 +231,7 @@ namespace eGuide.Service.ClientAPI.Controllers {
 
             await _business.AddAsync(user);
 
-            string htmlTemplate = System.IO.File.ReadAllText(@"C:\Users\ozcan\Desktop\-_-\eGuide_Temp\emailTemplate_Register_eGuide.html");
+            string htmlTemplate = System.IO.File.ReadAllText(@"D:\VSProject\Source\email\emailTemplate_Register_eGuide.html");
 
             string confirmationLink = $"http://localhost:4201/verify-email/{user.ConfirmationToken}";
 
@@ -413,7 +425,7 @@ namespace eGuide.Service.ClientAPI.Controllers {
             user.ResetTokenExpires = DateTime.Now.AddDays(1);
             await _business.UpdateAsync(user);
 
-            string htmlTemplate = System.IO.File.ReadAllText(@"C:\Users\ozcan\Desktop\-_-\eGuide_Temp\emailTemplate_ForgotPassword_eGuide.html");
+            string htmlTemplate = System.IO.File.ReadAllText(@"D:\VSProject\Source\email\emailTemplate_ForgotPassword_eGuide.html");
 
             string confirmationLink = $"http://localhost:4201/forgot-password/{user.PasswordResetToken}";
             string emailBody = htmlTemplate.Replace("{CONFIRMATION_LINK}", confirmationLink);
@@ -468,6 +480,42 @@ namespace eGuide.Service.ClientAPI.Controllers {
         public async Task<IActionResult> GetUsersLog() {
             var usersLog = await _business.GetAllLogs();
             return Ok(usersLog);
+        }
+
+        [HttpPost("broadcast")]
+        public async Task<IActionResult> BroadcastMessage( CreationDtoForMessage messageDto)
+        {
+            try
+            {
+                var receiverIdString = messageDto.ReceiverId.ToString();
+                var message = _mapper.Map<Messages>(messageDto);
+                await _context.Messages.AddAsync(message);
+                await _context.SaveChangesAsync();
+                await _hubContext.Clients.User(receiverIdString).BroadcastMessage(message);
+                return Ok(message);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, $"Internal Server Error: {ex.Message}");
+            }
+        }
+
+        [HttpPost("test")]
+        public async Task<IActionResult> Test(CreationDtoForMessage messageDto)
+        {
+            try
+            {
+               
+                var message = _mapper.Map<Messages>(messageDto);
+                await _context.Messages.AddAsync(message);
+                await _context.SaveChangesAsync();
+
+                return Ok(message);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, $"Internal Server Error: {ex.Message}");
+            }
         }
     }
 }
