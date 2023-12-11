@@ -14,7 +14,5 @@ namespace eGuide.Business.Interface
     /// <seealso cref="eGuide.Business.Interface.IBusiness&lt;eGuide.Data.Entities.Client.User&gt;" />
     public interface IUserBusiness : IBusiness<User>
     {
-        void AddUsersLogs(UserLogs user);
-        Task<IEnumerable<UserLogs>> GetAllLogs();
     }
 }
