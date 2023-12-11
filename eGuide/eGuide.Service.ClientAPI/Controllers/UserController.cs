@@ -470,18 +470,6 @@ namespace eGuide.Service.ClientAPI.Controllers {
             return Ok("Password successfully changed");
         }
 
-        [HttpPost("users-log")]
-        public async Task<IActionResult> UsersLog(UserLogs user) {
-            _business.AddUsersLogs(user);
-            return Ok();
-        }
-
-        [HttpGet("get-users-log")]
-        public async Task<IActionResult> GetUsersLog() {
-            var usersLog = await _business.GetAllLogs();
-            return Ok(usersLog);
-        }
-
         [HttpPost("broadcast")]
         public async Task<IActionResult> BroadcastMessage( CreationDtoForMessage messageDto)
         {

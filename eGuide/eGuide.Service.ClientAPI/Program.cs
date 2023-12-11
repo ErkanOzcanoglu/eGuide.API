@@ -90,6 +90,8 @@ builder.Services.AddScoped(typeof(ICommentRepository), typeof(CommentRepository)
 builder.Services.AddScoped(typeof(IColorBusiness), typeof(ColorBusiness));
 builder.Services.AddScoped(typeof(IColorRepository), typeof(ColorRepository));
 
+builder.Services.AddScoped(typeof(ILogBusiness), typeof(LogBusiness));
+builder.Services.AddScoped(typeof(ILogRepository), typeof(LogRepository));
 
 
 builder.Services.AddSingleton<IMongoClient>(new MongoClient("mongodb://localhost:27017/test"));
