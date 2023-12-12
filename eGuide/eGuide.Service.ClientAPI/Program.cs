@@ -1,9 +1,11 @@
 using eGuide.Business.Concrete;
 using eGuide.Business.Interface;
+using eGuide.Cache.Concrete;
+using eGuide.Cache.Interface;
 using eGuide.Common.Mappers;
+using eGuide.Common.SignalR;
 using eGuide.Data.Context.Context;
 using eGuide.Data.Entities.Admin;
-using eGuide.Data.Entities.Hubs;
 using eGuide.Data.Entities.Station;
 using eGuide.Infrastructure.Concrete;
 using eGuide.Infrastructure.Conctrete;
@@ -41,12 +43,11 @@ builder.Services.AddCors(options => {
                     .AllowAnyMethod()
                     .AllowCredentials(); // You might need this if your WebSocket server requires credentials
         });
-
-   
 });
 
-builder.Services.AddSignalR();
+//builder.Services.AddSignalR();
 builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
+builder.Services.AddScoped<ICache, Cache>();
 
 builder.Services.AddScoped(typeof(IGenericRepository<>), typeof(GenericRepository<>));
 builder.Services.AddScoped(typeof(IBusiness<>), typeof(Business<>));
@@ -94,6 +95,9 @@ builder.Services.AddScoped(typeof(ILogBusiness), typeof(LogBusiness));
 builder.Services.AddScoped(typeof(ILogRepository), typeof(LogRepository));
 
 
+builder.Services.AddScoped(typeof(IContactFormBusiness), typeof(ContactFormBusiness));
+builder.Services.AddScoped(typeof(IContactFormRepository), typeof(ContactFormRepository));
+
 builder.Services.AddSingleton<IMongoClient>(new MongoClient("mongodb://localhost:27017/test"));
 builder.Services.AddSingleton<IMongoDatabase>(provider => {
     var client = provider.GetRequiredService<IMongoClient>();
@@ -111,6 +115,7 @@ builder.Services.AddAutoMapper(typeof(AdminProfileMapper));
 builder.Services.AddAutoMapper(typeof(UserMapper));
 builder.Services.AddAutoMapper(typeof(VehicleMapper));
 builder.Services.AddDbContext<eGuideContext>(options => options.UseSqlServer(builder.Configuration.GetConnectionString("eGuideContext")));
+builder.Services.AddSignalR();
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
@@ -129,9 +134,16 @@ app.UseRouting();
 
 app.UseAuthorization();
 
-app.UseEndpoints(endpoints =>
-{
-    endpoints.MapHub<BroadCastHub>("/Message/broadcast");
+//app.UseEndpoints(endpoints =>
+//{
+//    endpoints.MapHub<BroadCastHub>("/Message/broadcast");
+//    endpoints.MapControllers();
+//});
+
+app.UseEndpoints(endpoints => {
+    endpoints.MapHub<BroadCastHub>("/myhub");
+});
+app.UseEndpoints(endpoints => {
     endpoints.MapControllers();
 });
 
