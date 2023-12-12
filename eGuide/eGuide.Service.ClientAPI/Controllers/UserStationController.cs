@@ -1,10 +1,12 @@
 ﻿using AutoMapper;
 using eGuide.Business.Interface;
+using eGuide.Cache.Interface;
 using eGuide.Data.Context.Context;
 using eGuide.Data.Dto.InComing.CreationDto.Client;
 using eGuide.Data.Dto.OutComing.Client;
 using eGuide.Data.Dto.OutComing.Station;
 using eGuide.Data.Entities.Client;
+using eGuide.Data.Entities.Station;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -26,11 +28,13 @@ namespace eGuide.Service.ClientAPI.Controllers
         private readonly IMapper _mapper;
 
         protected readonly eGuideContext _context;
+        private readonly ICache _cache;
 
         
 
-        public UserStationController(IUserStationBusiness business, IMapper mapper)
+        public UserStationController(IUserStationBusiness business, IMapper mapper, ICache cache)
         {
+            _cache = cache;
             _business = business;
             _mapper = mapper;
         }
@@ -75,25 +79,19 @@ namespace eGuide.Service.ClientAPI.Controllers
         [HttpGet]
         public async Task<ActionResult<UserStationDto>> All()
         {
-            try
-            {
+            try {
                 var stations = await _business.GetAllAsync();
 
-                if (stations == null || !stations.Any())
-                {
+                if (stations == null || !stations.Any()) {
                     return NotFound("There are no vehicles in the database or the database is empty.");
                 }
 
                 var vehicledto = _mapper.Map<List<UserStationDto>>(stations.ToList());
 
                 return Ok(vehicledto);
-            }
-            catch (DbUpdateException ex)
-            {
+            } catch (DbUpdateException ex) {
                 return BadRequest("An error occurred while accessing the database. Please try again later.");
-            }
-            catch (Exception ex)
-            {
+            } catch (Exception ex) {
                 return BadRequest($"Hata: {ex.Message}");
             }
         }
