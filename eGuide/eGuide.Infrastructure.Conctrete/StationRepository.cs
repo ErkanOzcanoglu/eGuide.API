@@ -73,5 +73,22 @@ namespace eGuide.Infrastructure.Conctrete {
             else
                 return null;
         }
+
+        public async Task<StationProfile> GetStationProfile(Guid Id)
+        {
+            var res = await _context.Station
+            .Where(x => x.Id == Id && x.Status == 1)
+            .Include(us => us.UserStations)
+            .Include(sf => sf.StationFacilities)
+            .ThenInclude(f => f.Facility)
+            .Include(x => x.StationModel)
+            .ThenInclude(y => y.StationsChargingUnits)
+            .ThenInclude(z => z.ChargingUnit)
+             .ThenInclude(k => k.Connector)
+            .AsNoTracking()
+            .SingleOrDefaultAsync(); // SingleOrDefaultAsync kullanarak bir eleman veya null dönecek
+
+            return res; // Bu noktada ya bir S
+        }
     }
 }
