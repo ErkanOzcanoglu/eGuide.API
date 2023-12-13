@@ -8,5 +8,7 @@ using System.Threading.Tasks;
 namespace eGuide.Business.Interface {
     public interface IStationBusiness : IBusiness<StationProfile> {
         Task<List<StationProfile>> GetAllS();
+
+        Task<StationProfile> GetStationProfile(Guid Id);
     }
 }
