@@ -67,7 +67,6 @@ namespace eGuide.Infrastructure.Conctrete {
                  .AsNoTracking()
                  .ToListAsync();
 
-
             if (res != null)
                 return res;
             else
