@@ -83,11 +83,14 @@ namespace eGuide.Infrastructure.Conctrete {
             .Include(x => x.StationModel)
             .ThenInclude(y => y.StationsChargingUnits)
             .ThenInclude(z => z.ChargingUnit)
-             .ThenInclude(k => k.Connector)
+            .ThenInclude(k => k.Connector)
             .AsNoTracking()
-            .SingleOrDefaultAsync(); // SingleOrDefaultAsync kullanarak bir eleman veya null dönecek
+            .SingleOrDefaultAsync();
 
-            return res; // Bu noktada ya bir S
+            if (res != null)
+                return res;
+            else
+                return null;
         }
     }
 }

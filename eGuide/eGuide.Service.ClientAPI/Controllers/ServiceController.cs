@@ -42,11 +42,11 @@ namespace eGuide.Service.ClientAPI.Controllers {
 
             if (lang == "en")
             {
-                services = _business.Where(v => v.Language == "en");
+                services = _business.Where(v => v.Language == "en" && v.Status==1);
             }
             else if (lang == "tr")
             {
-                services = _business.Where(v => v.Language == "tr");
+                services = _business.Where(v => v.Language == "tr" && v.Status == 1);
             }
             else
             {
