@@ -54,6 +54,13 @@ namespace eGuide.Service.AdminAPI.Controllers {
             _dbSet=_context.Set<StationInformationModel>();
         }
 
+        [HttpGet("{id}")]
+        public async Task<ActionResult> Get(Guid id)
+        {
+            var result = await _business.GetStationProfile(id);
+            return Ok(result);
+        }
+
         /// <summary>
         /// Gets this instance.
         /// </summary>

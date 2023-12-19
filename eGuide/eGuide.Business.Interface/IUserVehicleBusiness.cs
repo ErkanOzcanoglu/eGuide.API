@@ -30,5 +30,7 @@ namespace eGuide.Business.Interface
 
         Task<Vehicle> GetUpdatedActiveVehicle(Guid userId, Guid vehicleId);
 
+        Task<UserVehicle> UpdateUserVehicleAsync(Guid userid, Guid vehicleId, Guid idNew, Guid connectorId);
+
     }
 }

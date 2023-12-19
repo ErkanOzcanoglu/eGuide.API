@@ -28,28 +28,15 @@ namespace eGuide.Service.ClientAPI.Controllers
         private readonly IMapper _mapper;
 
         /// <summary>
-        /// The context
-        /// </summary>
-        protected readonly eGuideContext _context;
-
-        /// <summary>
-        /// The database set
-        /// </summary>
-        private readonly DbSet<UserVehicle> _dbSet;
-
-        /// <summary>
         /// Initializes a new instance of the <see cref="UserVehicleController"/> class.
         /// </summary>
         /// <param name="business">The business.</param>
         /// <param name="mapper">The mapper.</param>
         /// <param name="context">The context.</param>
-        public UserVehicleController(IUserVehicleBusiness business, IMapper mapper, eGuideContext context)
+        public UserVehicleController(IUserVehicleBusiness business, IMapper mapper)
         {
             _business = business;
             _mapper = mapper;
-
-            _context = context;
-            _dbSet = _context.Set<UserVehicle>();
         }
 
         /// <summary>
@@ -59,13 +46,12 @@ namespace eGuide.Service.ClientAPI.Controllers
         [HttpPost]
         public async Task Save(CreationDtoForUserVehicle vehicledto)
         {
-            var existingVehicle = await _dbSet.FirstOrDefaultAsync(v => v.UserId == vehicledto.UserId);
+            var existingVehicle = await _business.FirstOrDefault(v => v.UserId == vehicledto.UserId);
 
             if (existingVehicle == null)
             {
                 vehicledto.ActiveStatus = 1;
             }
-        
             else
             {
                 vehicledto.ActiveStatus = 0;
@@ -85,22 +71,15 @@ namespace eGuide.Service.ClientAPI.Controllers
         public async Task<IActionResult> UpdateUserVehicle(Guid userid, Guid vehicleId, Guid idNew, Guid connectorId )
         {
             try
-            {              
-                var existingVehicle = await _dbSet.FirstOrDefaultAsync(v => v.UserId == userid && v.VehicleId == vehicleId && v.Status == 1);//kontrol et
+            {
+                var updatedVehicle = await _business.UpdateUserVehicleAsync(userid, vehicleId, idNew, connectorId);
 
-                if (existingVehicle == null)
+                if (updatedVehicle == null)
                 {
                     return NotFound($"UserId {userid} ve VehicleId {vehicleId} olan araç kaydı bulunamadı.");
                 }
-                
-                existingVehicle.VehicleId = idNew;
-                existingVehicle.UpdatedDate = DateTime.Now;
-                existingVehicle.ConnectorId = connectorId;
-                              
-                _dbSet.Update(existingVehicle);
-                await _context.SaveChangesAsync();
 
-                return Ok(existingVehicle); 
+                return Ok(updatedVehicle);
             }
             catch (Exception ex)
             {
@@ -118,7 +97,7 @@ namespace eGuide.Service.ClientAPI.Controllers
 
                 if (vehicle == null)
                 {
-                    return NotFound(); // Kullanıcıya ait araçlar bulunamadıysa 404 dönebilirsiniz.
+                    return NotFound(); 
                 }
 
                 return Ok(vehicle);
@@ -141,7 +120,7 @@ namespace eGuide.Service.ClientAPI.Controllers
         {
             try
             {
-                var existingVehicle = await _dbSet.FirstOrDefaultAsync(v => v.UserId == userid && v.VehicleId == vehicleId && v.Status == 1);
+                var existingVehicle = await _business.FirstOrDefault(v => v.UserId == userid && v.VehicleId == vehicleId && v.Status == 1);
 
                 if (existingVehicle == null)
                 {
@@ -191,7 +170,7 @@ namespace eGuide.Service.ClientAPI.Controllers
         {
             try
             {
-                var activeUserVehicle = await _dbSet.FirstOrDefaultAsync(v => v.UserId == userId && v.ActiveStatus == 1);
+                var activeUserVehicle = await _business.FirstOrDefault(v => v.UserId == userId && v.ActiveStatus == 1);
 
                 if (activeUserVehicle != null)
                 {

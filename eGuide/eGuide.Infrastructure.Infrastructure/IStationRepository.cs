@@ -13,5 +13,7 @@ namespace eGuide.Infrastructure.Interface {
     /// <seealso cref="eGuide.Infrastructure.Interface.IGenericRepository&lt;eGuide.Data.Entities.Station.StationProfile&gt;" />
     public interface IStationRepository: IGenericRepository<StationProfile> {
         Task<List<StationProfile>> GetStationProf();
+
+        Task<StationProfile> GetStationProfile(Guid Id);
     }
 }

@@ -40,10 +40,11 @@ namespace eGuide.Infrastructure.Conctrete
 
         }
 
-
         public async Task<Vehicle> GetActiveVehicle(Guid userId)
         {
-            var activeVehicle = await _dbSet.Include(uv => uv.Vehicle)  .Where(uv => uv.UserId == userId && uv.ActiveStatus == 1).Select(uv => uv.Vehicle)  .SingleOrDefaultAsync();
+            var activeVehicle = await _dbSet.Include(uv => uv.Vehicle)
+                                .Where(uv => uv.UserId == userId && uv.ActiveStatus == 1)
+                                .Select(uv => uv.Vehicle).SingleOrDefaultAsync();
 
             return activeVehicle;
         }
@@ -92,6 +93,25 @@ namespace eGuide.Infrastructure.Conctrete
         public async Task<List<Vehicle>> GetUserVehicles(Guid userId)
         {
             return await _dbSet.Where(uv => uv.UserId == userId && uv.Status == 1).Select(uv => uv.Vehicle).AsNoTracking().ToListAsync();
+        }
+
+        public async Task<UserVehicle> UpdateUserVehicleAsync(Guid userid, Guid vehicleId, Guid idNew, Guid connectorId)
+        {
+            var existingVehicle = await FirstOrDefault(v => v.UserId == userid && v.VehicleId == vehicleId && v.Status == 1);
+
+            if (existingVehicle == null)
+            {
+                return null; // Veya isteğe bağlı olarak bir hata durumu gönderebilirsiniz.
+            }
+
+            existingVehicle.VehicleId = idNew;
+            existingVehicle.UpdatedDate = DateTime.Now;
+            existingVehicle.ConnectorId = connectorId;
+
+            _dbSet.Update(existingVehicle);
+            await _context.SaveChangesAsync();
+
+            return existingVehicle;
         }
 
         //return await _dbSet.Include(uv => uv.Vehicle).Where(uv => uv.UserId == userId).Select(uv => new Vehicle

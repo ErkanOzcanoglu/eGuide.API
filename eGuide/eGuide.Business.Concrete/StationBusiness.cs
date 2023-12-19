@@ -18,5 +18,10 @@ namespace eGuide.Business.Concrete {
         public Task<List<StationProfile>> GetAllS() {
             return _stationRepository.GetStationProf();
         }
+
+        public Task<StationProfile> GetStationProfile(Guid Id)
+        {
+            return _stationRepository.GetStationProfile(Id);
+        }
     }
 }

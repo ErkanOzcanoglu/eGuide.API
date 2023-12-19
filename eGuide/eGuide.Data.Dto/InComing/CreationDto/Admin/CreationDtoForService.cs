@@ -23,6 +23,8 @@ namespace eGuide.Data.Dto.InComing.CreationDto.Admin
         /// </value>
         public string Name { get; set; }
 
+        public string Language { get; set; }
+
         /// <summary>
         /// Gets or sets the description.
         /// </summary>

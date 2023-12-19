@@ -34,8 +34,7 @@ namespace eGuide.Infrastructure.Interface
 
         Task<UserVehicle> GetActiveUserVehicleConnector(Guid userId);
 
-       
-
-
+        Task<UserVehicle> UpdateUserVehicleAsync(Guid userid, Guid vehicleId, Guid idNew, Guid connectorId);
     }
+
 }
