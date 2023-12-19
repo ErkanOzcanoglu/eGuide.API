@@ -100,7 +100,7 @@ namespace eGuide.Service.AdminAPI.Controllers {
 
             using var smtp = new MailKit.Net.Smtp.SmtpClient();
             smtp.Connect("smtp.gmail.com", 587, false);
-            smtp.Authenticate("crntrim@gmail.com", "yzlijnhvqjrbipwl");
+            smtp.Authenticate("eguideacnt@gmail.com", "xcnbnfhndthxnosz");
 
             smtp.Send(replyEmail);
 

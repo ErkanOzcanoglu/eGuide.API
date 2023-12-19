@@ -158,7 +158,7 @@ namespace eGuide.Service.AdminAPI.Controllers {
 
             using var smtp = new SmtpClient();
             smtp.Connect("smtp.gmail.com", 587, SecureSocketOptions.StartTls);
-            smtp.Authenticate("crntrim@gmail.com", "yzlijnhvqjrbipwl");
+            smtp.Authenticate("eguideacnt@gmail.com", "xcnbnfhndthxnosz");
 
             smtp.Send(email);
 
