@@ -1,7 +1,9 @@
 ﻿using AutoMapper;
 using eGuide.Business.Interface;
+using eGuide.Data.Entities.Admin;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 
 namespace eGuide.Service.ClientAPI.Controllers {
     [Route("api/[controller]")]
@@ -33,9 +35,25 @@ namespace eGuide.Service.ClientAPI.Controllers {
         /// Gets this instance.
         /// </summary>
         /// <returns></returns>
-        [HttpGet]
-        public async Task<ActionResult> Get() {
-            var result = await _business.GetAllAsync();
+        [HttpGet("lang")]
+        public async Task<ActionResult> Get(string lang)
+        {
+            IQueryable<Services> services;
+
+            if (lang == "en")
+            {
+                services = _business.Where(v => v.Language == "en" && v.Status==1);
+            }
+            else if (lang == "tr")
+            {
+                services = _business.Where(v => v.Language == "tr" && v.Status == 1);
+            }
+            else
+            {
+                return BadRequest("Desteklenmeyen dil");
+            }
+
+            var result = await services.ToListAsync();
             return Ok(result);
         }
     }

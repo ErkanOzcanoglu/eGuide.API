@@ -5,6 +5,7 @@ using eGuide.Data.Entites.Station;
 using eGuide.Data.Entities.Admin;
 using eGuide.Data.Entities.Client;
 using eGuide.Data.Entities.Map;
+using eGuide.Data.Entities.Message;
 using eGuide.Data.Entities.Station;
 using Microsoft.EntityFrameworkCore;
 using System.Reflection;
@@ -215,5 +216,7 @@ namespace eGuide.Data.Context.Context {
         /// The station facilities.
         /// </value>
         public DbSet<StationFacility> StationFacilities { get; set; }
+
+        public DbSet<Messages> Messages { get; set; }
     }
 }

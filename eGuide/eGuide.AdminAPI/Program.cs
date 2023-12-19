@@ -1,12 +1,16 @@
 using eGuide.Business.Concrete;
 using eGuide.Business.Interface;
+using eGuide.Cache.Concrete;
+using eGuide.Cache.Interface;
 using eGuide.Common.Mappers;
+using eGuide.Common.SignalR;
 using eGuide.Data.Context.Context;
 using eGuide.Data.Entities.Admin;
 using eGuide.Infrastructure.Concrete;
 using eGuide.Infrastructure.Conctrete;
 using eGuide.Infrastructure.Interface;
 using Microsoft.AspNetCore.Mvc.Formatters;
+using Microsoft.AspNetCore.SignalR;
 using Microsoft.EntityFrameworkCore;
 using MongoDB.Driver;
 using System.Text.Json;
@@ -17,6 +21,7 @@ var builder = WebApplication.CreateBuilder(args);
 // Add services to the container.
 
 builder.Services.AddControllers();
+builder.Services.AddSignalR();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
@@ -38,6 +43,7 @@ JsonSerializerOptions options = new() {
 };
 
 builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
+builder.Services.AddScoped<ICache, Cache>();
 
 builder.Services.AddScoped(typeof(IAdminProfileBusiness), typeof(AdminProfileBusiness));
 builder.Services.AddScoped(typeof(IAdminProfileRepository),typeof( AdminProfileRepository));
@@ -66,10 +72,8 @@ builder.Services.AddScoped(typeof(IVehicleRepository), typeof(VehicleRepository)
 builder.Services.AddScoped(typeof(IStationModelBusiness), typeof(StationModelBusiness));
 builder.Services.AddScoped(typeof(IStationModelRepository), typeof(StationModelRepository));
 
-
 builder.Services.AddScoped(typeof(IUserStationBusiness), typeof(UserStationBusiness));
 builder.Services.AddScoped(typeof(IUserStationRepository), typeof(UserStationRepository));
-
 
 builder.Services.AddScoped(typeof(IWebsiteBusiness), typeof(WebsiteBusiness));
 builder.Services.AddScoped(typeof(IWebsiteRepository), typeof(WebsiteRepository));
@@ -95,6 +99,14 @@ builder.Services.AddScoped<IUserRepository, UserRepository>();
 builder.Services.AddScoped(typeof(IUserVehicleBusiness), typeof(UserVehicleBusiness));
 builder.Services.AddScoped(typeof(IUserVehicleRepository), typeof(UserVehicleRepository));
 
+builder.Services.AddScoped(typeof(ILogBusiness), typeof(LogBusiness));
+builder.Services.AddScoped(typeof(ILogRepository), typeof(LogRepository));
+
+builder.Services.AddScoped(typeof(IContactFormBusiness), typeof(ContactFormBusiness));
+builder.Services.AddScoped(typeof(IContactFormRepository), typeof(ContactFormRepository));
+
+//builder.Services.AddScoped<IHubContext<BroadCastHub, IHubClient>, HubContext<BroadCastHub, IHubClient>>();
+
 
 builder.Services.AddSingleton<IMongoClient>(new MongoClient("mongodb://localhost:27017/test"));
 builder.Services.AddSingleton<IMongoDatabase>(provider => {
@@ -103,17 +115,19 @@ builder.Services.AddSingleton<IMongoDatabase>(provider => {
 });
 
 builder.Services.AddCors(options => {
-    options.AddPolicy("AllowSpecificOrigin",
+    options.AddPolicy("eGuideOrigins",
         builder => {
             builder.WithOrigins("http://localhost:4200") // Replace with your frontend application's URL
                     .AllowAnyHeader()
                     .AllowAnyMethod()
-                    .AllowCredentials(); // You might need this if your WebSocket server requires credentials
+                    .AllowCredentials() // You might need this if your WebSocket server requires credentials
+                    .SetIsOriginAllowed(origin => true);
         });
 });
+builder.Services.AddSignalR();
 
-builder.Services.AddCors(options => options.AddPolicy(name: "eGuideOrigins",
-    policy => { policy.WithOrigins("http://localhost:4200").AllowAnyMethod().AllowAnyHeader(); }));
+//builder.Services.AddCors(options => options.AddPolicy(name: "eGuideOrigins",
+//    policy => { policy.WithOrigins("http://localhost:4200").AllowAnyMethod().AllowAnyHeader().SetIsOriginAllowed(origin => true); }));
 
 builder.Services.AddAutoMapper(typeof(AdminProfileMapper));
 builder.Services.AddAutoMapper(typeof(BaseMapper<,,,>));
@@ -133,8 +147,19 @@ app.UseHttpsRedirection();
 
 app.UseCors("eGuideOrigins");
 
+app.UseRouting();
+
 app.UseAuthorization();
 
-app.MapControllers();
+app.UseEndpoints(endpoints =>
+{
+    endpoints.MapHub<BroadCastHub>("/myHub");
+});
+
+app.UseEndpoints(endpoints =>
+{
+    endpoints.MapControllers();
+});
+
 
 app.Run();
