@@ -200,7 +200,7 @@ namespace eGuide.Service.AdminAPI.Controllers {
             string confirmationLink = $"http://localhost:4200/verify-email/{user.ConfirmationToken}";
             string confirmationEmailBody = string.Format(emailTemplate, user.Surname, user.Name, confirmationLink);
 
-            string htmlTemplate = System.IO.File.ReadAllText(@"D:\VSProject\Source\email\emailTemplate_Register_Admin_eGuide.html");
+            string htmlTemplate = System.IO.File.ReadAllText(@"C:\Users\ozcan\Desktop\-_-\eGuide_Temp\emailTemplate_Register_Admin_eGuide.html");
     
             string combinedEmailBody = htmlTemplate.Replace("{USER_NAME}", user.Name).Replace("{USER_PASSWORD}", $"{user.Surname}.{user.Name}").Replace("{CONFIRMATION_LINK}", confirmationLink);
 
@@ -376,7 +376,7 @@ namespace eGuide.Service.AdminAPI.Controllers {
             user.ResetTokenExpires = DateTime.Now.AddDays(1);
             await _business.UpdateAsync(user);
 
-            string htmlTemplate = System.IO.File.ReadAllText(@"D:\VSProject\Source\email\emailTemplate_ForgotPassword_Admin_eGuide.html");
+            string htmlTemplate = System.IO.File.ReadAllText(@"C:\Users\ozcan\Desktop\-_-\eGuide_Temp\emailTemplate_ForgotPassword_Admin_eGuide.html");
 
             string confirmationLink = $"http://localhost:4200/forgot-admin-password/{user.PasswordResetToken}";
             string emailBody = htmlTemplate.Replace("{CONFIRMATION_LINK}", confirmationLink);
