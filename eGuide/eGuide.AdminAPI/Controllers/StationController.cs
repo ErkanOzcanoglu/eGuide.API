@@ -83,6 +83,22 @@ namespace eGuide.Service.AdminAPI.Controllers {
             return Ok(cacheData);
         }
 
+        [HttpGet("Sta")]
+        public async Task<ActionResult> GetSta() {
+            var result = await _business.GetAllAsync();
+            return Ok(result);
+        }
+
+
+        // clear cache 
+        [HttpGet("clear")]
+        public async Task<ActionResult> ClearCache() {
+            _cache.RemoveData("station");
+            //call get function
+            this.Get();
+            return Ok();
+        }
+
         /// <summary>
         /// Posts the specified station.
         /// </summary>
