@@ -69,5 +69,14 @@ namespace eGuide.Service.ClientAPI.Controllers {
             var result = await _business.GetbyIdAsync(id);
             return Ok(result);
         }
+
+        // clear cache 
+        [HttpGet("clear")]
+        public async Task<ActionResult> ClearCache() {
+            _cache.RemoveData("station");
+            //call get function
+            this.Get();
+            return Ok();
+        }
     }
 }

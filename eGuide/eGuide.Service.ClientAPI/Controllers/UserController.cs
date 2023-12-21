@@ -193,7 +193,7 @@ namespace eGuide.Service.ClientAPI.Controllers {
 
             using var smtp = new SmtpClient();
             smtp.Connect("smtp.gmail.com", 587, SecureSocketOptions.StartTls);
-            smtp.Authenticate("crntrim@gmail.com", "yzlijnhvqjrbipwl");
+            smtp.Authenticate("eguideacnt@gmail.com", "xcnbnfhndthxnosz");
 
             smtp.Send(email);
 
@@ -231,7 +231,7 @@ namespace eGuide.Service.ClientAPI.Controllers {
 
             await _business.AddAsync(user);
 
-            string htmlTemplate = System.IO.File.ReadAllText(@"D:\VSProject\Source\email\emailTemplate_Register_eGuide.html");
+            string htmlTemplate = System.IO.File.ReadAllText(@"C:\Users\ozcan\Desktop\-_-\eGuide_Temp\emailTemplate_Register_eGuide.html");
 
             string confirmationLink = $"http://localhost:4201/verify-email/{user.ConfirmationToken}";
 
@@ -425,7 +425,7 @@ namespace eGuide.Service.ClientAPI.Controllers {
             user.ResetTokenExpires = DateTime.Now.AddDays(1);
             await _business.UpdateAsync(user);
 
-            string htmlTemplate = System.IO.File.ReadAllText(@"D:\VSProject\Source\email\emailTemplate_ForgotPassword_eGuide.html");
+            string htmlTemplate = System.IO.File.ReadAllText(@"C:\Users\ozcan\Desktop\-_-\eGuide_Temp\emailTemplate_ForgotPassword_eGuide.html");
 
             string confirmationLink = $"http://localhost:4201/forgot-password/{user.PasswordResetToken}";
             string emailBody = htmlTemplate.Replace("{CONFIRMATION_LINK}", confirmationLink);
