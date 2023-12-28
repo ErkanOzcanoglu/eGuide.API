@@ -10,8 +10,7 @@ namespace eGuide.Data.Entities.Admin
     /// 
     /// </summary>
     /// <seealso cref="eGuide.Data.Entities.BaseModel" />
-    public class Website : BaseModel
-    {
+    public class Website : BaseModel {
 
         /// <summary>
         /// Gets or sets the navbar.
@@ -28,5 +27,45 @@ namespace eGuide.Data.Entities.Admin
         /// The footer.
         /// </value>
         public int Footer { get; set; }
+
+        /// <summary>
+        /// Gets or sets the phone number.
+        /// </summary>
+        /// <value>
+        /// The phone number.
+        /// </value>
+        public string PhoneNumber { get;set; }
+
+        /// <summary>
+        /// Gets or sets the address.
+        /// </summary>
+        /// <value>
+        /// The address.
+        /// </value>
+        public string Address { get; set; }
+
+        /// <summary>
+        /// Gets or sets the email.
+        /// </summary>
+        /// <value>
+        /// The email.
+        /// </value>
+        public string Email { get; set; }
+
+        /// <summary>
+        /// Gets or sets the description.
+        /// </summary>
+        /// <value>
+        /// The description.
+        /// </value>
+        public string Description { get; set; }
+
+        /// <summary>
+        /// Gets or sets the name.
+        /// </summary>
+        /// <value>
+        /// The name.
+        /// </value>
+        public string Name { get; set; }
     }
 }

@@ -9,6 +9,7 @@
   <ItemGroup>
     <PackageReference Include="MailKit" Version="4.2.0" />
     <PackageReference Include="Microsoft.AspNetCore.Authentication.Google" Version="6.0.6" />
+    <PackageReference Include="Microsoft.AspNetCore.SignalR" Version="1.1.0" />
     <PackageReference Include="Microsoft.EntityFrameworkCore" Version="7.0.11" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="7.0.11">
       <PrivateAssets>all</PrivateAssets>
@@ -25,6 +26,7 @@
   <ItemGroup>
     <ProjectReference Include="..\eGuide.Business.Concrete\eGuide.Business.Concrete.csproj" />
     <ProjectReference Include="..\eGuide.Business.Interface\eGuide.Business.Interface.csproj" />
+    <ProjectReference Include="..\eGuide.Data.Dto\eGuide.Data.Dto.csproj" />
     <ProjectReference Include="..\eGuide.Data.Entites\eGuide.Data.Entities.csproj" />
     <ProjectReference Include="..\eGuide.Infrastructure.Conctrete\eGuide.Infrastructure.Conctrete.csproj" />
     <ProjectReference Include="..\eGuide.Infrastructure.Infrastructure\eGuide.Infrastructure.Interface.csproj" />

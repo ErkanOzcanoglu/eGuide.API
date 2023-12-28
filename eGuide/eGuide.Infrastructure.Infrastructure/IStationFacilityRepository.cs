@@ -15,6 +15,7 @@ namespace eGuide.Infrastructure.Interface {
     public interface IStationFacilityRepository : IGenericRepository<StationFacility> {
         Task<List<StationFacility>> GetAllFacility();
         Task<List<StationFacility>> GetFacilityByStationId(Guid stationId);
-        
+       
+
     }
 }

@@ -17,6 +17,7 @@ using System.Security.Cryptography;
 using System.Text;
 using MailKit.Net.Smtp;
 using MailKit.Security;
+using Microsoft.Win32;
 
 namespace eGuide.Service.AdminAPI.Controllers {
     /// <summary>
@@ -157,7 +158,7 @@ namespace eGuide.Service.AdminAPI.Controllers {
 
             using var smtp = new SmtpClient();
             smtp.Connect("smtp.gmail.com", 587, SecureSocketOptions.StartTls);
-            smtp.Authenticate("crntrim@gmail.com", "yzlijnhvqjrbipwl");
+            smtp.Authenticate("eguideacnt@gmail.com", "xcnbnfhndthxnosz");
 
             smtp.Send(email);
 
@@ -185,17 +186,25 @@ namespace eGuide.Service.AdminAPI.Controllers {
                 PassWordHash = passwordHash,
                 PassWordSalt = passwordSalt,
                 ConfirmationToken = CreatedToken(register),
+                isMasterAdmin = register.isMasterAdmin,
                 CreatedDate = DateTime.Now
 
             };
 
-            user.Status = 1;
+            user.Status = 0;
 
-            await _business.AddAsync(user);
+           await _business.AddAsync(user);
 
+
+            string emailTemplate = "Şifreniz: '{0}.{1}'. Hesabınızı onaylamak için lütfen şu bağlantıya tıklayın: {2}";
             string confirmationLink = $"http://localhost:4200/verify-email/{user.ConfirmationToken}";
-            string confirmationEmailBody = $"Şifreniz: '{user.Surname}.{user.Name}'. Hesabınızı onaylamak için lütfen şu bağlantıya tıklayın: {confirmationLink}";
-            SendEmail(confirmationEmailBody, user.Email);
+            string confirmationEmailBody = string.Format(emailTemplate, user.Surname, user.Name, confirmationLink);
+
+            string htmlTemplate = System.IO.File.ReadAllText(@"C:\Users\ozcan\Desktop\-_-\eGuide_Temp\emailTemplate_Register_Admin_eGuide.html");
+    
+            string combinedEmailBody = htmlTemplate.Replace("{USER_NAME}", user.Name).Replace("{USER_PASSWORD}", $"{user.Surname}.{user.Name}").Replace("{CONFIRMATION_LINK}", confirmationLink);
+
+            SendEmail(combinedEmailBody, user.Email);
 
             return Ok(user);
         }
@@ -210,7 +219,7 @@ namespace eGuide.Service.AdminAPI.Controllers {
             {
                 return BadRequest("Invalid confirmation code.");
             }
-
+            user.Status = 1;
             user.VerifiedAt = DateTime.Now;
             await _business.UpdateAsync(user);
 
@@ -367,11 +376,13 @@ namespace eGuide.Service.AdminAPI.Controllers {
             user.ResetTokenExpires = DateTime.Now.AddDays(1);
             await _business.UpdateAsync(user);
 
+            string htmlTemplate = System.IO.File.ReadAllText(@"C:\Users\ozcan\Desktop\-_-\eGuide_Temp\emailTemplate_ForgotPassword_Admin_eGuide.html");
+
             string confirmationLink = $"http://localhost:4200/forgot-admin-password/{user.PasswordResetToken}";
-            string confirmationEmailBody = $"Hesabınızı şifrenizi sıfırlamak için lütfen şu bağlantıya tıklayın: {confirmationLink}";
+            string emailBody = htmlTemplate.Replace("{CONFIRMATION_LINK}", confirmationLink);
             string recipientEmail = user.Email;
 
-            SendEmail(confirmationEmailBody, recipientEmail);
+            SendEmail(emailBody, recipientEmail);
 
             return Ok("You may now reset your password");
 
@@ -398,16 +409,37 @@ namespace eGuide.Service.AdminAPI.Controllers {
                 return BadRequest("Token Expired");
             }
 
-            CreatePasswordHash(request.Password, out byte[] passwordHash, out byte[] passwordSalt);
+            byte[] passwordHash, passwordSalt;
+            CreatePasswordHash(request.Password, out passwordHash, out passwordSalt);
+
+            //CreatePasswordHash(request.Password, out byte[] passwordHash, out byte[] passwordSalt);
+
+            //user.PassWordHash = passwordHash;
+            //user.PassWordSalt = passwordSalt;
+            //user.PasswordResetToken = null;
+            //user.ResetTokenExpires = null;
+
+            //await _business.UpdateAsync(user);
+
+            return Ok("Password successfully changed");
+        }
+
+        [HttpPost("pass-change")]
+        public async Task<IActionResult> ChangePassword(Guid id, ResetPassword changePasswordDto) {
+            var user = await _business.FirstOrDefault(u => u.Id == id);
+
+            if (user == null) {
+                return BadRequest("UserNotFound");
+            }
+
+            CreatePasswordHash(changePasswordDto.Password, out byte[] passwordHash, out byte[] passwordSalt);
 
             user.PassWordHash = passwordHash;
             user.PassWordSalt = passwordSalt;
-            user.PasswordResetToken = null;
-            user.ResetTokenExpires = null;
 
             await _business.UpdateAsync(user);
 
-            return Ok("Password successfully changed");
+            return Ok(user);
         }
     }
 }

@@ -13,7 +13,7 @@ namespace eGuide.Service.AdminAPI.Controllers {
         /// <summary>
         /// The business
         /// </summary>
-        private readonly ICommentBusiness<Comment> _business;
+        private readonly ICommentBusiness _business;
 
         /// <summary>
         /// The mapper
@@ -25,7 +25,7 @@ namespace eGuide.Service.AdminAPI.Controllers {
         /// </summary>
         /// <param name="business">The business.</param>
         /// <param name="mapper">The mapper.</param>
-        public CommentController(ICommentBusiness<Comment> business, IMapper mapper) {
+        public CommentController(ICommentBusiness business, IMapper mapper) {
             _business = business;
             _mapper = mapper;
 
@@ -50,6 +50,14 @@ namespace eGuide.Service.AdminAPI.Controllers {
         [HttpGet]
         public async Task<IActionResult> GetAllComments() {
             var comments = await _business.GetAllComments();
+            var commentsDto = _mapper.Map<CommentDto[]>(comments);
+            return Ok(commentsDto);
+        }
+
+        [HttpGet("{stationId}")]
+        public async Task<IActionResult> GetCommentsByStationId(Guid stationId)
+        {
+            var comments = await _business.GetAllCommentsByStationId(stationId);
             var commentsDto = _mapper.Map<CommentDto[]>(comments);
             return Ok(commentsDto);
         }

@@ -28,6 +28,16 @@ namespace eGuide.Business.Concrete
             _vehicleRepository = vehicleRepository;
         }
 
+        public async Task<UserVehicle> GetActiveUserVehicleConnector(Guid userId)
+        {
+            return await _vehicleRepository.GetActiveUserVehicleConnector(userId);
+        }
+
+        public async Task<Vehicle> GetActiveVehicle(Guid userId)
+        {
+           return await _vehicleRepository.GetActiveVehicle(userId);
+        }
+
         /// <summary>
         /// Gets the by vehicle identifier asynchronous.
         /// </summary>
@@ -38,6 +48,11 @@ namespace eGuide.Business.Concrete
             return await _vehicleRepository.GetByVehicleIdAsync(vehicleId);
         }
 
+        public async Task<Vehicle> GetUpdatedActiveVehicle(Guid userId, Guid vehicleId)
+        {
+           return await _vehicleRepository.GetUpdatedActiveVehicle(userId, vehicleId);
+        }
+
         /// <summary>
         /// Gets the user vehicles.
         /// </summary>
@@ -46,6 +61,11 @@ namespace eGuide.Business.Concrete
         public async Task<List<Vehicle>> GetUserVehicles(Guid id)
         {
             return await _vehicleRepository.GetUserVehicles(id);
+        }
+
+        public async Task<UserVehicle> UpdateUserVehicleAsync(Guid userid, Guid vehicleId, Guid idNew, Guid connectorId)
+        {
+            return await _vehicleRepository.UpdateUserVehicleAsync(userid, vehicleId, idNew, connectorId);
         }
     }
 }

@@ -42,18 +42,28 @@ namespace eGuide.Service.AdminAPI.Controllers
         [HttpGet]
         public async Task<ActionResult<VehicleDto>> All()
         {
-            try
-            {
                 var vehicles = await _business.GetAllAsync();
-
-                if (vehicles == null || !vehicles.Any())
-                {
-                    return NotFound("There are no vehicles in the database or the database is empty.");
-                }
 
                 var vehicledto = _mapper.Map<List<VehicleDto>>(vehicles.ToList());
 
                 return Ok(vehicledto);
+        }
+
+        [HttpGet("getVehiclebyId/{vehicleId}")]
+        public async Task<ActionResult<VehicleDto>> GetVehicleById(Guid vehicleId)
+        {
+            try
+            {
+                var vehicle = await _business.GetbyIdAsync(vehicleId);
+
+                if (vehicle == null)
+                {
+                    return NotFound($"Vehicle with ID {vehicleId} not found.");
+                }
+
+                var vehicleDto = _mapper.Map<VehicleDto>(vehicle);
+
+                return Ok(vehicleDto);
             }
             catch (DbUpdateException ex)
             {
@@ -61,7 +71,7 @@ namespace eGuide.Service.AdminAPI.Controllers
             }
             catch (Exception ex)
             {
-                return BadRequest($"Hata: {ex.Message}");
+                return BadRequest($"Error: {ex.Message}");
             }
         }
 

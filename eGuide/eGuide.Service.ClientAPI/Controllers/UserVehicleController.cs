@@ -4,6 +4,7 @@ using eGuide.Data.Context.Context;
 using eGuide.Data.Dto.InComing.CreationDto.Client;
 using eGuide.Data.Dto.InComing.UpdateDto.Client;
 using eGuide.Data.Entites.Client;
+using eGuide.Data.Entities.Client;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Data.SqlClient;
@@ -27,28 +28,15 @@ namespace eGuide.Service.ClientAPI.Controllers
         private readonly IMapper _mapper;
 
         /// <summary>
-        /// The context
-        /// </summary>
-        protected readonly eGuideContext _context;
-
-        /// <summary>
-        /// The database set
-        /// </summary>
-        private readonly DbSet<UserVehicle> _dbSet;
-
-        /// <summary>
         /// Initializes a new instance of the <see cref="UserVehicleController"/> class.
         /// </summary>
         /// <param name="business">The business.</param>
         /// <param name="mapper">The mapper.</param>
         /// <param name="context">The context.</param>
-        public UserVehicleController(IUserVehicleBusiness business, IMapper mapper, eGuideContext context)
+        public UserVehicleController(IUserVehicleBusiness business, IMapper mapper)
         {
             _business = business;
             _mapper = mapper;
-
-            _context = context;
-            _dbSet = _context.Set<UserVehicle>();
         }
 
         /// <summary>
@@ -58,6 +46,17 @@ namespace eGuide.Service.ClientAPI.Controllers
         [HttpPost]
         public async Task Save(CreationDtoForUserVehicle vehicledto)
         {
+            var existingVehicle = await _business.FirstOrDefault(v => v.UserId == vehicledto.UserId);
+
+            if (existingVehicle == null)
+            {
+                vehicledto.ActiveStatus = 1;
+            }
+            else
+            {
+                vehicledto.ActiveStatus = 0;
+            }
+
             await _business.AddAsync(_mapper.Map<UserVehicle>(vehicledto));
         }
 
@@ -72,27 +71,42 @@ namespace eGuide.Service.ClientAPI.Controllers
         public async Task<IActionResult> UpdateUserVehicle(Guid userid, Guid vehicleId, Guid idNew, Guid connectorId )
         {
             try
-            {              
-                var existingVehicle = await _dbSet.FirstOrDefaultAsync(v => v.UserId == userid && v.VehicleId == vehicleId && v.Status == 1);//kontrol et
+            {
+                var updatedVehicle = await _business.UpdateUserVehicleAsync(userid, vehicleId, idNew, connectorId);
 
-                if (existingVehicle == null)
+                if (updatedVehicle == null)
                 {
                     return NotFound($"UserId {userid} ve VehicleId {vehicleId} olan araç kaydı bulunamadı.");
                 }
-                
-                existingVehicle.VehicleId = idNew;
-                existingVehicle.UpdatedDate = DateTime.Now;
-                existingVehicle.ConnectorId = connectorId;
-                              
-                _dbSet.Update(existingVehicle);
-                await _context.SaveChangesAsync();
 
-                return Ok(existingVehicle); 
+                return Ok(updatedVehicle);
             }
             catch (Exception ex)
             {
                 return BadRequest($"Hata: {ex.Message}");
             }
+        }
+
+        [HttpPut("update-active-vehicle/{userId}/{vehicleId}")]
+        public async Task<IActionResult> UpdateActiveVehicle(Guid userId, Guid vehicleId)
+        {
+            
+            try
+            {
+                var vehicle = await _business.GetUpdatedActiveVehicle( userId,vehicleId);
+
+                if (vehicle == null)
+                {
+                    return NotFound(); 
+                }
+
+                return Ok(vehicle);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest($"Hata: {ex.Message}");
+            }
+
         }
 
         /// <summary>
@@ -106,7 +120,7 @@ namespace eGuide.Service.ClientAPI.Controllers
         {
             try
             {
-                var existingVehicle = await _dbSet.FirstOrDefaultAsync(v => v.UserId == userid && v.VehicleId == vehicleId && v.Status == 1);
+                var existingVehicle = await _business.FirstOrDefault(v => v.UserId == userid && v.VehicleId == vehicleId && v.Status == 1);
 
                 if (existingVehicle == null)
                 {
@@ -140,7 +154,7 @@ namespace eGuide.Service.ClientAPI.Controllers
 
                 if (userVehicles == null)
                 {
-                    return NotFound(); // Kullanıcıya ait araçlar bulunamadıysa 404 dönebilirsiniz.
+                    return NotFound();
                 }
 
                 return Ok(userVehicles);
@@ -150,6 +164,74 @@ namespace eGuide.Service.ClientAPI.Controllers
                 return BadRequest($"Hata: {ex.Message}");
             }
         }
+
+        [HttpGet("GetUserVehicleWithActiveStatus/{userId}")]
+        public async Task<IActionResult> GetUserVehicleWithActiveStatus(Guid userId)
+        {
+            try
+            {
+                var activeUserVehicle = await _business.FirstOrDefault(v => v.UserId == userId && v.ActiveStatus == 1);
+
+                if (activeUserVehicle != null)
+                {
+                    return Ok(activeUserVehicle);
+                }
+
+                return Ok(null);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest($"Hata: {ex.Message}");
+            }
+        }
+
+        [HttpGet("GetUserVehicleActiveStatusWithConnector/{userId}")]
+        public async Task<IActionResult> GetUserVehicleActiveStatusWithConnector(Guid userId)
+        {
+             
+            try
+            {
+                var userVehicle = await _business.GetActiveUserVehicleConnector(userId);
+
+                if (userVehicle == null)
+                {
+                    return NotFound();
+                }
+
+                return Ok(userVehicle.ConnectorId);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest($"Hata: {ex.Message}");
+            }
+
+        }
+
+
+        [HttpGet("GetActiveVehicle/{userId}")]
+        public async Task<IActionResult> GetActiveVehicle(Guid userId)
+        {
+
+            try
+            {
+                var vehicle = await _business.GetActiveVehicle(userId);
+
+                if (vehicle == null)
+                {
+                    return NotFound();
+                }
+
+                return Ok(vehicle);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest($"Hata: {ex.Message}");
+            }
+
+        }
+
+
+
 
         //[HttpGet]
         //public IActionResult Get(Guid userId) 

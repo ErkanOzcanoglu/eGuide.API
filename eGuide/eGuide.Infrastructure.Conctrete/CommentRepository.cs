@@ -9,20 +9,24 @@ using System.Text;
 using System.Threading.Tasks;
 
 namespace eGuide.Infrastructure.Conctrete {
-    public class CommentRepository<T> : ICommentRepository<T> where T : class {
-        private readonly IMongoCollection<T> _collection;
+    public class CommentRepository : ICommentRepository{
+        private readonly IMongoCollection<Comment> _collection;
 
         public CommentRepository(IMongoDatabase context) {
-            _collection = context.GetCollection<T>("Comments");
+            _collection = context.GetCollection<Comment>("Comments");
         }
 
-        public async Task<T> AddAsync(T comment) {
+        public async Task<Comment> AddAsync(Comment comment) {
             await _collection.InsertOneAsync(comment);
             return comment;
         }
 
-        public async Task<IEnumerable<T>> GetAllAsync() {
+        public async Task<IEnumerable<Comment>> GetAllAsync() {
             return await _collection.Find(_ => true).ToListAsync();
+        }
+
+        public async Task<IEnumerable<Comment>> GetAllByStationIdAsync(Guid stationId) {
+            return await _collection.Find(comment => comment.StationId == stationId).ToListAsync();
         }
     }
 }

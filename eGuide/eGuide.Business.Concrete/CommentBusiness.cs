@@ -9,20 +9,24 @@ using System.Text;
 using System.Threading.Tasks;
 
 namespace eGuide.Business.Concrete {
-    public class CommentBusiness<T> : ICommentBusiness<T> where T : BaseModel {
-        private readonly ICommentRepository<T> _commentRepository;
+    public class CommentBusiness : ICommentBusiness {
+        private readonly ICommentRepository _commentRepository;
 
-        public CommentBusiness(ICommentRepository<T> commentRepository) {
+        public CommentBusiness(ICommentRepository commentRepository) {
             _commentRepository = commentRepository;
         }
 
-        public async void AddComment(T comment) {
+        public async void AddComment(Comment comment) {
             comment.Id = Guid.NewGuid();
             await _commentRepository.AddAsync(comment);
         }
 
-        public async Task<IEnumerable<T>> GetAllComments() {
+        public async Task<IEnumerable<Comment>> GetAllComments() {
             return await _commentRepository.GetAllAsync();
+        }
+
+        public Task<IEnumerable<Comment>> GetAllCommentsByStationId(Guid stationId) {
+            return _commentRepository.GetAllByStationIdAsync(stationId);
         }
     }
 }

@@ -33,13 +33,5 @@ namespace eGuide.Business.Concrete
             _userRepository = userRepository;
             _unitOfWork = unitOfWork;
         }
-
-        public async void AddUsersLogs(UserLogs user) {
-            await _userRepository.CreateUsersLog(user);
-        }
-
-        public async Task<IEnumerable<UserLogs>> GetAllLogs() {
-            return await _userRepository.GetAllAsyncLog();
-        }
     }
 }

@@ -7,6 +7,7 @@ using eGuide.Data.Dto.InComing.UpdateDto.Station;
 using eGuide.Data.Entities.Admin;
 using eGuide.Data.Entities.Station;
 using Microsoft.AspNetCore.Mvc;
+using System.Linq;
 
 namespace eGuide.Service.AdminAPI.Controllers {
     [Route("api/[controller]")]
@@ -27,7 +28,8 @@ namespace eGuide.Service.AdminAPI.Controllers {
         }
 
         [HttpGet("{id}")]
-        public async Task<ActionResult<Services>> Get(Guid id) {
+        public async Task<ActionResult<Services>> Get(Guid id, string lang) {
+
             var result = await _business.GetbyIdAsync(id);
             return Ok(result);
         }

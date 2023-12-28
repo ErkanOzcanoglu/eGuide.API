@@ -1,6 +1,7 @@
 using AutoMapper;
 using eGuide.Business.Concrete;
 using eGuide.Business.Interface;
+using eGuide.Cache.Interface;
 using eGuide.Data.Context.Context;
 using eGuide.Data.Dto.InComing.CreationDto.Station;
 using eGuide.Data.Dto.InComing.UpdateDto.Station;
@@ -30,6 +31,10 @@ namespace eGuide.Service.AdminAPI.Controllers {
         /// </summary>
         private readonly eGuideContext _context;
 
+        /// <summary>
+        /// The cache
+        /// </summary>
+        private readonly ICache _cache;
 
         /// <summary>
         /// The mapper
@@ -41,12 +46,19 @@ namespace eGuide.Service.AdminAPI.Controllers {
         /// </summary>
         /// <param name="business">The business.</param>
         /// <param name="mapper">The mapper.</param>
-        public StationController(IStationBusiness business, IMapper mapper ,eGuideContext context) {
-           
+        public StationController(IStationBusiness business, IMapper mapper ,eGuideContext context, ICache cahce) {
+            _cache = cahce;
             _business = business;
             _mapper = mapper;
             _context = context;
             _dbSet=_context.Set<StationInformationModel>();
+        }
+
+        [HttpGet("{id}")]
+        public async Task<ActionResult> Get(Guid id)
+        {
+            var result = await _business.GetStationProfile(id);
+            return Ok(result);
         }
 
         /// <summary>
@@ -55,8 +67,36 @@ namespace eGuide.Service.AdminAPI.Controllers {
         /// <returns></returns>
         [HttpGet]
         public async Task<ActionResult> Get() {
-            var result = await _business.GetAllS();
+            //var result = await _business.GetAllS();
+            //return Ok(result);
+
+            var cacheData = _cache.GetData<IEnumerable<StationProfile>>("station");
+
+            if (cacheData != null && cacheData.Count() > 0) 
+                return Ok(cacheData);
+
+            cacheData = await _business.GetAllS();
+
+            var expirationTime = DateTimeOffset.Now.AddMinutes(1);
+            _cache.SetData<IEnumerable<StationProfile>>("station", cacheData, expirationTime);
+
+            return Ok(cacheData);
+        }
+
+        [HttpGet("Sta")]
+        public async Task<ActionResult> GetSta() {
+            var result = await _business.GetAllAsync();
             return Ok(result);
+        }
+
+
+        // clear cache 
+        [HttpGet("clear")]
+        public async Task<ActionResult> ClearCache() {
+            _cache.RemoveData("station");
+            //call get function
+            this.Get();
+            return Ok();
         }
 
         /// <summary>
@@ -78,6 +118,7 @@ namespace eGuide.Service.AdminAPI.Controllers {
         /// <param name="id">The identifier.</param>
         /// <param name="station">The station.</param>
         /// <returns></returns>
+        
         [HttpPut]
         public async Task<ActionResult<StationProfile>> Put(Guid id, UpdateDtoForStationProfile station) {
             var entity = await _business.GetbyIdAsync(id);

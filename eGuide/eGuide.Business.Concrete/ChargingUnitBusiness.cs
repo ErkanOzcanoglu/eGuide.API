@@ -16,5 +16,13 @@ namespace eGuide.Business.Concrete {
             _repository = repository;
             _unitOfWork = unitOfWork;
         }
+
+        public async Task<List<ChargingUnit>> GetChargingUnits() {
+            var res = await _repository.GetChargingUnits();
+            if(res != null)
+                return res;
+
+            return null;
+        }
     }
 }

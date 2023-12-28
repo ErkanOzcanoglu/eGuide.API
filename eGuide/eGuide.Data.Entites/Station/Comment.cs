@@ -53,6 +53,6 @@ namespace eGuide.Data.Entities.Station
         /// <value>
         /// The station.
         /// </value>
-        public StationProfile Station { get; set; }
+        public Guid StationId { get; set; }
     }
 }

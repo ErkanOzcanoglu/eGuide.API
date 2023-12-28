@@ -1,8 +1,12 @@
 using eGuide.Business.Concrete;
 using eGuide.Business.Interface;
+using eGuide.Cache.Concrete;
+using eGuide.Cache.Interface;
 using eGuide.Common.Mappers;
+using eGuide.Common.SignalR;
 using eGuide.Data.Context.Context;
 using eGuide.Data.Entities.Admin;
+using eGuide.Data.Entities.Station;
 using eGuide.Infrastructure.Concrete;
 using eGuide.Infrastructure.Conctrete;
 using eGuide.Infrastructure.Interface;
@@ -41,7 +45,9 @@ builder.Services.AddCors(options => {
         });
 });
 
+//builder.Services.AddSignalR();
 builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
+builder.Services.AddScoped<ICache, Cache>();
 
 builder.Services.AddScoped(typeof(IGenericRepository<>), typeof(GenericRepository<>));
 builder.Services.AddScoped(typeof(IBusiness<>), typeof(Business<>));
@@ -58,6 +64,9 @@ builder.Services.AddScoped(typeof(IUserVehicleRepository), typeof(UserVehicleRep
 builder.Services.AddScoped(typeof(IStationBusiness), typeof(StationBusiness));
 builder.Services.AddScoped(typeof(IStationRepository), typeof(StationRepository));
 
+builder.Services.AddScoped(typeof(IFacilityBusiness), typeof(FacilityBusiness));
+builder.Services.AddScoped(typeof(IFacilityRepository), typeof(FacilityRepository));
+
 builder.Services.AddScoped(typeof(IConnectorBusiness), typeof(ConnectorBusiness));
 builder.Services.AddScoped(typeof(IConnectorRepository), typeof(ConnectorRepository));
 
@@ -73,9 +82,24 @@ builder.Services.AddScoped(typeof(ILastVisitedStationsRepository), typeof(LastVi
 builder.Services.AddScoped(typeof(ISocialMediaBusiness), typeof(SocialMediaBusiness));
 builder.Services.AddScoped(typeof(ISocialMediaRepository), typeof(SocialMediaRepository));
 
-builder.Services.AddSingleton<IMongoClient>(new MongoClient("mongodb://localhost:27017"));
-builder.Services.AddSingleton<IMongoDatabase>(provider =>
-{
+builder.Services.AddScoped(typeof(IWebsiteBusiness), typeof(WebsiteBusiness));
+builder.Services.AddScoped(typeof(IWebsiteRepository), typeof(WebsiteRepository));
+
+builder.Services.AddScoped(typeof(ICommentBusiness), typeof(CommentBusiness));
+builder.Services.AddScoped(typeof(ICommentRepository), typeof(CommentRepository));
+
+builder.Services.AddScoped(typeof(IColorBusiness), typeof(ColorBusiness));
+builder.Services.AddScoped(typeof(IColorRepository), typeof(ColorRepository));
+
+builder.Services.AddScoped(typeof(ILogBusiness), typeof(LogBusiness));
+builder.Services.AddScoped(typeof(ILogRepository), typeof(LogRepository));
+
+
+builder.Services.AddScoped(typeof(IContactFormBusiness), typeof(ContactFormBusiness));
+builder.Services.AddScoped(typeof(IContactFormRepository), typeof(ContactFormRepository));
+
+builder.Services.AddSingleton<IMongoClient>(new MongoClient("mongodb://localhost:27017/test"));
+builder.Services.AddSingleton<IMongoDatabase>(provider => {
     var client = provider.GetRequiredService<IMongoClient>();
     return client.GetDatabase("eGuideDb");
 });
@@ -91,6 +115,7 @@ builder.Services.AddAutoMapper(typeof(AdminProfileMapper));
 builder.Services.AddAutoMapper(typeof(UserMapper));
 builder.Services.AddAutoMapper(typeof(VehicleMapper));
 builder.Services.AddDbContext<eGuideContext>(options => options.UseSqlServer(builder.Configuration.GetConnectionString("eGuideContext")));
+builder.Services.AddSignalR();
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
@@ -100,12 +125,26 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 
+
 app.UseCors("eGuideOrigins");
 
 app.UseHttpsRedirection();
 
+app.UseRouting();
+
 app.UseAuthorization();
 
-app.MapControllers();
+//app.UseEndpoints(endpoints =>
+//{
+//    endpoints.MapHub<BroadCastHub>("/Message/broadcast");
+//    endpoints.MapControllers();
+//});
+
+app.UseEndpoints(endpoints => {
+    endpoints.MapHub<BroadCastHub>("/myhub");
+});
+app.UseEndpoints(endpoints => {
+    endpoints.MapControllers();
+});
 
 app.Run();

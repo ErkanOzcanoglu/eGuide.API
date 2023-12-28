@@ -30,5 +30,13 @@ namespace eGuide.Infrastructure.Conctrete {
         public ChargingUnitRepository(eGuideContext context) : base(context) {
             _context = context;
         }
+
+        public async Task<List<ChargingUnit>> GetChargingUnits() {
+            var res = _context.CharginUnit.Include(s => s.Connector).ToList();
+            if(res != null)
+            return res;
+
+            return null;
+        }
     }
 }

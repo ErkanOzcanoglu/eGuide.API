@@ -28,6 +28,9 @@ namespace eGuide.Data.Context.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
+                    b.Property<int>("ActiveStatus")
+                        .HasColumnType("int");
+
                     b.Property<Guid>("ConnectorId")
                         .HasColumnType("uniqueidentifier");
 
@@ -176,6 +179,9 @@ namespace eGuide.Data.Context.Migrations
                     b.Property<DateTime?>("VerifiedAt")
                         .HasColumnType("datetime2");
 
+                    b.Property<bool>("isMasterAdmin")
+                        .HasColumnType("bit");
+
                     b.HasKey("Id");
 
                     b.ToTable("Admin");
@@ -264,6 +270,10 @@ namespace eGuide.Data.Context.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<string>("Language")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<int>("Layout")
                         .HasColumnType("int");
 
@@ -327,17 +337,37 @@ namespace eGuide.Data.Context.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
+                    b.Property<string>("Address")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<DateTime>("CreatedDate")
                         .HasColumnType("datetime2");
 
                     b.Property<DateTime?>("DeletedDate")
                         .HasColumnType("datetime2");
 
+                    b.Property<string>("Description")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Email")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<int>("Footer")
                         .HasColumnType("int");
 
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<int>("Navbar")
                         .HasColumnType("int");
+
+                    b.Property<string>("PhoneNumber")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("Status")
                         .HasColumnType("int");
@@ -523,6 +553,39 @@ namespace eGuide.Data.Context.Migrations
                     b.ToTable("Route");
                 });
 
+            modelBuilder.Entity("eGuide.Data.Entities.Message.Messages", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("Content")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("CreatedDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime?>("DeletedDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<Guid>("ReceiverId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("SenderId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<int>("Status")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime?>("UpdatedDate")
+                        .HasColumnType("datetime2");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Messages");
+                });
+
             modelBuilder.Entity("eGuide.Data.Entities.Station.ChargingUnit", b =>
                 {
                     b.Property<Guid>("Id")
@@ -592,6 +655,9 @@ namespace eGuide.Data.Context.Migrations
                     b.Property<Guid>("StationId")
                         .HasColumnType("uniqueidentifier");
 
+                    b.Property<Guid?>("StationProfileId")
+                        .HasColumnType("uniqueidentifier");
+
                     b.Property<int>("Status")
                         .HasColumnType("int");
 
@@ -606,7 +672,7 @@ namespace eGuide.Data.Context.Migrations
 
                     b.HasIndex("OwnerId");
 
-                    b.HasIndex("StationId");
+                    b.HasIndex("StationProfileId");
 
                     b.ToTable("Comment");
                 });
@@ -895,15 +961,11 @@ namespace eGuide.Data.Context.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("eGuide.Data.Entities.Station.StationProfile", "Station")
+                    b.HasOne("eGuide.Data.Entities.Station.StationProfile", null)
                         .WithMany("Comments")
-                        .HasForeignKey("StationId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("StationProfileId");
 
                     b.Navigation("Owner");
-
-                    b.Navigation("Station");
                 });
 
             modelBuilder.Entity("eGuide.Data.Entities.Station.StationProfile", b =>
