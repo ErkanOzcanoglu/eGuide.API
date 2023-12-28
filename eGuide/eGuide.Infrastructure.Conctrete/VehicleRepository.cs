@@ -27,6 +27,10 @@ namespace eGuide.Infrastructure.Conctrete
             _context = context;
         }
 
+        /// <summary>
+        /// Gets all brands asynchronous.
+        /// </summary>
+        /// <returns></returns>
         public async Task<IEnumerable<string>> GetAllBrandsAsync()
         {
             var brands = await _context.Vehicle.Select(v => v.Brand).Distinct().ToListAsync();

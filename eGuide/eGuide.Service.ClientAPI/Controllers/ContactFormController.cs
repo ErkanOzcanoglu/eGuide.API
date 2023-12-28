@@ -65,6 +65,11 @@ namespace eGuide.Service.ClientAPI.Controllers {
 
         }
 
+        /// <summary>
+        /// Replays the mail.
+        /// </summary>
+        /// <param name="contactForm">The contact form.</param>
+        /// <returns></returns>
         [HttpPost("reply-mail")]
         public IActionResult ReplayMail(MailDto contactForm) {
             var replyEmail = new MimeMessage();
@@ -87,6 +92,11 @@ namespace eGuide.Service.ClientAPI.Controllers {
             return Ok();
         }
 
+        /// <summary>
+        /// Posts the specified contact form.
+        /// </summary>
+        /// <param name="contactForm">The contact form.</param>
+        /// <returns></returns>
         [HttpPost("send")]
         public async Task<IActionResult> Post(Mail contactForm) {
             await _hubContext.Clients.All.BroadcastMessage();

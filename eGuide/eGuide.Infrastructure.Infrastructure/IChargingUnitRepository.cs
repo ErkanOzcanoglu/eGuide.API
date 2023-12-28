@@ -12,6 +12,10 @@ namespace eGuide.Infrastructure.Interface {
     /// </summary>
     /// <seealso cref="eGuide.Infrastructure.Interface.IGenericRepository&lt;eGuide.Data.Entities.Station.ChargingUnit&gt;" />
     public interface IChargingUnitRepository : IGenericRepository<ChargingUnit> {
+        /// <summary>
+        /// Gets the charging units.
+        /// </summary>
+        /// <returns></returns>
         Task<List<ChargingUnit>> GetChargingUnits();
     }
 }

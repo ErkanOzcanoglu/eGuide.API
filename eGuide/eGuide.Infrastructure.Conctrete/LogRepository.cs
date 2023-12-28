@@ -48,10 +48,18 @@ namespace eGuide.Infrastructure.Conctrete {
             return await _collection.Find(x => true).ToListAsync();
         }
 
+        /// <summary>
+        /// Gets the error logs.
+        /// </summary>
+        /// <returns></returns>
         public async Task<IEnumerable<UserLogs>> GetErrorLogs() {
             return await _collection.Find(x => x.Level == "error").ToListAsync();
         }
 
+        /// <summary>
+        /// Gets the information logs.
+        /// </summary>
+        /// <returns></returns>
         public async Task<IEnumerable<UserLogs>> GetInfoLogs() {
             return await _collection.Find(x => x.Level == "info").ToListAsync();
         }

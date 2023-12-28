@@ -7,9 +7,29 @@ using System.Threading.Tasks;
 
 namespace eGuide.Business.Interface {
     public interface ILogBusiness {
+        /// <summary>
+        /// Creates the users log.
+        /// </summary>
+        /// <param name="comment">The comment.</param>
+        /// <returns></returns>
         Task<UserLogs> CreateUsersLog(UserLogs comment);
+
+        /// <summary>
+        /// Gets all asynchronous log.
+        /// </summary>
+        /// <returns></returns>
         Task<IEnumerable<UserLogs>> GetAllAsyncLog();
+
+        /// <summary>
+        /// Gets the error logs.
+        /// </summary>
+        /// <returns></returns>
         Task<IEnumerable<UserLogs>> GetErrorLogs();
+
+        /// <summary>
+        /// Gets the information logs.
+        /// </summary>
+        /// <returns></returns>
         Task<IEnumerable<UserLogs>> GetInfoLogs();
     }
 }

@@ -54,6 +54,10 @@ namespace eGuide.Infrastructure.Conctrete {
             return stationInformation;
         }
 
+        /// <summary>
+        /// Gets the station prof.
+        /// </summary>
+        /// <returns></returns>
         public async Task<List<StationProfile>> GetStationProf() {
             var res = await _context.Station.Where(x => x.Status == 1)
 
@@ -73,6 +77,11 @@ namespace eGuide.Infrastructure.Conctrete {
                 return null;
         }
 
+        /// <summary>
+        /// Gets the station profile.
+        /// </summary>
+        /// <param name="Id">The identifier.</param>
+        /// <returns></returns>
         public async Task<StationProfile> GetStationProfile(Guid Id)
         {
             var res = await _context.Station

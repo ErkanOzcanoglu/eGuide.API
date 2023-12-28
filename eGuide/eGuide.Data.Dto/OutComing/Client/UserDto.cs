@@ -53,6 +53,13 @@ namespace eGuide.Data.Dto.OutComing.Client
         /// The confirm password.
         /// </value>
         public string ConfirmPassword { get; set; }
+        
+        /// <summary>
+        /// Gets or sets the created date.
+        /// </summary>
+        /// <value>
+        /// The created date.
+        /// </value>
         public DateTime CreatedDate { get; set; }
 
     }

@@ -50,6 +50,10 @@ namespace eGuide.Service.AdminAPI.Controllers {
         }
 
 
+        /// <summary>
+        /// Alls this instance.
+        /// </summary>
+        /// <returns></returns>
         [HttpGet]
         public async Task<IActionResult> All()
         {
@@ -76,6 +80,11 @@ namespace eGuide.Service.AdminAPI.Controllers {
             }
         }
 
+        /// <summary>
+        /// Gets the by identifier.
+        /// </summary>
+        /// <param name="id">The identifier.</param>
+        /// <returns></returns>
         [HttpGet("getbyId")]
         public async Task<IActionResult> GetById(Guid id)
         {
@@ -101,6 +110,11 @@ namespace eGuide.Service.AdminAPI.Controllers {
             }
         }
 
+        /// <summary>
+        /// Deletes the specified identifier.
+        /// </summary>
+        /// <param name="id">The identifier.</param>
+        /// <returns></returns>
         [HttpDelete]
         public async Task<IActionResult> Delete(Guid id)
         {
@@ -120,6 +134,12 @@ namespace eGuide.Service.AdminAPI.Controllers {
             }
         }
 
+        /// <summary>
+        /// Updates the user.
+        /// </summary>
+        /// <param name="userId">The user identifier.</param>
+        /// <param name="userDto">The user dto.</param>
+        /// <returns></returns>
         [HttpPut("{userId}")]
         public async Task<IActionResult> UpdateUser(Guid userId, [FromBody] UpdateDtoForAdmin userDto)
         {
@@ -146,6 +166,12 @@ namespace eGuide.Service.AdminAPI.Controllers {
             }
         }
 
+        /// <summary>
+        /// Sends the email.
+        /// </summary>
+        /// <param name="body">The body.</param>
+        /// <param name="recipientEmail">The recipient email.</param>
+        /// <returns></returns>
         [HttpPost("mail")]
         public IActionResult SendEmail(string body, string recipientEmail)
         {
@@ -167,6 +193,11 @@ namespace eGuide.Service.AdminAPI.Controllers {
             return Ok();
         }
 
+        /// <summary>
+        /// Registers the admin.
+        /// </summary>
+        /// <param name="register">The register.</param>
+        /// <returns></returns>
         [HttpPost("registerAdmin")]
         public async Task<ActionResult<AdminProfile>> RegisterAdmin(CreationDtoForAdminProfile register)
         {
@@ -210,6 +241,11 @@ namespace eGuide.Service.AdminAPI.Controllers {
         }
 
 
+        /// <summary>
+        /// Confirms the account.
+        /// </summary>
+        /// <param name="token">The token.</param>
+        /// <returns></returns>
         [HttpGet("confirm")]
         public async Task<IActionResult> ConfirmAccount(string token)
         {
@@ -310,6 +346,11 @@ namespace eGuide.Service.AdminAPI.Controllers {
             }
         }
 
+        /// <summary>
+        /// Forgots the password.
+        /// </summary>
+        /// <param name="userId">The user identifier.</param>
+        /// <returns></returns>
         [HttpPost("forgot-password")]
         public async Task<IActionResult> ForgotPassword(Guid userId)
         {
@@ -329,7 +370,13 @@ namespace eGuide.Service.AdminAPI.Controllers {
             return Ok("You may now reset your password");
         }
 
-      
+
+        /// <summary>
+        /// Resets the password.
+        /// </summary>
+        /// <param name="request">The request.</param>
+        /// <param name="userId">The user identifier.</param>
+        /// <returns></returns>
         [HttpPost("reset-password")]
         public async Task<IActionResult> ResetPassword(ResetPassword request, Guid userId)
         {
@@ -359,7 +406,12 @@ namespace eGuide.Service.AdminAPI.Controllers {
 
         }
 
-       
+
+        /// <summary>
+        /// Forgots the password screen.
+        /// </summary>
+        /// <param name="userEmail">The user email.</param>
+        /// <returns></returns>
         [HttpPost("forgot-password/{userEmail}")]
         public async Task<IActionResult> ForgotPasswordScreen(string userEmail)
         {
@@ -424,6 +476,12 @@ namespace eGuide.Service.AdminAPI.Controllers {
             return Ok("Password successfully changed");
         }
 
+        /// <summary>
+        /// Changes the password.
+        /// </summary>
+        /// <param name="id">The identifier.</param>
+        /// <param name="changePasswordDto">The change password dto.</param>
+        /// <returns></returns>
         [HttpPost("pass-change")]
         public async Task<IActionResult> ChangePassword(Guid id, ResetPassword changePasswordDto) {
             var user = await _business.FirstOrDefault(u => u.Id == id);

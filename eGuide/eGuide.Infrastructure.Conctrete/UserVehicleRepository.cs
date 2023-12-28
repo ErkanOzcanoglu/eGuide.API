@@ -23,6 +23,7 @@ namespace eGuide.Infrastructure.Conctrete
         /// The database set
         /// </summary>
         private readonly DbSet<UserVehicle> _dbSet;
+
         /// <summary>
         /// Initializes a new instance of the <see cref="UserVehicleRepository"/> class.
         /// </summary>
@@ -33,6 +34,11 @@ namespace eGuide.Infrastructure.Conctrete
             _dbSet = _context.Set<UserVehicle>();
         }
 
+        /// <summary>
+        /// Gets the active user vehicle connector.
+        /// </summary>
+        /// <param name="userId">The user identifier.</param>
+        /// <returns></returns>
         public async Task<UserVehicle> GetActiveUserVehicleConnector(Guid userId)
         {
             var userVehicle = await _dbSet.FirstOrDefaultAsync(v => v.UserId == userId && v.ActiveStatus == 1);
@@ -40,6 +46,11 @@ namespace eGuide.Infrastructure.Conctrete
 
         }
 
+        /// <summary>
+        /// Gets the active vehicle.
+        /// </summary>
+        /// <param name="userId">The user identifier.</param>
+        /// <returns></returns>
         public async Task<Vehicle> GetActiveVehicle(Guid userId)
         {
             var activeVehicle = await _dbSet.Include(uv => uv.Vehicle)
@@ -95,6 +106,14 @@ namespace eGuide.Infrastructure.Conctrete
             return await _dbSet.Where(uv => uv.UserId == userId && uv.Status == 1).Select(uv => uv.Vehicle).AsNoTracking().ToListAsync();
         }
 
+        /// <summary>
+        /// Updates the user vehicle asynchronous.
+        /// </summary>
+        /// <param name="userid">The userid.</param>
+        /// <param name="vehicleId">The vehicle identifier.</param>
+        /// <param name="idNew">The identifier new.</param>
+        /// <param name="connectorId">The connector identifier.</param>
+        /// <returns></returns>
         public async Task<UserVehicle> UpdateUserVehicleAsync(Guid userid, Guid vehicleId, Guid idNew, Guid connectorId)
         {
             var existingVehicle = await FirstOrDefault(v => v.UserId == userid && v.VehicleId == vehicleId && v.Status == 1);

@@ -23,13 +23,22 @@ namespace eGuide.Service.AdminAPI.Controllers
 
         protected readonly eGuideContext _context;
 
-
+        /// <summary>
+        /// Initializes a new instance of the <see cref="UserStationController"/> class.
+        /// </summary>
+        /// <param name="business">The business.</param>
+        /// <param name="mapper">The mapper.</param>
         public UserStationController(IUserStationBusiness business, IMapper mapper)
         {
             _business = business;
             _mapper = mapper;
         }
 
+        /// <summary>
+        /// Gets the total user count for station.
+        /// </summary>
+        /// <param name="stationId">The station identifier.</param>
+        /// <returns></returns>
         [HttpGet("GetTotalUserCountForStation/{stationId}")]
         public async Task<IActionResult> GetTotalUserCountForStation(Guid stationId)
         {
@@ -44,6 +53,10 @@ namespace eGuide.Service.AdminAPI.Controllers
             }
         }
 
+        /// <summary>
+        /// Gets the distinct station ids.
+        /// </summary>
+        /// <returns></returns>
         [HttpGet("GetDistinctStationIds")]
         public async Task<IActionResult> GetDistinctStationIds()
         {
@@ -60,6 +73,11 @@ namespace eGuide.Service.AdminAPI.Controllers
             }
         }
 
+        /// <summary>
+        /// Gets the station profiles.
+        /// </summary>
+        /// <param name="userId">The user identifier.</param>
+        /// <returns></returns>
         [HttpGet("GetStationProfile/{userId}")]
         public async Task<IActionResult> GetStationProfiles(Guid userId)
         {

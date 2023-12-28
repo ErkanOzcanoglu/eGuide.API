@@ -31,6 +31,10 @@ namespace eGuide.Infrastructure.Conctrete {
             _context = context;
         }
 
+        /// <summary>
+        /// Gets the charging units.
+        /// </summary>
+        /// <returns></returns>
         public async Task<List<ChargingUnit>> GetChargingUnits() {
             var res = _context.CharginUnit.Include(s => s.Connector).ToList();
             if(res != null)

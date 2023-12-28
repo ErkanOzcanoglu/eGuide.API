@@ -35,18 +35,32 @@ namespace eGuide.Service.AdminAPI.Controllers {
             _mapper = mapper;
         }
 
+        /// <summary>
+        /// Gets this instance.
+        /// </summary>
+        /// <returns></returns>
         [HttpGet]
         public async Task<ActionResult> Get() {
             var result = await _business.GetAllAsync();
             return Ok(result);
         }
 
+        /// <summary>
+        /// Gets the by identifier.
+        /// </summary>
+        /// <param name="id">The identifier.</param>
+        /// <returns></returns>
         [HttpGet("{id}")]
         public async Task<ActionResult<Facility>> GetById(Guid id) {
             var result = await _business.GetbyIdAsync(id);
             return Ok(result);
         }
 
+        /// <summary>
+        /// Posts the specified facility.
+        /// </summary>
+        /// <param name="facility">The facility.</param>
+        /// <returns></returns>
         [HttpPost]
         public async Task<ActionResult<Facility>> Post(CreationDtoForFacility facility) {
             var entity = _mapper.Map<Facility>(facility);
@@ -54,6 +68,12 @@ namespace eGuide.Service.AdminAPI.Controllers {
             return Ok(result);
         }
 
+        /// <summary>
+        /// Puts the specified identifier.
+        /// </summary>
+        /// <param name="id">The identifier.</param>
+        /// <param name="facility">The facility.</param>
+        /// <returns></returns>
         [HttpPut]
         public async Task<ActionResult<Facility>> Put(Guid id, UpdateDtoForFacility facility) {
             var entity = await _business.GetbyIdAsync(id);
@@ -72,6 +92,11 @@ namespace eGuide.Service.AdminAPI.Controllers {
             return Ok();
         }
 
+        /// <summary>
+        /// Deletes the specified identifier.
+        /// </summary>
+        /// <param name="id">The identifier.</param>
+        /// <returns></returns>
         [HttpDelete]
         public async Task<ActionResult<Facility>> Delete(Guid id) {
             var entity = await _business.GetbyIdAsync(id);

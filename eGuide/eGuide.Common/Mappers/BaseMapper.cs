@@ -8,6 +8,10 @@ using System.Threading.Tasks;
 
 namespace eGuide.Common.Mappers {
     public class BaseMapper<T, TDto, TUpdate, TCreate> : Profile where T: BaseModel {
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="BaseMapper{T, TDto, TUpdate, TCreate}"/> class.
+        /// </summary>
         public BaseMapper() {
             CreateMap<TCreate, T>()
                 .ForMember(dest => dest.Id, opt => opt.MapFrom(src => Guid.NewGuid()))

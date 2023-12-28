@@ -27,11 +27,22 @@ namespace eGuide.Service.ClientAPI.Controllers
         /// </summary>
         private readonly IMapper _mapper;
 
+        /// <summary>
+        /// The context
+        /// </summary>
         protected readonly eGuideContext _context;
+
+        /// <summary>
+        /// The cache
+        /// </summary>
         private readonly ICache _cache;
 
-        
-
+        /// <summary>
+        /// Initializes a new instance of the <see cref="UserStationController"/> class.
+        /// </summary>
+        /// <param name="business">The business.</param>
+        /// <param name="mapper">The mapper.</param>
+        /// <param name="cache">The cache.</param>
         public UserStationController(IUserStationBusiness business, IMapper mapper, ICache cache)
         {
             _cache = cache;
@@ -39,6 +50,10 @@ namespace eGuide.Service.ClientAPI.Controllers
             _mapper = mapper;
         }
 
+        /// <summary>
+        /// Saves the specified userstation.
+        /// </summary>
+        /// <param name="userstation">The userstation.</param>
         [HttpPost]
         public async Task Save(CreationDtoForUserStation userstation)
         {
@@ -53,6 +68,11 @@ namespace eGuide.Service.ClientAPI.Controllers
             
         }
 
+        /// <summary>
+        /// Deletes the specified identifier.
+        /// </summary>
+        /// <param name="id">The identifier.</param>
+        /// <returns></returns>
         [HttpDelete("DeleteStationProfile/{id}")]
         public async Task<ActionResult> Delete(Guid id)
         {
@@ -76,6 +96,10 @@ namespace eGuide.Service.ClientAPI.Controllers
             }
         }
 
+        /// <summary>
+        /// Alls this instance.
+        /// </summary>
+        /// <returns></returns>
         [HttpGet]
         public async Task<ActionResult<UserStationDto>> All()
         {
@@ -96,6 +120,11 @@ namespace eGuide.Service.ClientAPI.Controllers
             }
         }
 
+        /// <summary>
+        /// Gets the station profiles.
+        /// </summary>
+        /// <param name="userId">The user identifier.</param>
+        /// <returns></returns>
         [HttpGet("GetStationProfile/{userId}")]
         public async Task<IActionResult> GetStationProfiles(Guid userId)
         {
@@ -118,7 +147,5 @@ namespace eGuide.Service.ClientAPI.Controllers
                 return BadRequest($"Hata: {ex.Message}");
             }
         }
-
-
     }
 }

@@ -61,6 +61,8 @@ namespace eGuide.Data.Entites.Client
         /// </value>
         public Connector Connector { get; set; }
 
+        /// <summary>Gets or sets the active status.</summary>
+        /// <value>The active status.</value>
         public int ActiveStatus { get; set; }
 
     }

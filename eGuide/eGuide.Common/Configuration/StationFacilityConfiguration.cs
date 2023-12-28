@@ -9,7 +9,13 @@ using System.Threading.Tasks;
 
 namespace eGuide.Common.Configuration {
     public class StationFacilityConfiguration {
+        
+        /// <summary>
+        /// Configures the specified builder.
+        /// </summary>
+        /// <param name="builder">The builder.</param>
         public void Configure(EntityTypeBuilder<StationFacility> builder) {
+            
             builder.HasKey(builder => builder.Id);
 
             builder.HasOne(builder => builder.Facility)

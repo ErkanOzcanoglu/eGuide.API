@@ -7,8 +7,24 @@ using System.Threading.Tasks;
 
 namespace eGuide.Business.Interface {
     public interface ILastVisitedStationsBusiness {
+        /// <summary>
+        /// Creates the users log.
+        /// </summary>
+        /// <param name="lvs">The LVS.</param>
         void CreateUsersLog(LastVisitedStations lvs);
+
+        /// <summary>
+        /// Gets the last visited stations by user identifier.
+        /// </summary>
+        /// <param name="id">The identifier.</param>
+        /// <returns></returns>
         Task<IEnumerable<LastVisitedStations>> GetLastVisitedStationsByUserId(Guid id);
+       
+        /// <summary>
+        /// Removes the last visited station.
+        /// </summary>
+        /// <param name="id">The identifier.</param>
+        /// <returns></returns>
         Task<LastVisitedStations> RemoveLastVisitedStation(Guid id);
     }
 }

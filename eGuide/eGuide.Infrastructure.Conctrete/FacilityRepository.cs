@@ -31,6 +31,11 @@ namespace eGuide.Infrastructure.Conctrete {
             _context = context;
         }
 
+        /// <summary>
+        /// Gets the by facility identifier.
+        /// </summary>
+        /// <param name="facilityId">The facility identifier.</param>
+        /// <returns></returns>
         public async Task<Facility> GetByFacilityId(Guid facilityId)
         {
             var facilityInfo = await _context.Facility.Where(res => res.Status == 1 && res.Id == facilityId).Include(sf => sf.StationFacilities).ThenInclude(stFac => stFac.Station).FirstOrDefaultAsync();

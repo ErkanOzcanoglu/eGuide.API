@@ -9,6 +9,12 @@ namespace eGuide.Data.Dto.InComing.CreationDto.Station
 {
     public class CreationDtoForStationModel : BaseDto
     {
+        /// <summary>
+        /// Gets or sets the name.
+        /// </summary>
+        /// <value>
+        /// The name.
+        /// </value>
         public string Name { get; set; }
     }
 }

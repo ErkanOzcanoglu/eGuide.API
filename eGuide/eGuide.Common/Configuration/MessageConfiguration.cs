@@ -11,6 +11,10 @@ namespace eGuide.Common.Configuration
 {
     public class MessageConfiguration
     {
+        /// <summary>
+        /// Configures the specified builder.
+        /// </summary>
+        /// <param name="builder">The builder.</param>
         public void Configure(EntityTypeBuilder<Messages> builder)
         {
             builder.HasKey(builder => builder.Id);

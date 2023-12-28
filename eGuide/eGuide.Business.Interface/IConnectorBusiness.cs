@@ -7,6 +7,10 @@ using System.Threading.Tasks;
 
 namespace eGuide.Business.Interface {
     public interface IConnectorBusiness : IBusiness<Connector> {
+        /// <summary>
+        /// Gets the con.
+        /// </summary>
+        /// <returns></returns>
         Task<List<Connector>> GetCon();
     }
 }

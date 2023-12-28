@@ -49,6 +49,11 @@ namespace eGuide.Service.AdminAPI.Controllers
                 return Ok(vehicledto);
         }
 
+        /// <summary>
+        /// Gets the vehicle by identifier.
+        /// </summary>
+        /// <param name="vehicleId">The vehicle identifier.</param>
+        /// <returns></returns>
         [HttpGet("getVehiclebyId/{vehicleId}")]
         public async Task<ActionResult<VehicleDto>> GetVehicleById(Guid vehicleId)
         {

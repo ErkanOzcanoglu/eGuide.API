@@ -9,6 +9,12 @@ namespace eGuide.Data.Dto.OutComing.Station
 {
     public class StationModelDto : BaseDto
     {
+        /// <summary>
+        /// Gets or sets the name.
+        /// </summary>
+        /// <value>
+        /// The name.
+        /// </value>
         public string Name { get; set; }
     }
 }

@@ -20,6 +20,10 @@ namespace eGuide.Business.Concrete
         /// The user repository
         /// </summary>
         private readonly IUserRepository _userRepository;
+
+        /// <summary>
+        /// The unit of work
+        /// </summary>
         private readonly IUnitOfWork _unitOfWork;
 
         /// <summary>

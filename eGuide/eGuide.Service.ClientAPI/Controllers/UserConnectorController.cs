@@ -42,6 +42,11 @@ namespace eGuide.Service.ClientAPI.Controllers
             return Ok(result);
         }
 
+        /// <summary>
+        /// Gets the by identifier.
+        /// </summary>
+        /// <param name="id">The identifier.</param>
+        /// <returns></returns>
         [HttpGet("{id}")]
         public async Task<ActionResult<Connector>> GetById(Guid id)
         {

@@ -43,6 +43,11 @@ namespace eGuide.Service.AdminAPI.Controllers {
             return Ok(result);
         }
 
+        /// <summary>
+        /// Gets the by identifier.
+        /// </summary>
+        /// <param name="id">The identifier.</param>
+        /// <returns></returns>
         [HttpGet("{id}")]
         public async Task<ActionResult<Connector>> GetById(Guid id) {
             var result = await _business.GetbyIdAsync(id);

@@ -31,8 +31,17 @@ namespace eGuide.Service.ClientAPI.Controllers
         /// </summary>
         private readonly IMapper _mapper;
 
+        /// <summary>
+        /// The hub context
+        /// </summary>
         private readonly IHubContext<BroadCastHub, IHubClient> _hubContext;
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="MessageController"/> class.
+        /// </summary>
+        /// <param name="mapper">The mapper.</param>
+        /// <param name="hubContext">The hub context.</param>
+        /// <param name="context">The context.</param>
         public MessageController(IMapper mapper, IHubContext<BroadCastHub, IHubClient> hubContext, eGuideContext context)
         {
           
@@ -42,6 +51,11 @@ namespace eGuide.Service.ClientAPI.Controllers
         }
 
 
+        /// <summary>
+        /// Broadcasts the message.
+        /// </summary>
+        /// <param name="messageDto">The message dto.</param>
+        /// <returns></returns>
         [HttpPost("broadcast")]
         public async Task<IActionResult> BroadcastMessage(CreationDtoForMessage messageDto)
         {

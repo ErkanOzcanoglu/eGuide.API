@@ -45,6 +45,11 @@ namespace eGuide.Infrastructure.Concrete
             await _dbSet.AddAsync(entity);
         }
 
+        /// <summary>
+        /// Firsts the or default.
+        /// </summary>
+        /// <param name="predicate">The predicate.</param>
+        /// <returns></returns>
         public Task<T> FirstOrDefault(Expression<Func<T, bool>> predicate)
         {
             return _dbSet.FirstAsync(predicate);

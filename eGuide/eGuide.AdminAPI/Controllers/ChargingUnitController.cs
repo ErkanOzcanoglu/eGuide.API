@@ -112,6 +112,10 @@ namespace eGuide.Service.AdminAPI.Controllers {
             return Ok();
         }
 
+        /// <summary>
+        /// Gets the con.
+        /// </summary>
+        /// <returns></returns>
         [HttpGet("AllChargingUnits")]
         public async Task<IActionResult> GetCon() {
             var sockets = await _socketBusiness.GetChargingUnits();

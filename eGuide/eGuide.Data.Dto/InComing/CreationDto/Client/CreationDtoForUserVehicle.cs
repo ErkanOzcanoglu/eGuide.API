@@ -16,6 +16,7 @@ namespace eGuide.Data.Dto.InComing.CreationDto.Client
         /// The user identifier.
         /// </value>
         public Guid UserId { get; set; }
+       
         /// <summary>
         /// Gets or sets the vehicle identifier.
         /// </summary>
@@ -32,6 +33,12 @@ namespace eGuide.Data.Dto.InComing.CreationDto.Client
         /// </value>
         public Guid ConnectorId { get; set; }
 
+        /// <summary>
+        /// Gets or sets the active status.
+        /// </summary>
+        /// <value>
+        /// The active status.
+        /// </value>
         public int ActiveStatus { get; set; }
     }
 }

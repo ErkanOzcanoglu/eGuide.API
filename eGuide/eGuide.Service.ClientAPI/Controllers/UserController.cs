@@ -38,6 +38,9 @@ namespace eGuide.Service.ClientAPI.Controllers {
         /// </summary>
         private readonly IUserBusiness _business;
 
+        /// <summary>
+        /// The context
+        /// </summary>
         protected readonly eGuideContext _context;
 
         /// <summary>
@@ -470,6 +473,11 @@ namespace eGuide.Service.ClientAPI.Controllers {
             return Ok("Password successfully changed");
         }
 
+        /// <summary>
+        /// Broadcasts the message.
+        /// </summary>
+        /// <param name="messageDto">The message dto.</param>
+        /// <returns></returns>
         [HttpPost("broadcast")]
         public async Task<IActionResult> BroadcastMessage( CreationDtoForMessage messageDto)
         {
@@ -488,6 +496,11 @@ namespace eGuide.Service.ClientAPI.Controllers {
             }
         }
 
+        /// <summary>
+        /// Tests the specified message dto.
+        /// </summary>
+        /// <param name="messageDto">The message dto.</param>
+        /// <returns></returns>
         [HttpPost("test")]
         public async Task<IActionResult> Test(CreationDtoForMessage messageDto)
         {

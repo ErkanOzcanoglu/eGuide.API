@@ -47,8 +47,20 @@ namespace eGuide.Data.Dto.InComing.CreationDto.Station
         /// </value>
         public string Longitude { get; set; }
 
+        /// <summary>
+        /// Gets or sets the station model identifier.
+        /// </summary>
+        /// <value>
+        /// The station model identifier.
+        /// </value>
         public Guid StationModelId { get; set; }
 
+        /// <summary>
+        /// Gets or sets the station status.
+        /// </summary>
+        /// <value>
+        /// The station status.
+        /// </value>
         public int StationStatus { get; set; }
     }
 }

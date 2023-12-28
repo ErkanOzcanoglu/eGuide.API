@@ -87,6 +87,12 @@ namespace eGuide.Service.ClientAPI.Controllers
             }
         }
 
+        /// <summary>
+        /// Updates the active vehicle.
+        /// </summary>
+        /// <param name="userId">The user identifier.</param>
+        /// <param name="vehicleId">The vehicle identifier.</param>
+        /// <returns></returns>
         [HttpPut("update-active-vehicle/{userId}/{vehicleId}")]
         public async Task<IActionResult> UpdateActiveVehicle(Guid userId, Guid vehicleId)
         {
@@ -165,6 +171,11 @@ namespace eGuide.Service.ClientAPI.Controllers
             }
         }
 
+        /// <summary>
+        /// Gets the user vehicle with active status.
+        /// </summary>
+        /// <param name="userId">The user identifier.</param>
+        /// <returns></returns>
         [HttpGet("GetUserVehicleWithActiveStatus/{userId}")]
         public async Task<IActionResult> GetUserVehicleWithActiveStatus(Guid userId)
         {
@@ -185,6 +196,11 @@ namespace eGuide.Service.ClientAPI.Controllers
             }
         }
 
+        /// <summary>
+        /// Gets the user vehicle active status with connector.
+        /// </summary>
+        /// <param name="userId">The user identifier.</param>
+        /// <returns></returns>
         [HttpGet("GetUserVehicleActiveStatusWithConnector/{userId}")]
         public async Task<IActionResult> GetUserVehicleActiveStatusWithConnector(Guid userId)
         {
@@ -207,7 +223,11 @@ namespace eGuide.Service.ClientAPI.Controllers
 
         }
 
-
+        /// <summary>
+        /// Gets the active vehicle.
+        /// </summary>
+        /// <param name="userId">The user identifier.</param>
+        /// <returns></returns>
         [HttpGet("GetActiveVehicle/{userId}")]
         public async Task<IActionResult> GetActiveVehicle(Guid userId)
         {

@@ -10,20 +10,42 @@ namespace eGuide.Service.AdminAPI.Controllers {
     [Route("api/[controller]")]
     [ApiController]
     public class ColorController : ControllerBase {
+
+        /// <summary>
+        /// The business
+        /// </summary>
         private readonly IColorBusiness _business;
+
+        /// <summary>
+        /// The mapper
+        /// </summary>
         private readonly IMapper _mapper;
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="ColorController"/> class.
+        /// </summary>
+        /// <param name="business">The business.</param>
+        /// <param name="mapper">The mapper.</param>
         public ColorController(IColorBusiness business, IMapper mapper) {
             _business = business;
             _mapper = mapper;
         }
 
+        /// <summary>
+        /// Gets this instance.
+        /// </summary>
+        /// <returns></returns>
         [HttpGet]
         public async Task<IActionResult> Get() {
             var result = await _business.GetAllAsync();
             return Ok(result);
         }
 
+        /// <summary>
+        /// Posts the specified dto.
+        /// </summary>
+        /// <param name="dto">The dto.</param>
+        /// <returns></returns>
         [HttpPost]
         public async Task<IActionResult> Post(CreationDtoForColor dto) {
             var entity = _mapper.Map<Color>(dto);
@@ -31,6 +53,12 @@ namespace eGuide.Service.AdminAPI.Controllers {
             return Ok(result);
         }
 
+        /// <summary>
+        /// Puts the specified dto.
+        /// </summary>
+        /// <param name="dto">The dto.</param>
+        /// <param name="id">The identifier.</param>
+        /// <returns></returns>
         [HttpPut("{id}")]
         public async Task<IActionResult> Put(UpdateDtoForColor dto, Guid id) {
             var result = await _business.GetbyIdAsync(id);

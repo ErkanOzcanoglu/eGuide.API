@@ -54,6 +54,11 @@ namespace eGuide.Service.AdminAPI.Controllers {
             _dbSet=_context.Set<StationInformationModel>();
         }
 
+        /// <summary>
+        /// Gets the specified identifier.
+        /// </summary>
+        /// <param name="id">The identifier.</param>
+        /// <returns></returns>
         [HttpGet("{id}")]
         public async Task<ActionResult> Get(Guid id)
         {
@@ -83,14 +88,20 @@ namespace eGuide.Service.AdminAPI.Controllers {
             return Ok(cacheData);
         }
 
+        /// <summary>
+        /// Gets the sta.
+        /// </summary>
+        /// <returns></returns>
         [HttpGet("Sta")]
         public async Task<ActionResult> GetSta() {
             var result = await _business.GetAllAsync();
             return Ok(result);
         }
-
-
-        // clear cache 
+ 
+        /// <summary>
+        /// Clears the cache.
+        /// </summary>
+        /// <returns></returns>
         [HttpGet("clear")]
         public async Task<ActionResult> ClearCache() {
             _cache.RemoveData("station");

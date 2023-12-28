@@ -10,6 +10,10 @@ namespace eGuide.Common.Configuration
 {
     public class UserStationConfiguration
     {
+        /// <summary>
+        /// Configures the specified builder.
+        /// </summary>
+        /// <param name="builder">The builder.</param>
         public void Configure(EntityTypeBuilder<UserStation> builder)
         {
             builder.HasKey(builder => builder.Id);
@@ -22,7 +26,6 @@ namespace eGuide.Common.Configuration
                 .WithMany(builder => builder.UserStations)
                 .HasForeignKey(builder => builder.StationProfileId)
                 .OnDelete(Microsoft.EntityFrameworkCore.DeleteBehavior.Cascade);    
-
         }
     }
 }

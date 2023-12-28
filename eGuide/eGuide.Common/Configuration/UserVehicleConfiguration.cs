@@ -11,6 +11,10 @@ namespace eGuide.Common.Configuration
 {
     public class UserVehicleConfiguration 
     {
+        /// <summary>
+        /// Configures the specified builder.
+        /// </summary>
+        /// <param name="builder">The builder.</param>
         public void Configure(EntityTypeBuilder<UserVehicle> builder)
         {
             builder.HasKey(builder => builder.Id);

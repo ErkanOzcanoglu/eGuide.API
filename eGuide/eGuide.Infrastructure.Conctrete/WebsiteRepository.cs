@@ -25,6 +25,11 @@ namespace eGuide.Infrastructure.Conctrete {
             _context = context;
         }
 
+        /// <summary>
+        /// Updates the footer.
+        /// </summary>
+        /// <param name="website">The website.</param>
+        /// <returns></returns>
         public async Task<Website> UpdateFooter(Website website) {
             var res = await _context.Website.Where(x => x.Status == 1).FirstOrDefaultAsync();
             if( res == null) {
@@ -35,6 +40,11 @@ namespace eGuide.Infrastructure.Conctrete {
             return res;
         }
 
+        /// <summary>
+        /// Updates the navbar.
+        /// </summary>
+        /// <param name="website">The website.</param>
+        /// <returns></returns>
         public async Task<Website> UpdateNavbar(Website website) {
             var res = await _context.Website.Where(x => x.Status == 1).FirstOrDefaultAsync();
             if( res == null) {

@@ -54,6 +54,11 @@ namespace eGuide.Service.AdminAPI.Controllers {
             return Ok(commentsDto);
         }
 
+        /// <summary>
+        /// Gets the comments by station identifier.
+        /// </summary>
+        /// <param name="stationId">The station identifier.</param>
+        /// <returns></returns>
         [HttpGet("{stationId}")]
         public async Task<IActionResult> GetCommentsByStationId(Guid stationId)
         {

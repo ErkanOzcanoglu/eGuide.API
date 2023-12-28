@@ -12,6 +12,11 @@ namespace eGuide.Infrastructure.Interface {
     /// <seealso cref="eGuide.Infrastructure.Interface.IGenericRepository&lt;eGuide.Data.Entities.Station.Facility&gt;" />
     public interface IFacilityRepository : IGenericRepository<Facility> {
 
+        /// <summary>
+        /// Gets the by facility identifier.
+        /// </summary>
+        /// <param name="facilityId">The facility identifier.</param>
+        /// <returns></returns>
         Task<Facility> GetByFacilityId(Guid facilityId);
     }
 }

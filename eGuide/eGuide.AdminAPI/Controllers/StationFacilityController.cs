@@ -64,6 +64,11 @@ namespace eGuide.Service.AdminAPI.Controllers {
             return Ok();
         }
 
+        /// <summary>
+        /// Gets the fac by station identifier.
+        /// </summary>
+        /// <param name="stationId">The station identifier.</param>
+        /// <returns></returns>
         [HttpGet("station-facility-by-station-id/{stationId}")]
         public async Task<ActionResult> GetFacByStationId(Guid stationId) {
             var result = await _business.GetFacByStationId(stationId);

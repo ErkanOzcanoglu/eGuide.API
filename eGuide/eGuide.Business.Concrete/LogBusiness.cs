@@ -53,10 +53,18 @@ namespace eGuide.Business.Concrete {
             return await _repository.CreateUsersLog(comment);
         }
 
+        /// <summary>
+        /// Gets the error logs.
+        /// </summary>
+        /// <returns></returns>
         public async Task<IEnumerable<UserLogs>> GetErrorLogs() {
             return await _repository.GetErrorLogs();
         }
 
+        /// <summary>
+        /// Gets the information logs.
+        /// </summary>
+        /// <returns></returns>
         public async Task<IEnumerable<UserLogs>> GetInfoLogs() {
             return await _repository.GetInfoLogs();
         }

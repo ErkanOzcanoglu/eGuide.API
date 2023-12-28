@@ -31,6 +31,10 @@ namespace eGuide.Infrastructure.Conctrete {
             _context = context;
         }
 
+        /// <summary>
+        /// Gets all facility.
+        /// </summary>
+        /// <returns></returns>
         public async Task<List<StationFacility>> GetAllFacility() {
             var stationFacilityInfo = await _context.StationFacilities.Where(res => res.Status == 1)
                 .Include(sf => sf.Station)
@@ -44,6 +48,11 @@ namespace eGuide.Infrastructure.Conctrete {
             return stationFacilityInfo;
         }
 
+        /// <summary>
+        /// Gets the facility by station identifier.
+        /// </summary>
+        /// <param name="stationId">The station identifier.</param>
+        /// <returns></returns>
         public async Task<List<StationFacility>> GetFacilityByStationId(Guid stationId) {
             var stationFacilityInfo = await _context.StationFacilities.Where(res => res.Status == 1 && res.StationId == stationId)
                 .Include(sf => sf.Station)

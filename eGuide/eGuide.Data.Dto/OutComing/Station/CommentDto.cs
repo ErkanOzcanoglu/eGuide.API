@@ -29,7 +29,21 @@ namespace eGuide.Data.Dto.OutComing.Station
         /// The rating.
         /// </value>
         public float Rating { get; set; }
+
+        /// <summary>
+        /// Gets or sets the owner identifier.
+        /// </summary>
+        /// <value>
+        /// The owner identifier.
+        /// </value>
         public Guid OwnerId { get; set; }
+
+        /// <summary>
+        /// Gets or sets the station identifier.
+        /// </summary>
+        /// <value>
+        /// The station identifier.
+        /// </value>
         public Guid StationId { get; set; }
     }
 }

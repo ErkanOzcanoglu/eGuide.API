@@ -79,14 +79,23 @@ namespace eGuide.Service.AdminAPI.Controllers {
             return Ok();
         }
 
+        /// <summary>
+        /// Gets the unread.
+        /// </summary>
+        /// <returns></returns>
         [HttpGet("unread")]
         public async Task<IActionResult> GetUnread() {
             var mails = await _business.GetUnreadMessages();
             return Ok(mails);
         }
 
-        
 
+
+        /// <summary>
+        /// Replies to.
+        /// </summary>
+        /// <param name="contactForm">The contact form.</param>
+        /// <returns></returns>
         [HttpPost("reply-to")]
         public IActionResult ReplyTo(ReplyMail contactForm) {
             var replyEmail = new MimeMessage();

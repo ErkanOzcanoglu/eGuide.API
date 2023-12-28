@@ -8,6 +8,11 @@ using System.Threading.Tasks;
 
 namespace eGuide.Common.Configuration {
     public class StationSocketsConfiguration {
+        
+        /// <summary>
+        /// Configures the specified builder.
+        /// </summary>
+        /// <param name="builder">The builder.</param>
         public void Configure(EntityTypeBuilder<StationsChargingUnits> builder) {
             builder.HasKey(builder => builder.Id);
 
