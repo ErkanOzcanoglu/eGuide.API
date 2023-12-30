@@ -47,17 +47,20 @@ namespace eGuide.Service.ClientAPI.Controllers {
         /// </summary>
         /// <returns></returns>
         [HttpGet]
-        public async Task<IActionResult> GetAllComments() {
+        public async Task<ActionResult<Comment>> GetAllComments() {
             var comments = await _business.GetAllComments();
-            var commentsDto = _mapper.Map<CommentDto[]>(comments);
-            return Ok(commentsDto);
+            return Ok(comments);
         }
 
+        /// <summary>
+        /// Gets the comments by station identifier.
+        /// </summary>
+        /// <param name="stationId">The station identifier.</param>
+        /// <returns></returns>
         [HttpGet("{stationId}")]
-        public async Task<IActionResult> GetCommentsByStationId(Guid stationId) {
+        public async Task<ActionResult<Comment>> GetCommentsByStationId(Guid stationId) {
             var comments = await _business.GetAllCommentsByStationId(stationId);
-            var commentsDto = _mapper.Map<CommentDto[]>(comments);
-            return Ok(commentsDto);
+            return Ok(comments);
         }
     }
 }

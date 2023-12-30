@@ -19,7 +19,7 @@ namespace eGuide.Service.AdminAPI.Controllers {
         }
 
         [HttpGet]
-        public async Task<IActionResult> Get() {
+        public async Task<ActionResult<Color>> Get() {
             var result = await _business.GetAllAsync();
             return Ok(result);
         }

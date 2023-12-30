@@ -37,7 +37,7 @@ namespace eGuide.Service.AdminAPI.Controllers {
         /// </summary>
         /// <returns></returns>
         [HttpGet]
-        public async Task<IActionResult> GetAll() {
+        public async Task<ActionResult<ChargingUnit>> GetAll() {
             var sockets = await _socketBusiness.GetAllAsync();
             return Ok(sockets);
         }
@@ -48,7 +48,7 @@ namespace eGuide.Service.AdminAPI.Controllers {
         /// <param name="id">The identifier.</param>
         /// <returns></returns>
         [HttpGet("{id}")]
-        public async Task<IActionResult> GetById(Guid id) {
+        public async Task<ActionResult<ChargingUnit>> GetById(Guid id) {
             var socket = await _socketBusiness.GetbyIdAsync(id);
             return Ok(socket);
         }
@@ -97,8 +97,8 @@ namespace eGuide.Service.AdminAPI.Controllers {
         /// <returns></returns>
         [HttpDelete]
         public async Task<ActionResult<ChargingUnit>> Delete(Guid id) {
-            var result = _socketBusiness.RemoveAsync(id);
-            return Ok(result);
+            await _socketBusiness.RemoveAsync(id);
+            return Ok();
         }
 
         /// <summary>

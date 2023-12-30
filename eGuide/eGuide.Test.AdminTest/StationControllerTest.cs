@@ -1,103 +1,141 @@
-﻿//using AutoMapper;
-//using eGuide.Business.Interface;
-//using eGuide.Data.Dto.InComing.CreationDto.Station;
-//using eGuide.Data.Dto.InComing.UpdateDto.Station;
-//using eGuide.Data.Entities.Station;
-//using eGuide.Service.AdminAPI.Controllers;
-//using Microsoft.Identity.Client;
-//using Moq;
-//using Xunit;
+﻿using AutoMapper;
+using eGuide.Business.Interface;
+using eGuide.Cache.Interface;
+using eGuide.Data.Dto.InComing.CreationDto.Station;
+using eGuide.Data.Dto.InComing.UpdateDto.Station;
+using eGuide.Data.Entities.Station;
+using eGuide.Service.AdminAPI.Controllers;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.Identity.Client;
+using Moq;
+using Xunit;
 
-//namespace eGuide.Test.AdminTest {
-//    public class StationControllerTest {
-//        [Fact]
-//        public async void Get_ReturnsListOfStations() {
+namespace eGuide.Test.AdminTest {
+    public class StationControllerTest {
 
-//            // Arrange
-//            var mockBusiness = new Mock<IStationBusiness>();
-//            var mockMapper = new Mock<IMapper>();
-//            var controller = new StationController(mockBusiness.Object, mockMapper.Object);
+        /// <summary>
+        /// The mock business
+        /// </summary>
+        private readonly Mock<IStationBusiness> _mockBusiness;
 
-//            // Act
-//            var result = await controller.Get();
+        /// <summary>
+        /// The mock mapper
+        /// </summary>
+        private readonly Mock<IMapper> _mockMapper;
 
-//            // Assert
-//            Assert.NotNull(result);
-//        }
+        /// <summary>
+        /// The mock cache
+        /// </summary>
+        private readonly Mock<ICache> _mockCache;
 
-//        [Fact]
-//        public async void Post_AddNewStaiton() {
+        /// <summary>
+        /// The controller
+        /// </summary>
+        private readonly StationController _controller;
 
-//            // Arrange 
-//            var mockBusiness = new Mock<IStationBusiness>();
-//            var mockMapper = new Mock<IMapper>();
-//            var controller = new StationController(mockBusiness.Object, mockMapper.Object);
+        /// <summary>
+        /// Initializes a new instance of the <see cref="StationControllerTest"/> class.
+        /// </summary>
+        public StationControllerTest() {
+            _mockBusiness = new Mock<IStationBusiness>();
+            _mockMapper = new Mock<IMapper>();
+            _mockCache = new Mock<ICache>();
+            _controller = new StationController(_mockBusiness.Object, _mockMapper.Object, _mockCache.Object);
+        }
 
-//            var createDto = new CreationDtoForStationProfile {
-//                Address = "New Address",
-//                Latitude = "38.123982938",
-//                Longitude = "27.123982938",
-//                Name = "New Name",
-//                StationModelId = Guid.NewGuid()
-//            };
+        [Fact]
+        public async void Get_ReturnListOfStations() {
+            // Arrange
+            var stations = new StationProfile[] {
+                new StationProfile(),
+                new StationProfile()
+            };
 
-//            // Act
-//            var result = await controller.Post(createDto);
-//            var model = result.Value as StationProfile;
+            _mockBusiness.Setup(x => x.GetAllAsync()).ReturnsAsync(stations);
 
-//            // Assert
-//            Assert.NotNull(result);
-//            // OkObjectResult
-//            if (model != null) {
-//                Assert.Equal("New Address", model.Address);
-//                Assert.Equal(1, model.Status);
-//                Assert.Equal("38.123982938", model.Latitude);
-//            }
-//        }
+            // Act
+            var result = await _controller.Get();
 
-//        [Fact]
-//        public async void Put_UpdateStationController() {
+            // Assert
+            
 
-//            // Arrange
-//            var mockBusiness = new Mock<IStationBusiness>();
-//            var mockMapper = new Mock<IMapper>();
-//            var controller = new StationController(mockBusiness.Object, mockMapper.Object);
+        }
 
-//            var id = Guid.NewGuid();
-//            var updateDto = new UpdateDtoForStationProfile {
-//                Address = "Update Address",
-//                Latitude = "38.123982938",
-//                Longtitude = "27.123982938",
-//                Name = "Update Name",
-//            };
+        /// <summary>
+        /// Posts the return ok result.
+        /// </summary>
+        [Fact]
+        public async void Post_ReturnOkResult() {
+            var id = Guid.NewGuid();
+            var station = new CreationDtoForStationProfile {
+                Id = id,
+                Name = "Test",
+                Address = "Address Test",
+                Latitude = "12.3213213",
+                Longitude = "12.3213213",
+                StationStatus = 1
+            };
 
-//            // Act
-//            var result = await controller.Put(id, updateDto);
-//            var model = result.Value as StationProfile;
+            var stationEntity = new StationProfile {
+                Id = id,
+                Name = station.Name,
+                Address = station.Address,
+                Latitude = station.Latitude,
+                Longitude = station.Longitude,
+                StationStatus = station.StationStatus
+            };
 
-//            // Assert
-//            Assert.NotNull(result);
-//            if (model != null) {
-//                Assert.Equal("Update Address", model.Address);
-//                Assert.Equal("38.123982938", model.Latitude);
-//            }
-//        }
+            // Set up mock mapper to return the entity when the DTO is mapped to it
+            _mockMapper.Setup(x => x.Map<StationProfile>(station)).Returns(stationEntity);
+            // Set up mock business to return the entity when it is added
+            _mockBusiness.Setup(x => x.AddAsync(stationEntity)).ReturnsAsync(stationEntity);
 
-//        [Fact]
-//        public async void Delete_RemoveStation() {
+            // Act
+            var result = await _controller.Post(station);
 
-//            // Arrange
-//            var mockBusiness = new Mock<IStationBusiness>();
-//            var mockMapper = new Mock<IMapper>();
-//            var controller = new StationController(mockBusiness.Object, mockMapper.Object);
+            // Assert
+            var actionResult = Assert.IsType<ActionResult<StationProfile>>(result);
+            var okObjectResult = Assert.IsType<OkObjectResult>(actionResult.Result);
+            var model = Assert.IsType<StationProfile>(okObjectResult.Value);
 
-//            var id = Guid.NewGuid();
+            Assert.Equal(id, model.Id);
+            Assert.Equal("Test", model.Name);
+        }
 
-//            // Act
-//            var result = await controller.Delete(id);
+        /// <summary>
+        /// Puts the return ok result.
+        /// </summary>
+        [Fact]
+        public async void Put_ReturnOkResult() {
+            var id = Guid.NewGuid();
+            var station = new UpdateDtoForStationProfile {
+                Name = "Test",
+                Address = "Address Test",
+                Latitude = "12.3213213",
+                Longtitude = "12.3213213",
+                StationStatus = 1
+            };
 
-//            // Assert
-//            Assert.NotNull(result);
-//        }
-//    }
-//}
+            var stationEntity = new StationProfile {
+                Id = id,
+                Name = "Test2",
+                Address = "Address Test2",
+                Latitude = "32.12312321",
+                Longitude = "23.3213213",
+                StationStatus = 1
+            };
+
+            // Set up mock mapper to return the entity when the DTO is mapped to it
+            _mockBusiness.Setup(b => b.GetbyIdAsync(id)).ReturnsAsync(stationEntity);
+
+            // Act
+            var result = await _controller.Put(id, station);
+
+            // Assert
+            var actionResult = Assert.IsType<ActionResult<StationProfile>>(result);
+            var okObjectResult = Assert.IsType<OkResult>(actionResult.Result);
+
+            Assert.Equal(200, okObjectResult.StatusCode);
+        }
+    }
+}

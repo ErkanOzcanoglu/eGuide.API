@@ -105,6 +105,9 @@ builder.Services.AddScoped(typeof(ILogRepository), typeof(LogRepository));
 builder.Services.AddScoped(typeof(IContactFormBusiness), typeof(ContactFormBusiness));
 builder.Services.AddScoped(typeof(IContactFormRepository), typeof(ContactFormRepository));
 
+builder.Services.AddScoped(typeof(ICommentBusiness), typeof(CommentBusiness));
+builder.Services.AddScoped(typeof(ICommentRepository), typeof(CommentRepository));
+
 builder.Services.AddSingleton<IMongoClient>(new MongoClient("mongodb://localhost:27017/test"));
 
 builder.Services.AddSingleton<IMongoDatabase>(provider => {

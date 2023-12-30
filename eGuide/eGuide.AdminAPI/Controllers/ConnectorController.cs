@@ -38,7 +38,7 @@ namespace eGuide.Service.AdminAPI.Controllers {
         /// </summary>
         /// <returns></returns>
         [HttpGet]
-        public async Task<ActionResult> Get() {
+        public async Task<ActionResult<Connector>> Get() {
             var result = await _business.GetCon();
             return Ok(result);
         }

@@ -37,7 +37,7 @@ namespace eGuide.Service.AdminAPI.Controllers {
         /// <param name="comment">The comment.</param>
         /// <returns></returns>
         [HttpPost]
-        public IActionResult CreateComment(CommentDto comment) {
+        public IActionResult CreateComment(Comment comment) {
             var commentEntity = _mapper.Map<Comment>(comment);
             _business.AddComment(commentEntity);
             return Ok();
@@ -48,18 +48,16 @@ namespace eGuide.Service.AdminAPI.Controllers {
         /// </summary>
         /// <returns></returns>
         [HttpGet]
-        public async Task<IActionResult> GetAllComments() {
-            var comments = await _business.GetAllComments();
-            var commentsDto = _mapper.Map<CommentDto[]>(comments);
-            return Ok(commentsDto);
+        public async Task<ActionResult<Comment>> GetAllComments() {
+           var comments = await _business.GetAllComments();
+            return Ok(comments);
         }
 
         [HttpGet("{stationId}")]
-        public async Task<IActionResult> GetCommentsByStationId(Guid stationId)
+        public async Task<ActionResult<Comment>> GetCommentsByStationId(Guid stationId)
         {
             var comments = await _business.GetAllCommentsByStationId(stationId);
-            var commentsDto = _mapper.Map<CommentDto[]>(comments);
-            return Ok(commentsDto);
+            return Ok(comments);
         }
     }
 }

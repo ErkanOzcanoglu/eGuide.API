@@ -22,16 +22,6 @@ namespace eGuide.Service.AdminAPI.Controllers {
         private readonly IStationBusiness _business;
 
         /// <summary>
-        /// The database set
-        /// </summary>
-        private readonly DbSet<StationInformationModel> _dbSet;
-
-        /// <summary>
-        /// The context
-        /// </summary>
-        private readonly eGuideContext _context;
-
-        /// <summary>
         /// The cache
         /// </summary>
         private readonly ICache _cache;
@@ -46,12 +36,10 @@ namespace eGuide.Service.AdminAPI.Controllers {
         /// </summary>
         /// <param name="business">The business.</param>
         /// <param name="mapper">The mapper.</param>
-        public StationController(IStationBusiness business, IMapper mapper ,eGuideContext context, ICache cahce) {
+        public StationController(IStationBusiness business, IMapper mapper, ICache cahce) {
             _cache = cahce;
             _business = business;
             _mapper = mapper;
-            _context = context;
-            _dbSet=_context.Set<StationInformationModel>();
         }
 
         [HttpGet("{id}")]
@@ -147,24 +135,6 @@ namespace eGuide.Service.AdminAPI.Controllers {
         public async Task<ActionResult> Delete(Guid id) {
             await _business.RemoveAsync(id);
             return Ok();
-        }
-
-        /// <summary>
-        /// Gets all station profile information.
-        /// </summary>
-        /// <returns></returns>
-        [HttpGet("GetAllStationProfile")]
-        public async Task<IActionResult> GetAllStationProfileInformation()
-        {
-            try
-            {
-                var stationInformation = _dbSet.FromSqlRaw("EXEC [GetStationInformation]").ToList();
-                return new JsonResult(stationInformation);
-            }
-            catch (Exception ex)
-            {
-                return StatusCode(500, $"Internal server error: {ex}");
-            }
         }
     }
 }
