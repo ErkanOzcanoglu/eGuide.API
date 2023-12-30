@@ -39,6 +39,9 @@ namespace eGuide.Test.AdminTest {
             _controller = new CommentController(_mockBusiness.Object, _mockMapper.Object);
         }
 
+        /// <summary>
+        /// Gets the return list of comments.
+        /// </summary>
         [Fact]
         public async void Get_ReturnListOfComments() {
             var id = Guid.NewGuid();
